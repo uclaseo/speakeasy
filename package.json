@@ -1,0 +1,28 @@
+{
+  "name": "speakeasy",
+  "version": "1.0.0",
+  "description": "Event-based chat app",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/joshuabahr/speakeasy.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/joshuabahr/speakeasy/issues"
+  },
+  "homepage": "https://github.com/joshuabahr/speakeasy#readme",
+  "dependencies": {
+    "body-parser": "^1.17.2",
+    "cors": "^2.8.3",
+    "express": "^4.15.3",
+    "morgan": "^1.8.2",
+    "nodemon": "^1.11.0",
+    "sequelize": "^4.2.1",
+    "socket.io": "^2.0.3"
+  }
+}
