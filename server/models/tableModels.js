@@ -11,8 +11,8 @@ const User = db.define('user', {
 const Event = db.define('event', {
   eventName: Sequelize.STRING,
   password: Sequelize.STRING,  // integer for simplicity or string?
-  latitude: Sequelize.INTEGER,  // Sequelize has GEOMETRY type, I'll look into it
-  longitude: Sequelize.INTEGER  // Sequelize has GEOMETRY type, I'll look into it
+  latitude: Sequelize.FLOAT,  // Sequelize has GEOMETRY type, I'll look into it
+  longitude: Sequelize.FLOAT  // Sequelize has GEOMETRY type, I'll look into it
 });
 
 const Message = db.define('message', {
