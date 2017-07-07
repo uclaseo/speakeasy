@@ -44,13 +44,6 @@ const User_Event = db.define('user_event', {
   }
 });
 
-// Event.belongsTo(Message, {
-//   foreignKey: 'chat'
-// });
-// Message.hasOne(Event, {
-//   foreignKey: 'chat'
-// });
-
 User.belongsToMany(Event, {
   foreignKey: 'userId',
   through: 'user_event'
