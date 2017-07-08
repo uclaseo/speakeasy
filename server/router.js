@@ -1,15 +1,18 @@
 const router = require('express').Router();
 const controller = require('./controllers/controllers.js');
+const userController = require('./controllers/userController');
+const eventController = require('./controllers/eventController');
+const imageController = require('./controllers/imageController');
 
-router.get('/user/fetchUsers', controller.fetchUsers);
-router.post('/user/signup', controller.signupUser);
+router.get('/user/fetchUsers', userController.fetchUsers);
+router.post('/user/signup', userController.signupUser);
 
-router.post('/event/create/:userId', controller.createEvent);
-router.post('/event/joinevent/:userId', controller.joinEvent);
-router.get('/event/fetchuserevents/:userId', controller.fetchUserEvents);
+router.post('/event/create/:userId', eventController.createEvent);
+router.post('/event/joinevent/:userId', eventController.joinEvent);
+router.get('/event/fetchuserevents/:userId', eventController.fetchUserEvents);
 
-router.post('/image/upload/:userId', controller.uploadImage);
-router.get('/image/fetcheventimages/:eventId', controller.fetchEventImages)
+router.post('/image/upload/:userId', imageController.uploadImage);
+router.get('/image/fetcheventimages/:eventId', imageController.fetchEventImages)
 
 
 
