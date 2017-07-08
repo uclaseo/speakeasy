@@ -52,7 +52,7 @@ const createEvent = (req, res) => {
   .catch((error) => {
     res.send(error);
   });
-}
+};
 
 const fetchUserEvents = (req, res) => {
   Table.User_Event.findAll({
@@ -71,10 +71,10 @@ const fetchUserEvents = (req, res) => {
   .catch((error) => {
     res.send(error);
   });
-}
+};
 
 const joinEvent = (req, res) => {
-  Table.Event.find({
+  Table.Event.findOne({
     where: {
       eventName: req.body.eventName
     }
@@ -101,6 +101,17 @@ const joinEvent = (req, res) => {
   .catch((error) => {
     res.send(error);
   });
+};
+
+const createImage = (req, res) => {
+
+
+  Table.Image.findOrCreate({
+    where: {
+      userId: req.params.userId,
+      eventId: req.body.eventId
+    }
+  })
 }
 
 
@@ -109,5 +120,6 @@ module.exports = {
   fetchUsers: fetchUsers,
   createEvent: createEvent,
   fetchUserEvents: fetchUserEvents,
-  joinEvent: joinEvent
+  joinEvent: joinEvent,
+  createImage: createImage
 }
