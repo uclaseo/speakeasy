@@ -8,7 +8,7 @@ router.post('/event/create/:userId', controller.createEvent);
 router.post('/event/joinevent/:userId', controller.joinEvent);
 router.get('/event/fetchuserevents/:userId', controller.fetchUserEvents);
 
-router.post('/image/create/:userId', controller.createImage);
+router.post('/image/upload/:userId', controller.uploadImage);
 router.get('/image/fetcheventimages/:eventId', controller.fetchEventImages)
 
 

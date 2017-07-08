@@ -103,32 +103,21 @@ const joinEvent = (req, res) => {
   });
 };
 
-const createImage = (req, res) => {
-  Table.Event.findOne({
+const uploadImage = (req, res) => {
+  Table.Image.findOrCreate({
     where: {
-      eventName: req.body.eventName
+      name: req.body.name,
+      imageLink: req.body.imageLink,
+      userId: req.params.userId,
+      eventId: req.body.eventId
     }
   })
-  .then((response) => {
-    let eventId = response.id
-    Table.Image.findOrCreate({
-      where: {
-        name: req.body.name,
-        imageLink: req.body.imageLink,
-        userId: req.params.userId,
-        eventId: eventId
-      }
-    })
-    .spread((response, isCreated) => {
-      if (isCreated) {
-        res.status(201).send(response);
-      } else {
-        res.send(existed);
-      }
-    })
-    .catch((error) => {
-      res.send(error);
-    });
+  .spread((response, isCreated) => {
+    if (isCreated) {
+      res.status(201).send(response);
+    } else {
+      res.send(existed);
+    }
   })
   .catch((error) => {
     res.send(error);
@@ -160,6 +149,6 @@ module.exports = {
   createEvent: createEvent,
   fetchUserEvents: fetchUserEvents,
   joinEvent: joinEvent,
-  createImage: createImage,
+  uploadImage: uploadImage,
   fetchEventImages: fetchEventImages
 }
