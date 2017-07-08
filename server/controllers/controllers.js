@@ -104,15 +104,36 @@ const joinEvent = (req, res) => {
 };
 
 const createImage = (req, res) => {
-
-
-  Table.Image.findOrCreate({
+  Table.Event.findOne({
     where: {
-      userId: req.params.userId,
-      eventId: req.body.eventId
+      eventName: req.body.eventName
     }
   })
-}
+  .then((response) => {
+    let eventId = response.id
+    Table.Image.findOrCreate({
+      where: {
+        name: req.body.name,
+        imageLink: req.body.imageLink,
+        userId: req.params.userId,
+        eventId: eventId
+      }
+    })
+    .spread((response, isCreated) => {
+      if (isCreated) {
+        res.status(201).send(response);
+      } else {
+        res.send(existed);
+      }
+    })
+    .catch((error) => {
+      res.send(error);
+    });
+  })
+  .catch((error) => {
+    res.send(error);
+  })
+};
 
 
 module.exports = {
