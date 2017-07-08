@@ -10,7 +10,8 @@ const createEvent = (req, res) => {
       password: req.body.password,
       latitude: req.body.latitude,
       longitude: req.body.longitude,
-      userId: req.params.userId
+      userId: req.params.userId,
+      isLive: req.body.isLive
     }
   })
   .spread((response, isCreated) => {
@@ -66,10 +67,25 @@ const joinEvent = (req, res) => {
   });
 };
 
+const searchEvents = (req, res) => {
+  Table.Event.findAll({
+    where: {
+      live: true
+    }
+  })
+  .then((response) => {
+    res.status(200).send(response);
+  })
+  .catch((error) => {
+    res.send(error);
+  });
+};
+
 
 module.exports = {
 
   createEvent: createEvent,
   fetchUserEvents: fetchUserEvents,
-  joinEvent: joinEvent
+  joinEvent: joinEvent,
+  searchEvents: searchEvents
 }
