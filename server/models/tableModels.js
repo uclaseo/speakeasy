@@ -4,15 +4,16 @@ const db = require('./../db');
 const User = db.define('user', {
   name: Sequelize.STRING,
   email: Sequelize.STRING,
-  lat: Sequelize.FLOAT,
-  long: Sequelize.FLOAT
+  latitude: Sequelize.FLOAT,
+  longitude: Sequelize.FLOAT
 });
 
 const Event = db.define('event', {
   eventName: Sequelize.STRING,
   password: Sequelize.STRING,  // integer for simplicity or string?
-  latitude: Sequelize.INTEGER,  // Sequelize has GEOMETRY type, I'll look into it
-  longitude: Sequelize.INTEGER  // Sequelize has GEOMETRY type, I'll look into it
+  latitude: Sequelize.FLOAT,  // Sequelize has GEOMETRY type, I'll look into it
+  longitude: Sequelize.FLOAT,  // Sequelize has GEOMETRY type, I'll look into it
+  isLive: Sequelize.BOOLEAN
 });
 
 const Message = db.define('message', {
@@ -44,14 +45,13 @@ const User_Event = db.define('user_event', {
   }
 });
 
-User.belongsToMany(Event, {
-  foreignKey: 'userId',
-  through: 'user_event'
-});
-Event.belongsToMany(User, {
-  foreignKey: 'eventId',
-  through: 'user_event'
-});
+Event.belongsTo(User);
+User.hasOne(Event);
+
+User.hasMany(User_Event)
+User_Event.belongsTo(User)
+Event.hasMany(User_Event)
+User_Event.belongsTo(Event)
 
 Image.belongsTo(User);
 User.hasMany(Image);
