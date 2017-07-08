@@ -1,5 +1,8 @@
 const Table = require('../models/tableModels');
 
+const existed = {status: 'already exists'};
+
+
 const signupUser = (req, res) => {
   Table.User.findOrCreate({
     where: {
@@ -9,8 +12,12 @@ const signupUser = (req, res) => {
       longitude: '100.1010100101'
     }
   })
-  .then((response) => {
-    res.status(201).send(response);
+  .spread((response, isCreated) => {
+    if (isCreated) {
+      res.status(201).send(response);
+    } else {
+      res.send(existed)
+    }
   })
   .catch((error) => {
     res.send(error);
@@ -29,16 +36,22 @@ const fetchUsers = (req, res) => {
 
 const createEvent = (req, res) => {
   let eventName = req.body.eventName;
-  Table.Event.create({
-    eventName: eventName,
-    userId: req.params.userId
+  Table.Event.findOrCreate({
+    where: {
+      eventName: eventName,
+      userId: req.params.userId
+    }
   })
-  .then((response) => {
-    res.status(201).send(response);
+  .spread((response, isCreated) => {
+    if (isCreated) {
+      res.status(201).send(response);
+    } else {
+      res.send(existed);
+    }
   })
   .catch((error) => {
     res.send(error);
-  })
+  });
 }
 
 const fetchUserEvents = (req, res) => {
@@ -57,7 +70,7 @@ const fetchUserEvents = (req, res) => {
   })
   .catch((error) => {
     res.send(error);
-  })
+  });
 }
 
 const joinEvent = (req, res) => {
@@ -67,24 +80,27 @@ const joinEvent = (req, res) => {
     }
   })
   .then((response) => {
-    let eventId = response.id
+    let eventId = response.id;
     Table.User_Event.findOrCreate({
       where: {
         userId: req.params.userId,
         eventId: eventId
       }
     })
-    .spread((newResponse, isCreated) => {
+    .spread((response, isCreated) => {
       if (isCreated) {
-        res.status(201).send(newResponse)
+        res.status(201).send(response);
       } else {
-        res.send({created: 'already exist'})
+        res.send(existed);
       }
     })
+    .catch((error) => {
+      res.send(error);
+    });
   })
   .catch((error) => {
     res.send(error);
-  })
+  });
 }
 
 

@@ -47,13 +47,6 @@ const User_Event = db.define('user_event', {
 Event.belongsTo(User);
 User.hasOne(Event);
 
-// User.belongsToMany(Event, {
-//   through: 'user_event'
-// });
-// Event.belongsToMany(User, {
-//   through: 'user_event'
-// });
-
 User.hasMany(User_Event)
 User_Event.belongsTo(User)
 Event.hasMany(User_Event)
