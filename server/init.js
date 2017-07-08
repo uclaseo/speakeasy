@@ -1,7 +1,10 @@
 const db = require('./db');
+const mongoConfig = require('./db/mongodb');
 const Table = require('./models/tableModels');
 
 const init = () => {
+  mongoConfig();
+  
   return db.authenticate()
     .then(() => Table.User.sync({force: true}))
     .then(() => Table.Event.sync({force: true}))
