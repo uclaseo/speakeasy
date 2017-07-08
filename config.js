@@ -1,3 +1,3 @@
-const dbUrl = 'postgres://ambfbanr:TZ5SGTh30R41GJ9rLWiatlM585vm5hnl@pellefant.db.elephantsql.com:5432/ambfbanr';
+const dbUrl = '	postgres://yvkyoifu:Zz2k5is9ojQvyf1OgEduwdHdUjAmCHLm@pellefant.db.elephantsql.com:5432/yvkyoifu';
 
 module.exports = dbUrl;
