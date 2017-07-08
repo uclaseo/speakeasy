@@ -58,7 +58,17 @@ const socketEvents = (io) => {
     });
 
     socket.on('newdm', (data) => {
-      io.sockets.in(data.dm_id).emit('refreshmessages', data);
+      const { dm_id, user_from_name, user_to_name, text } = data;
+      const newDM = new DirectMessage({
+        dm_id: dm_id,
+        user_from_name: user_from_name,
+        user_to_name: user_to_name,
+        text: text
+      });
+      newDM.save((err, message) => {
+        if (err) console.error('error posting DM ', err);
+        io.sockets.in(data.dm_id).emit('refreshmessages', message);
+      })
     });
 
     socket.on('disconnect', () => {
