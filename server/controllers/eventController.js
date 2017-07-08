@@ -70,7 +70,7 @@ const joinEvent = (req, res) => {
 const searchEvents = (req, res) => {
   Table.Event.findAll({
     where: {
-      live: true
+      isLive: true
     }
   })
   .then((response) => {
