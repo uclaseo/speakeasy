@@ -132,9 +132,27 @@ const createImage = (req, res) => {
   })
   .catch((error) => {
     res.send(error);
-  })
+  });
 };
 
+const fetchEventImages = (req, res) => {
+  Table.Image.findAll({
+    where: {
+      eventId: req.params.eventId
+    },
+    include: [
+      {
+        model: Table.User
+      }
+    ]
+  })
+  .then((response) => {
+    res.status(200).send(response);
+  })
+  .catch((error) => {
+    res.send(error);
+  });
+};
 
 module.exports = {
   signupUser: signupUser,
@@ -142,5 +160,6 @@ module.exports = {
   createEvent: createEvent,
   fetchUserEvents: fetchUserEvents,
   joinEvent: joinEvent,
-  createImage: createImage
+  createImage: createImage,
+  fetchEventImages: fetchEventImages
 }
