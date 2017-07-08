@@ -4,6 +4,7 @@ const Schema = mongoose.Schema;
 const messageSchema = new Schema({
   event_id: {
     type: Number,
+    unique: true,
     required: true
   },
   user_name: {
@@ -13,11 +14,9 @@ const messageSchema = new Schema({
   text: {
     type: String,
     required: true
-  },
-  date: {
-    type: Date,
-    default: Date.now
   }
+}, {
+  timestamps: true
 });
 
 const Message = mongoose.model('Message', messageSchema)
