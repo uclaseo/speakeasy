@@ -10,15 +10,25 @@ const signupUser = (req, res) => {
     }
   })
   .then((response) => {
-    res.send(response);
+    res.status(201).send(response);
   })
-}
+  .catch((error) => {
+    res.send(error);
+  });
+};
 
-const post = () => {
-
+const fetchUsers = (req, res) => {
+  Table.User.findAll()
+  .then((response) => {
+    res.status(200).send(response);
+  })
+  .catch((error) => {
+    res.send(error);
+  });
 }
 
 
 module.exports = {
-  signupUser: signupUser
+  signupUser: signupUser,
+  fetchUsers: fetchUsers
 }
