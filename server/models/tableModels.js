@@ -44,14 +44,20 @@ const User_Event = db.define('user_event', {
   }
 });
 
-User.belongsToMany(Event, {
-  foreignKey: 'userId',
-  through: 'user_event'
-});
-Event.belongsToMany(User, {
-  foreignKey: 'eventId',
-  through: 'user_event'
-});
+Event.belongsTo(User);
+User.hasOne(Event);
+
+// User.belongsToMany(Event, {
+//   through: 'user_event'
+// });
+// Event.belongsToMany(User, {
+//   through: 'user_event'
+// });
+
+User.hasMany(User_Event)
+User_Event.belongsTo(User)
+Event.hasMany(User_Event)
+User_Event.belongsTo(Event)
 
 Image.belongsTo(User);
 User.hasMany(Image);
