@@ -15,8 +15,10 @@ app.use(morgan('dev'));
 
 app.use('/', router);
 
-app.use(express.static(path.join(__dirname, '../')));
-
+app.use(express.static(path.join(__dirname, '../public')));
+app.get('*',(req,res)=>{
+  res.sendFile(path.join(__dirname, '../public/index.html'))
+})
 
 init()
   .then(() => {
