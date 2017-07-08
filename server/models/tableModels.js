@@ -4,8 +4,8 @@ const db = require('./../db');
 const User = db.define('user', {
   name: Sequelize.STRING,
   email: Sequelize.STRING,
-  lat: Sequelize.FLOAT,
-  long: Sequelize.FLOAT
+  latitude: Sequelize.FLOAT,
+  longitude: Sequelize.FLOAT
 });
 
 const Event = db.define('event', {
