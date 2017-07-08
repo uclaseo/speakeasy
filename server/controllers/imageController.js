@@ -44,8 +44,24 @@ const fetchEventImages = (req, res) => {
   });
 };
 
+const fetchUserEventImages = (req, res) => {
+  Table.Image.findAll({
+    where: {
+      userId: req.params.userId,
+      eventId: req.params.eventId
+    }
+  })
+  .then((response) => {
+    res.status(200).send(response);
+  })
+  .catch((error) => {
+    res.send(error);
+  })
+}
+
 
 module.exports = {
   uploadImage: uploadImage,
-  fetchEventImages: fetchEventImages
+  fetchEventImages: fetchEventImages,
+  fetchUserEventImages: fetchUserEventImages
 }

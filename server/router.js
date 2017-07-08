@@ -12,7 +12,8 @@ router.post('/event/joinevent/:userId', eventController.joinEvent);
 router.get('/event/fetchuserevents/:userId', eventController.fetchUserEvents);
 
 router.post('/image/upload/:userId', imageController.uploadImage);
-router.get('/image/fetcheventimages/:eventId', imageController.fetchEventImages)
+router.get('/image/fetcheventimages/:eventId', imageController.fetchEventImages);
+router.get('/image/fetchusereventimages/:userId/:eventId', imageController.fetchUserEventImages);
 
 
 

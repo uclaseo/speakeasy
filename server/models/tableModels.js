@@ -12,7 +12,8 @@ const Event = db.define('event', {
   eventName: Sequelize.STRING,
   password: Sequelize.STRING,  // integer for simplicity or string?
   latitude: Sequelize.FLOAT,  // Sequelize has GEOMETRY type, I'll look into it
-  longitude: Sequelize.FLOAT  // Sequelize has GEOMETRY type, I'll look into it
+  longitude: Sequelize.FLOAT,  // Sequelize has GEOMETRY type, I'll look into it
+  live: Sequelize.BOOLEAN
 });
 
 const Message = db.define('message', {
