@@ -4,6 +4,7 @@ const Schema = mongoose.Schema;
 const directMessageSchema = new Schema({
   dm_id: {
     type: Number,
+    unique: true,
     require: true
   },
   user_from_name: {
@@ -17,11 +18,9 @@ const directMessageSchema = new Schema({
   text: {
     type: String,
     required: true
-  },
-  date: {
-    type: Date,
-    default: Date.now
   }
+}, {
+  timestamps: true
 });
 
 const DirectMessage = mongoose.model('DirectMessage', directMessageSchema);

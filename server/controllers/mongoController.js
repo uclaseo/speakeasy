@@ -4,9 +4,11 @@ const DirectMessage = require('./../models/dmModel');
 
 module.exports = {
 
-  fetchMessagesForRoom: (req, res) => {
+  fetchMessagesForEvent: (req, res) => {
     Message
       .find({ event_id: req.params.eventId })
+      .select('createdAt text user_name')
+      .sort('-createdAt')
       .exec((err, messages) => {
         if (err) console.error('error fetching messages ', err)
         res.json({
@@ -17,9 +19,12 @@ module.exports = {
       })
   },
 
-  postMessageToRoom: (req, res) => {
+  postMessageToEvent: (req, res) => {
     const { user_name, text } = req.body;
-    let newMessage = new Message({
+    if (!text) {
+      res.status(400).send({ error: 'No message included'});
+    }
+    const newMessage = new Message({
       user_name: user_name,
       event_id: req.params.eventId,
       text: text

@@ -5,8 +5,8 @@ const userController = require('./controllers/userController');
 const eventController = require('./controllers/eventController');
 const imageController = require('./controllers/imageController');
 
-router.get('/message/:eventId', mongoController.fetchMessagesForRoom);
-router.post('/message/:eventId', mongoController.postMessageToRoom);
+router.get('/message/:eventId', mongoController.fetchMessagesForEvent);
+router.post('/message/:eventId', mongoController.postMessageToEvent);
 
 router.get('/dm/:dmId', mongoController.fetchDirectMessages);
 router.post('/dm/:dmId', mongoController.postDirectMessage);
