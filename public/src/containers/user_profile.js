@@ -4,7 +4,7 @@ class User_Profile extends Component {
   render() {
     return (
       <div>
-        User Profile
+        User Profile !!!
       </div>
     );
   }

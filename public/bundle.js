@@ -151,11 +151,14 @@ _reactDom2.default.render(_react2.default.createElement(
       'div',
       null,
       _react2.default.createElement(_navigation_bar2.default, null),
-      _react2.default.createElement(_reactRouterDom.Route, { exact: true, path: '/', component: _home2.default }),
+      _react2.default.createElement(_reactRouterDom.Route, { path: '/', component: _home2.default }),
+      _react2.default.createElement(_reactRouterDom.Route, { path: '/profile', component: _user_profile2.default }),
       _react2.default.createElement(_reactRouterDom.Route, { path: '/temp', component: Temporary })
     )
   )
 ), document.getElementById('root'));
+
+// <Route path='/profile' component={User_Profile} />
 
 /***/ }),
 /* 1 */
@@ -28000,7 +28003,7 @@ var User_Profile = function (_Component) {
       return _react2.default.createElement(
         'div',
         null,
-        'User Profile'
+        'User Profile !!!'
       );
     }
   }]);
@@ -28027,6 +28030,8 @@ var _react = __webpack_require__(8);
 
 var _react2 = _interopRequireDefault(_react);
 
+var _reactRouterDom = __webpack_require__(252);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -28045,80 +28050,120 @@ var Navigation_Bar = function (_Component) {
   }
 
   _createClass(Navigation_Bar, [{
-    key: "render",
+    key: 'render',
     value: function render() {
       return _react2.default.createElement(
-        "nav",
-        { className: "navbar navbar-inverse" },
+        'nav',
+        { className: 'navbar navbar-inverse' },
         _react2.default.createElement(
-          "div",
-          { className: "container-fluid" },
+          'div',
+          { className: 'container-fluid' },
           _react2.default.createElement(
-            "div",
-            { className: "navbar-header" },
+            'div',
+            { className: 'navbar-header' },
             _react2.default.createElement(
-              "button",
-              { type: "button", className: "navbar-toggle", "data-toggle": "collapse", "data-target": "#myNavbar" },
-              _react2.default.createElement("span", { className: "icon-bar" }),
-              _react2.default.createElement("span", { className: "icon-bar" }),
-              _react2.default.createElement("span", { className: "icon-bar" })
+              'button',
+              { type: 'button', className: 'navbar-toggle', 'data-toggle': 'collapse', 'data-target': '#myNavbar' },
+              _react2.default.createElement('span', { className: 'icon-bar' }),
+              _react2.default.createElement('span', { className: 'icon-bar' }),
+              _react2.default.createElement('span', { className: 'icon-bar' })
             ),
             _react2.default.createElement(
-              "a",
-              { className: "navbar-brand", href: "#" },
-              "Speakeasy"
+              'a',
+              { className: 'navbar-brand', href: '#' },
+              'Speakeasy'
             )
           ),
           _react2.default.createElement(
-            "div",
-            { className: "collapse navbar-collapse", id: "myNavbar" },
+            'div',
+            { className: 'collapse navbar-collapse', id: 'myNavbar' },
             _react2.default.createElement(
-              "ul",
-              { className: "nav navbar-nav navbar-right" },
+              'ul',
+              { className: 'nav navbar-nav navbar-right' },
               _react2.default.createElement(
-                "li",
+                'li',
                 null,
+                ' ',
                 _react2.default.createElement(
-                  "a",
-                  { href: "#" },
-                  "Home"
-                )
+                  'a',
+                  null,
+                  '  ',
+                  _react2.default.createElement(
+                    _reactRouterDom.Link,
+                    { to: '/' },
+                    'Home '
+                  ),
+                  '               '
+                ),
+                '  '
               ),
               _react2.default.createElement(
-                "li",
+                'li',
                 null,
+                ' ',
                 _react2.default.createElement(
-                  "a",
-                  { href: "#" },
-                  "Friends"
-                )
+                  'a',
+                  null,
+                  '  ',
+                  _react2.default.createElement(
+                    _reactRouterDom.Link,
+                    { to: '/' },
+                    'Friends '
+                  ),
+                  '            '
+                ),
+                '  '
               ),
               _react2.default.createElement(
-                "li",
+                'li',
                 null,
+                ' ',
                 _react2.default.createElement(
-                  "a",
-                  { href: "#" },
-                  "Direct Messages"
-                )
+                  'a',
+                  null,
+                  '  ',
+                  _react2.default.createElement(
+                    _reactRouterDom.Link,
+                    { to: '/temp' },
+                    'Direct Events '
+                  ),
+                  '      '
+                ),
+                '  '
               ),
               _react2.default.createElement(
-                "li",
+                'li',
                 null,
+                ' ',
                 _react2.default.createElement(
-                  "a",
-                  { href: "#" },
-                  "Previous Events"
-                )
+                  'a',
+                  null,
+                  '  ',
+                  _react2.default.createElement(
+                    _reactRouterDom.Link,
+                    { to: '/' },
+                    'Previous Messages '
+                  ),
+                  '  '
+                ),
+                '  '
               ),
               _react2.default.createElement(
-                "li",
+                'li',
                 null,
+                ' ',
                 _react2.default.createElement(
-                  "a",
-                  { href: "#" },
-                  "Profile"
-                )
+                  'a',
+                  null,
+                  '  ',
+                  _react2.default.createElement(
+                    _reactRouterDom.Link,
+                    { to: '/profile' },
+                    'Profile '
+                  ),
+                  '            '
+                ),
+                '  '
               )
             )
           )

@@ -21,8 +21,10 @@ ReactDOM.render(
     <BrowserRouter>
     <div>
        <Navigation_Bar />
-        <Route exact path="/" component={Home} />
-        <Route path="/temp" component={Temporary} />
+        <Route path='/' component={Home} />
+        <Route path='/profile' component={User_Profile} />
+        <Route path='/temp' component={Temporary} />
+
 
       </div>
     </BrowserRouter>
@@ -31,3 +33,4 @@ ReactDOM.render(
 );
 
 
+        // <Route path='/profile' component={User_Profile} />
