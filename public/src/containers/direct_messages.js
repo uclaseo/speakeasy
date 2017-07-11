@@ -1,13 +1,13 @@
 import React, { Component } from 'react';
 
-class User_Profile extends Component {
+class Direct_Messages extends Component {
   render() {
     return (
       <div>
-        User Profile
+        User Direct Messages
       </div>
     );
   }
 }
 
-export default User_Profile;
+export default Direct_Messages;

@@ -1,13 +1,13 @@
 import React, { Component } from 'react';
 
-class User_Profile extends Component {
+class User_Events extends Component {
   render() {
     return (
       <div>
-        User Profile
+        User Events
       </div>
     );
   }
 }
 
-export default User_Profile;
+export default User_Events;

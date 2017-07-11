@@ -1,13 +1,13 @@
 import React, { Component } from 'react';
 
-class User_Profile extends Component {
+class User_Friends extends Component {
   render() {
     return (
       <div>
-        User Profile
+        User Friends
       </div>
     );
   }
 }
 
-export default User_Profile;
+export default User_Friends;

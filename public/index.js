@@ -4,33 +4,33 @@ import { Provider } from 'react-redux';
 import { createStore, applyMiddleware } from 'redux';
 import App from './src/components/app';
 import rootReducer from './src/reducers/index';
-import { BrowserRouter, Route } from 'react-router-dom';
+import { BrowserRouter, Route, Switch } from 'react-router-dom';
+
 import Navigation_Bar from './src/containers/navigation_bar';
-import Home from './src/containers/home';
 import User_Profile from './src/containers/user_profile';
+import User_Events from './src/containers/user_events';
+import Direct_Messages from './src/containers/direct_messages';
+import User_Friends from './src/containers/user_friends';
+import Home from './src/containers/home';
+
 
 const createStoreWithMiddleware = applyMiddleware()(createStore);
-
-//DELETE THIS LATER
-class Temporary extends React.Component {
-  render() { return(<div>HELLO THIS IS TEMPORARY</div>) }
-}
 
 ReactDOM.render(
   <Provider store={createStoreWithMiddleware(rootReducer)}>
     <BrowserRouter>
     <div>
        <Navigation_Bar />
-        <Route path='/' component={Home} />
+    <Switch>
         <Route path='/profile' component={User_Profile} />
-        <Route path='/temp' component={Temporary} />
-
-
+        <Route path='/past' component={User_Events} />
+        <Route path='/dm' component={Direct_Messages} />
+        <Route path='/friends' component={User_Friends} />
+        <Route path='/home' component={Home} />
+        <Route exact path='/' component={Home} />
+    </Switch>
       </div>
     </BrowserRouter>
   </Provider>,
   document.getElementById('root')
 );
-
-
-        // <Route path='/profile' component={User_Profile} />

@@ -16,11 +16,11 @@ class Navigation_Bar extends Component {
           </div>
           <div className="collapse navbar-collapse" id="myNavbar">
             <ul className="nav navbar-nav navbar-right">
-              <li> <a>  <Link to="/">Home </Link>               </a>  </li>
-              <li> <a>  <Link to="/">Friends </Link>            </a>  </li>
-              <li> <a>  <Link to="/temp">Direct Events </Link>      </a>  </li> 
-              <li> <a>  <Link to="/">Previous Messages </Link>  </a>  </li>
-              <li> <a>  <Link to="/profile">Profile </Link>            </a>  </li> 
+              <li><Link to="/home">Home </Link></li>
+              <li><Link to="/friends">Friends </Link></li>
+              <li><Link to="/dm">Direct Messages </Link></li> 
+              <li><Link to="/past">Previous Events </Link></li>
+              <li><Link to="/profile">Profile </Link></li> 
             </ul>
           </div>
         </div>
