@@ -70,6 +70,8 @@
 "use strict";
 
 
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
 var _react = __webpack_require__(8);
 
 var _react2 = _interopRequireDefault(_react);
@@ -92,17 +94,52 @@ var _index2 = _interopRequireDefault(_index);
 
 var _reactRouterDom = __webpack_require__(252);
 
-var _navbar = __webpack_require__(233);
+var _navigation_bar = __webpack_require__(268);
 
-var _navbar2 = _interopRequireDefault(_navbar);
+var _navigation_bar2 = _interopRequireDefault(_navigation_bar);
 
 var _home = __webpack_require__(234);
 
 var _home2 = _interopRequireDefault(_home);
 
+var _user_profile = __webpack_require__(267);
+
+var _user_profile2 = _interopRequireDefault(_user_profile);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
 var createStoreWithMiddleware = (0, _redux.applyMiddleware)()(_redux.createStore);
+
+//DELETE THIS LATER
+
+var Temporary = function (_React$Component) {
+  _inherits(Temporary, _React$Component);
+
+  function Temporary() {
+    _classCallCheck(this, Temporary);
+
+    return _possibleConstructorReturn(this, (Temporary.__proto__ || Object.getPrototypeOf(Temporary)).apply(this, arguments));
+  }
+
+  _createClass(Temporary, [{
+    key: 'render',
+    value: function render() {
+      return _react2.default.createElement(
+        'div',
+        null,
+        'HELLO THIS IS TEMPORARY'
+      );
+    }
+  }]);
+
+  return Temporary;
+}(_react2.default.Component);
 
 _reactDom2.default.render(_react2.default.createElement(
   _reactRedux.Provider,
@@ -113,13 +150,12 @@ _reactDom2.default.render(_react2.default.createElement(
     _react2.default.createElement(
       'div',
       null,
-      _react2.default.createElement(_navbar2.default, null),
-      _react2.default.createElement(_reactRouterDom.Route, { path: '/', component: _home2.default })
+      _react2.default.createElement(_navigation_bar2.default, null),
+      _react2.default.createElement(_reactRouterDom.Route, { exact: true, path: '/', component: _home2.default }),
+      _react2.default.createElement(_reactRouterDom.Route, { path: '/temp', component: Temporary })
     )
   )
 ), document.getElementById('root'));
-
-// <Route path="" component={}></Route>
 
 /***/ }),
 /* 1 */
@@ -25098,9 +25134,9 @@ var _react = __webpack_require__(8);
 
 var _react2 = _interopRequireDefault(_react);
 
-var _navbar = __webpack_require__(233);
+var _navigation_bar = __webpack_require__(268);
 
-var _navbar2 = _interopRequireDefault(_navbar);
+var _navigation_bar2 = _interopRequireDefault(_navigation_bar);
 
 var _home = __webpack_require__(234);
 
@@ -25129,7 +25165,7 @@ var App = function (_Component) {
       return _react2.default.createElement(
         'div',
         null,
-        _react2.default.createElement(_navbar2.default, null),
+        _react2.default.createElement(Navigation_Bar, null),
         _react2.default.createElement(_home2.default, null)
       );
     }
@@ -25141,128 +25177,7 @@ var App = function (_Component) {
 exports.default = App;
 
 /***/ }),
-/* 233 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-var _react = __webpack_require__(8);
-
-var _react2 = _interopRequireDefault(_react);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-var NavigationBar = function (_Component) {
-  _inherits(NavigationBar, _Component);
-
-  function NavigationBar() {
-    _classCallCheck(this, NavigationBar);
-
-    return _possibleConstructorReturn(this, (NavigationBar.__proto__ || Object.getPrototypeOf(NavigationBar)).apply(this, arguments));
-  }
-
-  _createClass(NavigationBar, [{
-    key: "render",
-    value: function render() {
-      return _react2.default.createElement(
-        "nav",
-        { className: "navbar navbar-inverse" },
-        _react2.default.createElement(
-          "div",
-          { className: "container-fluid" },
-          _react2.default.createElement(
-            "div",
-            { className: "navbar-header" },
-            _react2.default.createElement(
-              "button",
-              { type: "button", className: "navbar-toggle", "data-toggle": "collapse", "data-target": "#myNavbar" },
-              _react2.default.createElement("span", { className: "icon-bar" }),
-              _react2.default.createElement("span", { className: "icon-bar" }),
-              _react2.default.createElement("span", { className: "icon-bar" })
-            ),
-            _react2.default.createElement(
-              "a",
-              { className: "navbar-brand", href: "#" },
-              "Speakeasy"
-            )
-          ),
-          _react2.default.createElement(
-            "div",
-            { className: "collapse navbar-collapse", id: "myNavbar" },
-            _react2.default.createElement(
-              "ul",
-              { className: "nav navbar-nav navbar-right" },
-              _react2.default.createElement(
-                "li",
-                null,
-                _react2.default.createElement(
-                  "a",
-                  { href: "#" },
-                  "Home"
-                )
-              ),
-              _react2.default.createElement(
-                "li",
-                null,
-                _react2.default.createElement(
-                  "a",
-                  { href: "#" },
-                  "Friends"
-                )
-              ),
-              _react2.default.createElement(
-                "li",
-                null,
-                _react2.default.createElement(
-                  "a",
-                  { href: "#" },
-                  "Direct Messages"
-                )
-              ),
-              _react2.default.createElement(
-                "li",
-                null,
-                _react2.default.createElement(
-                  "a",
-                  { href: "#" },
-                  "Previous Messages"
-                )
-              ),
-              _react2.default.createElement(
-                "li",
-                null,
-                _react2.default.createElement(
-                  "a",
-                  { href: "#" },
-                  "Profile"
-                )
-              )
-            )
-          )
-        )
-      );
-    }
-  }]);
-
-  return NavigationBar;
-}(_react.Component);
-
-exports.default = NavigationBar;
-
-/***/ }),
+/* 233 */,
 /* 234 */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -28044,6 +27959,178 @@ NavLink.defaultProps = {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react_router__ = __webpack_require__(236);
 /* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return __WEBPACK_IMPORTED_MODULE_0_react_router__["i"]; });
 
+
+/***/ }),
+/* 267 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _react = __webpack_require__(8);
+
+var _react2 = _interopRequireDefault(_react);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var User_Profile = function (_Component) {
+  _inherits(User_Profile, _Component);
+
+  function User_Profile() {
+    _classCallCheck(this, User_Profile);
+
+    return _possibleConstructorReturn(this, (User_Profile.__proto__ || Object.getPrototypeOf(User_Profile)).apply(this, arguments));
+  }
+
+  _createClass(User_Profile, [{
+    key: 'render',
+    value: function render() {
+      return _react2.default.createElement(
+        'div',
+        null,
+        'User Profile'
+      );
+    }
+  }]);
+
+  return User_Profile;
+}(_react.Component);
+
+exports.default = User_Profile;
+
+/***/ }),
+/* 268 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _react = __webpack_require__(8);
+
+var _react2 = _interopRequireDefault(_react);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var Navigation_Bar = function (_Component) {
+  _inherits(Navigation_Bar, _Component);
+
+  function Navigation_Bar() {
+    _classCallCheck(this, Navigation_Bar);
+
+    return _possibleConstructorReturn(this, (Navigation_Bar.__proto__ || Object.getPrototypeOf(Navigation_Bar)).apply(this, arguments));
+  }
+
+  _createClass(Navigation_Bar, [{
+    key: "render",
+    value: function render() {
+      return _react2.default.createElement(
+        "nav",
+        { className: "navbar navbar-inverse" },
+        _react2.default.createElement(
+          "div",
+          { className: "container-fluid" },
+          _react2.default.createElement(
+            "div",
+            { className: "navbar-header" },
+            _react2.default.createElement(
+              "button",
+              { type: "button", className: "navbar-toggle", "data-toggle": "collapse", "data-target": "#myNavbar" },
+              _react2.default.createElement("span", { className: "icon-bar" }),
+              _react2.default.createElement("span", { className: "icon-bar" }),
+              _react2.default.createElement("span", { className: "icon-bar" })
+            ),
+            _react2.default.createElement(
+              "a",
+              { className: "navbar-brand", href: "#" },
+              "Speakeasy"
+            )
+          ),
+          _react2.default.createElement(
+            "div",
+            { className: "collapse navbar-collapse", id: "myNavbar" },
+            _react2.default.createElement(
+              "ul",
+              { className: "nav navbar-nav navbar-right" },
+              _react2.default.createElement(
+                "li",
+                null,
+                _react2.default.createElement(
+                  "a",
+                  { href: "#" },
+                  "Home"
+                )
+              ),
+              _react2.default.createElement(
+                "li",
+                null,
+                _react2.default.createElement(
+                  "a",
+                  { href: "#" },
+                  "Friends"
+                )
+              ),
+              _react2.default.createElement(
+                "li",
+                null,
+                _react2.default.createElement(
+                  "a",
+                  { href: "#" },
+                  "Direct Messages"
+                )
+              ),
+              _react2.default.createElement(
+                "li",
+                null,
+                _react2.default.createElement(
+                  "a",
+                  { href: "#" },
+                  "Previous Events"
+                )
+              ),
+              _react2.default.createElement(
+                "li",
+                null,
+                _react2.default.createElement(
+                  "a",
+                  { href: "#" },
+                  "Profile"
+                )
+              )
+            )
+          )
+        )
+      );
+    }
+  }]);
+
+  return Navigation_Bar;
+}(_react.Component);
+
+exports.default = Navigation_Bar;
 
 /***/ })
 /******/ ]);

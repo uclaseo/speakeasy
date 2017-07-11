@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 
-class NavigationBar extends Component {
+class Navigation_Bar extends Component {
   render() {
     return (
       <nav className="navbar navbar-inverse">
@@ -18,7 +18,7 @@ class NavigationBar extends Component {
               <li><a href="#">Home</a></li>
               <li><a href="#">Friends</a></li>
               <li><a href="#">Direct Messages</a></li> 
-              <li><a href="#">Previous Messages</a></li>
+              <li><a href="#">Previous Events</a></li>
               <li><a href="#">Profile</a></li> 
             </ul>
           </div>
@@ -28,7 +28,7 @@ class NavigationBar extends Component {
   }
 }
 
-export default NavigationBar;
+export default Navigation_Bar;
 
 
 

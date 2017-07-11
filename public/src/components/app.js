@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import NavigationBar from '../containers/navbar';
+import NavigationBar from '../containers/navigation_bar';
 import Home from '../containers/home';
 
 
@@ -7,7 +7,7 @@ export default class App extends Component {
   render() {
     return (
       <div>
-        <NavigationBar />
+        <Navigation_Bar />
         <Home />
       </div>
     );
