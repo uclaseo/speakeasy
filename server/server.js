@@ -31,9 +31,8 @@ app.use((req, res, next) => {
   next();
 });
 
-
 init()
   .then(() => {
-    app.listen(port, () => console.log(`app is listening on port ${port}`));
+    app.listen(port, () => console.log(`app is listening on http://localhost:${port}`));
   })
   .catch(err => console.error('unable to connect to database ', err));
