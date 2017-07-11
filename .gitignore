@@ -4,5 +4,3 @@ bower_components
 node_modules
 *.env
 .vscode
-public/bundle.js
-

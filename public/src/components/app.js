@@ -7,6 +7,7 @@ export default class App extends Component {
   render() {
     return (
       <div>
+        <h3>hi</h3>
         <NavigationBar />
         <Home />
       </div>

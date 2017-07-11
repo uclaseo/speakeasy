@@ -2,6 +2,8 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const morgan = require ('morgan');
 const path = require('path');
+const webpack = require('webpack');
+const config = require('../webpack.config');
 
 const router = require('./router');
 const init = require('./init');
@@ -13,6 +15,14 @@ const server = require('http').Server(app);
 const io = require('socket.io')(server);
 
 socketEvents(io);
+
+const compiler = webpack(config);
+
+app.use(require('webpack-dev-middleware')(compiler, {
+  publicPath: config.output.publicPath
+}));
+
+app.use(require('webpack-hot-middleware')(compiler));
 
 
 app.use(bodyParser.json());
