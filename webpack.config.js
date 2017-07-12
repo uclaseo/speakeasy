@@ -1,43 +1,40 @@
-var path = require('path');
-var webpack = require('webpack');
+
+const path = require('path');
+
+const SRC_DIR = path.resolve(__dirname, 'public');
+const BUILD_DIR = path.resolve(__dirname, 'public');
 
 module.exports = {
-  entry: [
-    'webpack-hot-middleware/client?reload=true',
-    'react-hot-loader/patch',
-    './public/index.js'
-  ],
+  entry: path.resolve(SRC_DIR, 'index.js'),
   output: {
-    path: path.join(__dirname, 'public'),
     filename: 'bundle.js',
-    publicPath: '/'
+    path: BUILD_DIR
   },
-  devtool: 'cheap-module-eval-source-map',
   module: {
     rules: [
-      { test: /\.(js|jsx)$/, 
-        exclude: /node_modules/, 
-        use: 'babel-loader' 
+      {
+        test: /\.(js|jsx)$/,
+        exclude: [/node_modules/],
+        use: [{
+          loader: 'babel-loader',
+          options: { presets: ['es2015', 'react'] }
+        }],
       },
       {
         test: /\.svg$/,
         loader: 'svg-inline-loader'
       },
       {
-        test   : /\.css$/,
-        loader : 'style-loader!css-loader'
+            test   : /\.css$/,
+            loader : 'style-loader!css-loader'
       },
       {
-        test   : /\.(png|jpg)$/,
-        loader : 'url-loader?limit=8192'
-      }, 
-      {
-        test   : /\.(ttf|eot|svg|woff(2)?)(\?[a-z0-9]+)?$/,
-        loader : 'file-loader'
+            test   : /\.(png|jpg)$/,
+            loader : 'url-loader?limit=8192'
+      }, {
+          test   : /\.(ttf|eot|svg|woff(2)?)(\?[a-z0-9]+)?$/,
+          loader : 'file-loader'
       }
-    ],
-  },
-  plugins: [
-    new webpack.HotModuleReplacementPlugin()
-  ]
-};
+    ]
+  }
+}
