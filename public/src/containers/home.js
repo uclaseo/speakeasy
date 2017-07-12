@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Link } from 'react-router-dom';
 
 class Home extends Component {
     render() {
@@ -32,11 +33,8 @@ class Home extends Component {
           </div>
           <br />
           <br />
-        <button type="button" className="btn btn-secondary btn-lg">Create Event</button>
+        <Link to="/friends" type="button" className="btn btn-secondary btn-lg">Create Event</Link>
         </div>
-
-
-
 
       </div>
     )
