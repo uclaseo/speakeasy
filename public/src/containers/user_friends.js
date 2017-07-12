@@ -4,7 +4,7 @@ class User_Friends extends Component {
   render() {
     return (
       <div>
-        User Friends!!!!
+        User Friends 
       </div>
     );
   }
