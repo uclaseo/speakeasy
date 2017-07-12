@@ -1,7 +1,18 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
+import Auth from '../Auth0/Auth0';
 
 class Navigation_Bar extends Component {
+  constructor() {
+    super();
+    this.login = this.login.bind(this);
+  }
+
+  login() {
+    const auth = new Auth();
+    auth.login();
+  }
+
   render() {
     return (
       <nav className="navbar navbar-inverse">
@@ -21,6 +32,7 @@ class Navigation_Bar extends Component {
               <li><Link to="/dm">Direct Messages</Link></li> 
               <li><Link to="/past">Previous Events</Link></li>
               <li><Link to="/profile">Profile</Link></li> 
+              <li><button onClick={this.login}><Link to="/">Login</Link></button></li>
             </ul>
           </div>
         </div>
