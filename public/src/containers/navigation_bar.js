@@ -32,7 +32,7 @@ class Navigation_Bar extends Component {
               <li><Link to="/dm">Direct Messages</Link></li> 
               <li><Link to="/past">Previous Events</Link></li>
               <li><Link to="/profile">Profile</Link></li> 
-              <li><button onClick={this.login}><Link to="/">Login</Link></button></li>
+              <li><Link onClick={this.login} to="/">Login</Link></li>
             </ul>
           </div>
         </div>
