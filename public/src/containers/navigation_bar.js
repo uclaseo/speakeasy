@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
+import { Link } from 'react-router-dom';
 
-class NavigationBar extends Component {
+class Navigation_Bar extends Component {
   render() {
     return (
       <nav className="navbar navbar-inverse">
@@ -15,11 +16,11 @@ class NavigationBar extends Component {
           </div>
           <div className="collapse navbar-collapse" id="myNavbar">
             <ul className="nav navbar-nav navbar-right">
-              <li><a href="#">Home</a></li>
-              <li><a href="#">Friends</a></li>
-              <li><a href="#">Direct Messages</a></li> 
-              <li><a href="#">Previous Messages</a></li>
-              <li><a href="#">Profile</a></li> 
+              <li><Link to="/">Home</Link></li>
+              <li><Link to="/friends">Friends</Link></li>
+              <li><Link to="/dm">Direct Messages</Link></li> 
+              <li><Link to="/past">Previous Events</Link></li>
+              <li><Link to="/profile">Profile</Link></li> 
             </ul>
           </div>
         </div>
@@ -28,7 +29,7 @@ class NavigationBar extends Component {
   }
 }
 
-export default NavigationBar;
+export default Navigation_Bar;
 
 
 

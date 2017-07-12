@@ -39,6 +39,7 @@
     "reactstrap": "^4.8.0",
     "reducers": "^3.0.0-alpha",
     "redux": "^3.0.4",
+    "redux-promise": "^0.5.3",
     "sequelize": "^4.2.1",
     "socket.io": "^2.0.3"
   },
