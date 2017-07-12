@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Field, reduxForm } from 'redux-form';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
-import { editProfile } from '../actions/index';
+import { editUserProfile } from '../actions/index';
 
 class User_Profile extends Component {
   renderField(field) {
@@ -22,9 +22,9 @@ class User_Profile extends Component {
     );
   }
 
-  onSubmit(values) {
+  onSubmit(values, id) {
     console.log('values:', values);
-    this.props.editProfile(values);
+    this.props.editUserProfile(values, 6);  //hardcoded 6
   }
 
   render() {
@@ -95,6 +95,6 @@ function validate(values) {
 export default reduxForm({
   validate: validate,
   form: 'ProfileForm;'
-})(connect(null, { editProfile })(User_Profile));
+})(connect(null, { editUserProfile })(User_Profile));
 
 //

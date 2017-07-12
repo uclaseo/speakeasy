@@ -35,11 +35,12 @@ const fetchUsers = (req, res) => {
 };
 
 const editUserProfile = (req, res) => {
+  let id = req.params.userId;
+
   Table.User
-    .findAll() //this will change for sure
+    .findOne({where: {id: id}}) //this will change for sure
     .then(response => {
       res.status(200).send(response);
-      console.log('res', res);
     })
     .catch(error => {
       res.send(error);
