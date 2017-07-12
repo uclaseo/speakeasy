@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { BrowserRouter, Route, Link } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
 class Navigation_Bar extends Component {
   render() {
@@ -16,11 +16,11 @@ class Navigation_Bar extends Component {
           </div>
           <div className="collapse navbar-collapse" id="myNavbar">
             <ul className="nav navbar-nav navbar-right">
-              <li><Link to="/home">Home </Link></li>
-              <li><Link to="/friends">Friends </Link></li>
-              <li><Link to="/dm">Direct Messages </Link></li> 
-              <li><Link to="/past">Previous Events </Link></li>
-              <li><Link to="/profile">Profile </Link></li> 
+              <li><Link to="/">Home</Link></li>
+              <li><Link to="/friends">Friends</Link></li>
+              <li><Link to="/dm">Direct Messages</Link></li> 
+              <li><Link to="/past">Previous Events</Link></li>
+              <li><Link to="/profile">Profile</Link></li> 
             </ul>
           </div>
         </div>

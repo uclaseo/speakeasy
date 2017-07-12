@@ -12,7 +12,7 @@ module.exports = {
     filename: 'bundle.js',
     publicPath: '/public/'
   },
-  devtool: 'inline-source-map',
+  devtool: 'cheap-module-eval-source-map',
   module: {
     rules: [
       { test: /\.(js|jsx)$/, 

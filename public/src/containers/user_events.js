@@ -4,7 +4,7 @@ class User_Events extends Component {
   render() {
     return (
       <div>
-        User Events
+        User Events !
       </div>
     );
   }
