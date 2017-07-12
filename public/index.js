@@ -24,21 +24,4 @@ function render(App) {
   );
 }
 
-if (module.hot) {
-  module.hot.accept('./src/reducers/index', () => {   
-    store.replaceReducer(rootReducer);
-  });
-
-  module.hot.accept('./src/components/app', () => {
-    ReactDOM.render(
-      <AppContainer>
-        <Provider store={store}>
-          <App />
-        </Provider>
-      </AppContainer>,
-      document.getElementById('root')
-    )
-  })
-};
-
 render(App);

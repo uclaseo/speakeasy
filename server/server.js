@@ -14,19 +14,6 @@ const io = require('socket.io')(server);
 
 socketEvents(io);
 
-// react hot loader shit
-var webpack = require('webpack');
-var WebpackDevServer = require('webpack-dev-server');
-var config = require('../webpack.config');
-var compiler = webpack(config);
-app.use(require('webpack-dev-middleware')(compiler, {
-  hot: true,
-  stats: {
-    colors: true
-  }
-}));
-app.use(require('webpack-hot-middleware')(compiler));
-
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true}));
@@ -44,9 +31,6 @@ app.use((req, res, next) => {
   next();
 });
 
-// app.get('*', (req, res) => {
-//   res.sendFile(path.join(__dirname, '../public/index.html'))
-// })
 
 init()
   .then(() => {
