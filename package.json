@@ -20,9 +20,11 @@
   },
   "homepage": "https://github.com/joshuabahr/speakeasy#readme",
   "dependencies": {
+    "auth0-js": "^8.8.0",
     "body-parser": "^1.17.2",
     "cors": "^2.8.3",
     "express": "^4.15.3",
+    "history": "^4.6.3",
     "lodash": "^3.10.1",
     "mongoose": "^4.11.1",
     "morgan": "^1.8.2",
