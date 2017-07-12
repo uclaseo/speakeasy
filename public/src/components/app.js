@@ -25,13 +25,14 @@ export default class App extends Component {
            <Navigation_Bar />
               <Switch>
                 <Route exact path='/' exact component={Home} />
-          <Route path="/profile" render={(props) => (
-            !auth.isAuthenticated() ? (
-              <Redirect to="/"/>
-            ) : (
-              <User_Profile auth={auth} {...props} />
-            )
-          )} />
+                <Route path="/profile" render={(props) => (
+                  !auth.isAuthenticated() ? (
+                    <Redirect to="/"/>
+                  ) : (
+                    <User_Profile auth={auth} {...props} />
+                  )
+                  )}
+                />
                 <Route path='/past' component={User_Events} />
                 <Route path='/dm' component={Direct_Messages} />
                 <Route path='/friends' component={User_Friends} />
