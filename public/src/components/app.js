@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { BrowserRouter, Route, Switch } from 'react-router-dom';
+import { Redirect, BrowserRouter, Route, Switch } from 'react-router-dom';
 
 import Navigation_Bar from '../containers/navigation_bar';
 import User_Profile from '../containers/user_profile';
@@ -25,7 +25,13 @@ export default class App extends Component {
            <Navigation_Bar />
               <Switch>
                 <Route exact path='/' exact component={Home} />
-                <Route path='/profile' component={User_Profile} />
+          <Route path="/profile" render={(props) => (
+            !auth.isAuthenticated() ? (
+              <Redirect to="/"/>
+            ) : (
+              <User_Profile auth={auth} {...props} />
+            )
+          )} />
                 <Route path='/past' component={User_Events} />
                 <Route path='/dm' component={Direct_Messages} />
                 <Route path='/friends' component={User_Friends} />

@@ -11,12 +11,14 @@ export default class Auth {
       redirectUri: AUTH_CONFIG.callbackUrl,
       audience: `https://${AUTH_CONFIG.domain}/userinfo`,
       responseType: 'token id_token',
-      scope: 'openid'
+      scope: 'openid profile'
     });
     this.login = this.login.bind(this);
     this.logout = this.logout.bind(this);
     this.handleAuthentication = this.handleAuthentication.bind(this);
     this.isAuthenticated = this.isAuthenticated.bind(this);
+    this.getProfile = this.getProfile.bind(this);
+
   }
 
   login() {
@@ -64,4 +66,21 @@ export default class Auth {
     let expiresAt = JSON.parse(localStorage.getItem('expires_at'));
     return new Date().getTime() < expiresAt;
   }
+
+  userProfile;
+
+  getProfile(cb) {
+    let accessToken = this.getAccessToken();
+    this.auth0.client.userInfo(accessToken, (err, profile) => {
+      if (profile) {
+        this.userProfile = profile;
+        console.log('THIS IS PROFILE', profile);
+        console.log('THIS IS USERPROFILE', this.userProfile);
+      }
+      cb(err, profile);
+    });
+  }
+
+
+
 }
