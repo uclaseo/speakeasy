@@ -20,12 +20,16 @@ var WebpackDevServer = require('webpack-dev-server');
 var config = require('../webpack.config');
 
 new WebpackDevServer(webpack(config), {
-    publicPath: '/public',
-    hot: true,
-    historyApiFallback: true,
-    proxy: {
-      "api": "http://localhost:3000/"
-    }
+  contentBase: './static',
+  publicPath: '/static',
+  hot: true,
+  inline: true,
+  stats: true,
+  historyApiFallback: true,
+  proxy: [{
+    context: ["/api"],
+    target: "http://localhost:3000/"
+  }]
 }).listen(8080, 'localhost', function (err) {
     if (err) {
         console.log(err);
@@ -34,7 +38,7 @@ new WebpackDevServer(webpack(config), {
   console.log('Listening at localhost:8080');
 });
 
-app.get('*', (req, res) => res.sendFile(path.join(__dirname, '../public/index.html')));
+app.get('*', (req, res) => res.sendFile(path.join(__dirname, '../static/index.html')));
 
 
 app.use(bodyParser.json());
@@ -43,7 +47,7 @@ app.use(morgan('dev'));
 
 app.use('/api', router);
 
-app.use(express.static(path.join(__dirname, '../public')));
+app.use(express.static(path.join(__dirname, '../static')));
 
 app.use((req, res, next) => {
   res.header('Access-Control-Allow-Origin', 'http://localhost:3000');
