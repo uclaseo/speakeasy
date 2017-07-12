@@ -8,7 +8,14 @@ import Direct_Messages from '../containers/direct_messages';
 import User_Friends from '../containers/user_friends';
 import Home from '../containers/home';
 
-
+import Callback from '../Auth0/Callback';
+import Auth from '../Auth0/Auth0';
+const auth = new Auth();
+const handleAuthentication = (nextState, replace) => {
+  if (/access_token|id_token|error/.test(nextState.location.hash)) {
+    auth.handleAuthentication();
+  }
+}
 
 export default class App extends Component {
   render() {
@@ -22,6 +29,10 @@ export default class App extends Component {
                 <Route path='/past' component={User_Events} />
                 <Route path='/dm' component={Direct_Messages} />
                 <Route path='/friends' component={User_Friends} />
+                <Route path="/callback" render={(props) => {
+                   handleAuthentication(props);
+                   return <Callback {...props} /> 
+                 }}/>
               </Switch>
           </div>
       </BrowserRouter>
