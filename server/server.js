@@ -33,16 +33,15 @@ new WebpackDevServer(webpack(config), {
     if (err) {
         console.log(err);
     }
- 
   console.log('Listening at http://localhost:8080');
 });
 
+app.use('/api', router);
 app.get('*', (req, res) => res.sendFile(path.join(__dirname, '../static/index.html')));
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(morgan('dev'));
-app.use('/api', router);
 app.use(express.static(path.join(__dirname, '../static')));
 app.use((req, res, next) => {
   res.header('Access-Control-Allow-Origin', 'http://localhost:3000');

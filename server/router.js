@@ -13,6 +13,7 @@ router.post('/dm/:dmId', mongoController.postDirectMessage);
 
 router.get('/user/fetchUsers', userController.fetchUsers);
 router.post('/user/signup', userController.signupUser);
+router.get('/user/profile', userController.editUserProfile); //change
 
 router.post('/event/create/:userId', eventController.createEvent);
 router.post('/event/joinevent/:userId', eventController.joinEvent);

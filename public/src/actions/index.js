@@ -14,3 +14,15 @@ export function fetchWeather(city, country = 'US') {
   };
 }
 */
+const BASE_URL = 'http://localhost:3000/api';
+const EDIT_PROFILE = 'EDIT_PROFILE';
+
+export function editProfile(values) {
+  let url = `${BASE_URL}/user/profile`;
+  let request = axios.get(url); //change
+  console.log('request:', request);
+  return {
+    type: EDIT_PROFILE,
+    payload: request
+  };
+}

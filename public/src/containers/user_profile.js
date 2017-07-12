@@ -1,5 +1,8 @@
 import React, { Component } from 'react';
 import { Field, reduxForm } from 'redux-form';
+import { Link } from 'react-router-dom';
+import { connect } from 'react-redux';
+import { editProfile } from '../actions/index';
 
 class User_Profile extends Component {
   renderField(field) {
@@ -11,9 +14,7 @@ class User_Profile extends Component {
         <label>
           {field.label}
         </label>
-        <input className="form-control"
-        type="text"
-        {...field.input} />
+        <input className="form-control" type="text" {...field.input} />
         <div className="help-block">
           {touched ? error : ''}
         </div>
@@ -23,45 +24,48 @@ class User_Profile extends Component {
 
   onSubmit(values) {
     console.log('values:', values);
+    this.props.editProfile(values);
   }
 
   render() {
     const { handleSubmit } = this.props;
 
     return (
-      <form onSubmit={handleSubmit(this.onSubmit.bind(this))}>
-        <Field
-          label="Name"
-          name="name"
-          type="text"
-          component={this.renderField}
-        />
+      <div id="user-profile">
+        <form onSubmit={handleSubmit(this.onSubmit.bind(this))}>
+          <Field
+            label="Name"
+            name="name"
+            type="text"
+            component={this.renderField}
+          />
 
-        <Field
-          label="Handle"
-          name="handle"
-          type="text"
-          component={this.renderField}
-        />
+          <Field
+            label="Handle"
+            name="handle"
+            type="text"
+            component={this.renderField}
+          />
 
-        <Field
-          label="Email"
-          name="email"
-          type="text"
-          component={this.renderField}
-        />
+          <Field
+            label="Email"
+            name="email"
+            type="text"
+            component={this.renderField}
+          />
 
-        <Field
-          label="Password"
-          name="password"
-          type="text"
-          component={this.renderField}
-        />
+          <Field
+            label="Password"
+            name="password"
+            type="text"
+            component={this.renderField}
+          />
 
-        <button type="submit" className="btn btn-secondary btn-lg">
-          Submit
-        </button>
-      </form>
+          <button type="submit" className="btn btn-secondary btn-lg myBtns">
+            Submit
+          </button>
+        </form>
+      </div>
     );
   }
 }
@@ -91,6 +95,6 @@ function validate(values) {
 export default reduxForm({
   validate: validate,
   form: 'ProfileForm;'
-})(User_Profile);
+})(connect(null, { editProfile })(User_Profile));
 
 //
