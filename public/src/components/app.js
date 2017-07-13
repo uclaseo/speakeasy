@@ -6,6 +6,7 @@ import User_Profile from '../containers/user_profile';
 import User_Events from '../containers/user_events';
 import Direct_Messages from '../containers/direct_messages';
 import User_Friends from '../containers/user_friends';
+import Chat from '../components/chat';
 import Home from '../containers/home';
 import Event_Setting from '../containers/event_setting';
 
@@ -38,6 +39,7 @@ export default class App extends Component {
                 <Route path='/past' component={User_Events} />
                 <Route path='/dm' component={Direct_Messages} />
                 <Route path='/friends' component={User_Friends} />
+                <Route path='/chat' component={Chat} />
                 <Route path='/event_setting' component={Event_Setting}/>
               </Switch>
           </div>

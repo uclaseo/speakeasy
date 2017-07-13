@@ -3,13 +3,14 @@ const DirectMessage = require('./../models/dmModel');
 
 const socketEvents = (io) => {
   io.on('connection', (socket) => {
-    console.log('user connected');
+    console.log('is socket working?????', socket.connected);
 
+    // Event message socket events
     socket.on('enterevent', (event) => {
       socket.join(event);
       socket.room = event;
-      console.log('user joined room ', socket.room);
-      Message.find({ event_id: event })
+      console.log('user ', event.user_name, 'joined room ', socket.room);
+      Message.find({ event_id: event.event_id })
         .select('createdAt text user_name')
         .sort('-createdAt')
         .limit(25)
@@ -38,6 +39,7 @@ const socketEvents = (io) => {
       })
     });
 
+    // direct message socket events
     socket.on('enterdm', (dmroom) => {
       socket.join(dmroom);
       socket.room = dmroom;
@@ -72,7 +74,7 @@ const socketEvents = (io) => {
     });
 
     socket.on('disconnect', () => {
-      console.log('user disconnected');
+      console.log('user disconnected ', socket.connected);
     });
   })
 }

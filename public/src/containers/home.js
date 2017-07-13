@@ -94,6 +94,7 @@ getUserInfo() {
               type="button" className="btn btn-secondary btn-lg myBtns">Create Event
             </button>
           </Link>
+        <Link to="/friends" type="button" className="btn btn-secondary btn-lg">Create Event</Link>
         </div>
       </div>
     );
