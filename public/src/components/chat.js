@@ -24,6 +24,7 @@ class Chat extends Component {
     this.handleSubmitClick = this.handleSubmitClick.bind(this)
     this.handleSendClick = this.handleSendClick.bind(this)
     this.handleUsernameClick = this.handleUsernameClick.bind(this)
+    this.handleKeyPress = this.handleKeyPress.bind(this)
     this._handleLogIn = this._handleLogIn.bind(this)
     this._handleRefreshMessages = this._handleRefreshMessages.bind(this)
     this._handleRecentMessages = this._handleRecentMessages.bind(this)   
@@ -41,11 +42,9 @@ class Chat extends Component {
     this.setState(() => {
       return input
     })
-    // console.log(this.state);
   }
 
   handleSendClick(event) {
-    console.log('refs ', this.refs);
     event.preventDefault()
     socket.emit('newmessage', {
       event_id: this.state.event_id,
@@ -59,7 +58,7 @@ class Chat extends Component {
   }
 
   handleSubmitClick(event) {
-    // event.preventDefault()
+    event.preventDefault()
     this.setState({
       name_chosen: true
     })
@@ -74,6 +73,21 @@ class Chat extends Component {
       event_id: this.state.event_id
     })
     this.setState({ name_chosen: true })
+  }
+
+  handleKeyPress(event) {
+    console.log('key press ', event.key);
+    if (event.key === 'Enter') {
+      // this.handleSendClick()
+      socket.emit('newmessage', {
+        event_id: this.state.event_id,
+        user_name: this.state.user_name,
+        text: this.state.text
+      })
+      this.setState({
+        text: ''
+      })
+    }
   }
   
   _handleLogIn() {
@@ -114,8 +128,16 @@ class Chat extends Component {
     if (this.state.name_chosen === false) {
       UserEvent = 
         <div>
-          <input type="text" onChange={this.handleInputChange} name="user_name"/>
-          <input type="text" onChange={this.handleInputChange} name="event_id"/>
+          <input  type="text" 
+                  onChange={this.handleInputChange} 
+                  placeholder="Pick a user name"
+                  name="user_name"
+          />
+          <input  type="text" 
+                  onChange={this.handleInputChange} 
+                  placeholder="Pick an event id (integer)"
+                  name="event_id"
+          />
           <Button bsStyle="primary" type="button" onClick={this.handleSubmitClick}>Submit</Button>
         </div>
        
@@ -125,8 +147,16 @@ class Chat extends Component {
     return (
       <div>   
         <ChatLog roomMessages={this.state.messages}/>
-        <input type="text" value={this.state.text} onChange={this.handleInputChange} name="text"/>             
-        <Button bsStyle="primary" type="button" onClick={this.handleSendClick}> Send </Button>        
+        <input  type="text" 
+                value={this.state.text} 
+                onChange={this.handleInputChange} 
+                name="text"
+                onKeyPress={this.handleKeyPress}
+        />             
+        <Button bsStyle="primary" 
+                type="button" 
+                onClick={this.handleSendClick}
+        > Send </Button>        
         {UserEvent}   
       </div>
     );
