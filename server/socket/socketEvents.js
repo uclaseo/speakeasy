@@ -7,16 +7,17 @@ const socketEvents = (io) => {
 
     // Event message socket events
     socket.on('enterevent', (event) => {
-      socket.join(event);
-      socket.room = event;
+      socket.join(event.event_id);
+      socket.room = event.event_id;
       console.log('user ', event.user_name, 'joined room ', socket.room);
       Message.find({ event_id: event.event_id })
-        .select('createdAt text user_name')
+        .select('createdAt text user_name event_id')
         .sort('-createdAt')
         .limit(25)
         .exec((err, messages) => {
           if (err) console.error('error getting recent messages ', err);
-          io.sockets.in(event).emit('recentmessages', messages);
+          console.log('enter event recent messages ', messages);
+          io.sockets.in(event.event_id).emit('recentmessages', messages);
         })
 
     });
@@ -27,6 +28,7 @@ const socketEvents = (io) => {
     });
 
     socket.on('newmessage', (data) => {
+      console.log('posting a new message ', data);
       const { event_id, user_name, text } = data;
       const newMessage = new Message({
         event_id: event_id,

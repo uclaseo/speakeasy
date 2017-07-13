@@ -23,12 +23,15 @@ class Chat extends Component {
     this.handleInputChange = this.handleInputChange.bind(this)
     this.handleSubmitClick = this.handleSubmitClick.bind(this)
     this.handleUsernameClick = this.handleUsernameClick.bind(this)
+    this._handleLogIn = this._handleLogIn.bind(this)
+    this._handleRefreshMessages = this._handleRefreshMessages.bind(this)
     this._handleRecentMessages = this._handleRecentMessages.bind(this)   
   }
 
 
   componentDidMount() {
     this._handleRecentMessages()
+    this._handleRefreshMessages()
   }
 
   handleInputChange(e) {
@@ -48,7 +51,6 @@ class Chat extends Component {
       user_name: this.state.user_name,
       text: this.state.text
     })
-    this.setState({ text: '' })
   }
 
   handleUsernameClick(e) {
@@ -59,16 +61,38 @@ class Chat extends Component {
     })
     this.setState({ name_chosen: true })
   }
+  
+  _handleLogIn() {
+    socket.emit('enterevent', {
+      event_id: this.state.event_id,
+      user_name: this.state.user_name
+    })
+  }
 
   _handleRecentMessages() {
     socket.on('recentmessages', (recentMessages) => {
+      console.log('these are the recent messages ', recentMessages);
+      let oldMessages = this.state.messages;
+      let newMessages = oldMessages.concat(recentMessages);
+      console.log('these are the new messages: ', newMessages);
       this.setState({
-        messages: [ ...state, recentMessages ]
+        messages: newMessages
       })
     })
   }
 
-  _handle
+  _handleRefreshMessages() {
+    socket.on('refreshmessages', (newMessage) => {
+      console.log('refresh messages caught ', newMessage);
+      let refresh = this.state.messages;
+      refresh.push(newMessage);
+      console.log('refresh new messages ', refresh);
+      this.setState({
+        messages: refresh
+      })
+    })
+  }
+
 
 
   render() {
@@ -87,7 +111,7 @@ class Chat extends Component {
           </InputGroup>
         </FormGroup>
         </form>
-
+        <Button bsStyle="primary" type="button" onClick={() => this._handleLogIn()}>Log In</Button>
    </div>
     );
   }
