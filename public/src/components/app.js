@@ -26,7 +26,7 @@ export default class App extends Component {
         <div>
            <Navigation_Bar />
               <Switch>
-                <Route exact path='/' exact component={Home} />
+                <Route exact path='/' render={(props) => {handleAuthentication(props); return <Home {...props}/> }} />
                 <Route path="/profile" render={(props) => (
                   !auth.isAuthenticated() ? (
                     <Redirect to="/"/>
@@ -39,10 +39,6 @@ export default class App extends Component {
                 <Route path='/dm' component={Direct_Messages} />
                 <Route path='/friends' component={User_Friends} />
                 <Route path='/event_setting' component={Event_Setting}/>
-                <Route path="/callback" render={(props) => {
-                   handleAuthentication(props);
-                   return <Callback {...props} /> 
-                 }}/>
               </Switch>
           </div>
       </BrowserRouter>

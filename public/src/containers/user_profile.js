@@ -15,15 +15,6 @@ class User_Profile extends Component {
     super(props);
   }
 
-  componentDidMount() {
-    if (!this.props.profile){
-      console.log('no profile')
-    }
-    auth.getProfile((error, profile) => {
-      this.props.fetchProfile(profile);
-    })
-  }
-
   renderField(field) {
     const { meta: { touched, error } } = field;
     const className = `form-group ${touched && error ? 'has-error' : ''}`;
@@ -124,17 +115,3 @@ export default reduxForm({
 })(connect(mapStateToProps, { editUserProfile, fetchProfile })(User_Profile));
 
 
-
-// const {profile} = this.props;
-//     if (!this.props.profile) {
-//       return <div>LOADING PROFILE</div>
-//     }
-//     return (
-//       <div>
-//          <p>name: {profile.name}</p>
-//         <p>nickname: {profile.nickname}</p>
-//         <p>sub: {profile.sub}</p> 
-
-
-
-//

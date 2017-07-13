@@ -11,7 +11,7 @@ export default class Auth {
       redirectUri: AUTH_CONFIG.callbackUrl,
       audience: `https://${AUTH_CONFIG.domain}/userinfo`,
       responseType: 'token id_token',
-      scope: 'openid profile'
+      scope: 'openid profile email'
     });
     this.login = this.login.bind(this);
     this.logout = this.logout.bind(this);
@@ -30,8 +30,6 @@ export default class Auth {
       if (authResult && authResult.accessToken && authResult.idToken) {
         this.setSession(authResult);
         history.replace('/');
-        console.log('AUTHRESULTTTTT');
-        console.log('auth result', authResult);
       } else if (err) {
         history.replace('/');
         console.log(err);
