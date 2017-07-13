@@ -8,7 +8,7 @@ const uploadImage = (req, res) => {
     where: {
       name: req.body.name,
       imageLink: req.body.imageLink,
-      userId: req.params.userId,
+      userId: req.body.userId,
       eventId: req.body.eventId
     }
   })
