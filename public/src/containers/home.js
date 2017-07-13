@@ -52,7 +52,7 @@ class Home extends Component {
           </div>
           <br />
           <br />
-          <Link to="/friends">
+          <Link to="/event_setting">
             <button
               type="button" className="btn btn-secondary btn-lg myBtns">Create Event
             </button>
