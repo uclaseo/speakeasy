@@ -15,15 +15,6 @@ class User_Profile extends Component {
     super(props);
   }
 
-  componentDidMount() {
-    if (!this.props.profile){
-      console.log('no profile')
-    }
-    auth.getProfile((error, profile) => {
-      this.props.fetchProfile(profile);
-    })
-  }
-
   renderField(field) {
     const { meta: { touched, error } } = field;
     const className = `form-group ${touched && error ? 'has-error' : ''}`;
@@ -43,12 +34,13 @@ class User_Profile extends Component {
 
   onSubmit(values, id) {
     console.log('values:', values);
+    console.log('this.props', this.props);
     this.props.editUserProfile(values, 6);
   }
 
   render() {
     const { handleSubmit } = this.props;
-
+    console.log('render in userprofile', this.props)
     return (
       <div id="user-profile">
         <form onSubmit={handleSubmit(this.onSubmit.bind(this))}>
@@ -58,7 +50,7 @@ class User_Profile extends Component {
             type="text"
             component={this.renderField}
           />
-
+    
           <Field
             label="Handle"
             name="handle"
@@ -83,6 +75,8 @@ class User_Profile extends Component {
           <button type="submit" className="btn btn-secondary btn-lg myBtns">
             Submit
           </button>
+
+
         </form>
       </div>
     );
@@ -91,7 +85,6 @@ class User_Profile extends Component {
 
 function validate(values) {
   const error = {};
-
   if (!values.name) {
     error.name = 'Enter your name';
   }
@@ -113,7 +106,7 @@ function validate(values) {
 
 function mapStateToProps(state) {
   return {
-   profile: state.authReducer.profile
+    profile: state.profile
   }
 }
 
@@ -124,17 +117,3 @@ export default reduxForm({
 })(connect(mapStateToProps, { editUserProfile, fetchProfile })(User_Profile));
 
 
-
-// const {profile} = this.props;
-//     if (!this.props.profile) {
-//       return <div>LOADING PROFILE</div>
-//     }
-//     return (
-//       <div>
-//          <p>name: {profile.name}</p>
-//         <p>nickname: {profile.nickname}</p>
-//         <p>sub: {profile.sub}</p> 
-
-
-
-//
