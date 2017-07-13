@@ -4,6 +4,7 @@ import * as chatActions from '../actions/chatActions'
 import { bindActionCreators } from 'redux'
 import io from 'socket.io-client'
 import ChatDetail from './chatDetail'
+import ChatLog from './chatLog'
 import { Image, Glyphicon, InputGroup, PageHeader, Col, Button, FormGroup, FormControl } from 'react-bootstrap'
 
 
@@ -13,10 +14,10 @@ class Chat extends Component {
   constructor() {
     super()
     this.state = {
-      user_name: '',
+      user_name: 'steve',
       event_id: 2,
       text: '',
-      messages: [],
+      messages: [{user_name: "steve", text: "whatever", event_id: 2}],
       name_chosen: false
     }
     this.handleInputChange = this.handleInputChange.bind(this)
@@ -39,8 +40,9 @@ class Chat extends Component {
     console.log(this.state);
   }
 
-  handleSubmitClick(e) {
-    e.preventDefault()
+  handleSubmitClick() {
+    // ev.preventDefault()
+    console.log('submit message click ')
     socket.emit('newmessage', {
       event_id: this.state.event_id,
       user_name: this.state.user_name,
@@ -66,15 +68,27 @@ class Chat extends Component {
     })
   }
 
+  _handle
 
 
   render() {
+    console.log(this.state);
     return (
       <div>
-        <div>
-          Chat
-        </div>
-      </div>
+      
+        <ChatLog roomMessages={this.state.messages}/>
+        <form>
+          <FormGroup>
+            <InputGroup>
+            <FormControl onChange={this.handleInputChange} name="text"/>
+            <InputGroup.Button> 
+              <Button bsStyle="primary" type="button" onClick={() => this.handleSubmitClick()}> Send </Button>
+            </InputGroup.Button>
+          </InputGroup>
+        </FormGroup>
+        </form>
+
+   </div>
     );
   }
 }

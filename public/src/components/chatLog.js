@@ -2,6 +2,7 @@ import React from 'react';
 import { Col, Grid, Row } from 'react-bootstrap';
 import ChatDetail from './chatDetail';
 
+
 const ChatLog = ({roomMessages}) => {
   const messages = roomMessages.map((message) => {
     return (<ChatDetail 
