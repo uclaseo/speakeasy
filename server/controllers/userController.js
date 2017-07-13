@@ -15,7 +15,7 @@ const signupUser = (req, res) => {
       if (isCreated) {
         res.status(201).send(response);
       } else {
-        res.send(existed);
+        res.send(response);
       }
     })
     .catch(error => {

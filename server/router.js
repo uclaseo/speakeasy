@@ -5,6 +5,13 @@ const userController = require('./controllers/userController');
 const eventController = require('./controllers/eventController');
 const imageController = require('./controllers/imageController');
 
+const config = require('../configJwt');
+const jwt = require('express-jwt');
+const authCheck = jwt({
+  secret: new Buffer(config.secret),
+  audience: config.audience
+});
+
 router.get('/message/:eventId', mongoController.fetchMessagesForEvent);
 router.post('/message/', mongoController.postMessageToEvent);
 

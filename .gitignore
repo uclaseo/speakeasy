@@ -6,3 +6,4 @@ node_modules
 .vscode
 config.js
 auth0-variables.js
+configJwt.js
