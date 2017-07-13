@@ -1,7 +1,21 @@
 import React, { Component } from 'react';
+import Auth from '../Auth0/Auth0';
+import {connect} from 'react-redux';
+import {bindActionCreators} from 'redux';
+import {fetchProfile} from '../actions/authAction';
+
+const auth = new Auth();
 
 class Home extends Component {
-    render() {
+
+  componentDidMount() {
+    auth.getProfile((error, profile) => {
+      this.props.fetchProfile(profile);
+      console.log(profile);
+    });
+  }
+
+  render() {
     return (
       <div>
 
@@ -42,5 +56,10 @@ class Home extends Component {
     )
   }
 }
+function mapStateToProps(state) {
+  return {
+    profile: state.authReducer.profile
+  };
+}
 
-export default Home;
+export default connect(mapStateToProps, {fetchProfile})(Home);
