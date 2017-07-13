@@ -4,5 +4,4 @@ bower_components
 node_modules
 *.env
 .vscode
-
 .config.js

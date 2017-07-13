@@ -9,12 +9,14 @@ const socketEvents = require('./socket/socketEvents');
 const port = 3000;
 const app = express();
 const server = require('http').Server(app);
+const webpack = require('webpack');
+const WebpackDevServer = require('webpack-dev-server');
+const config = require('../webpack.config');
+
 server.listen(3000, '127.0.0.1');
 const io = require('socket.io')(server);
 socketEvents(io);
-var webpack = require('webpack');
-var WebpackDevServer = require('webpack-dev-server');
-var config = require('../webpack.config');
+
 new WebpackDevServer(webpack(config), {
   contentBase: './static',
   publicPath: '/static',
