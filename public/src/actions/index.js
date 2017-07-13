@@ -12,3 +12,11 @@ export function editUserProfile(values, id) {
     payload: request
   };
 }
+
+export function provideActiveEventId(activeEventId){
+  console.log("in provideActiveEventId function", activeEventId)
+  return {
+    type : UPDATE_ACTIVE_EVENT_ID,
+    payload: activeEventId
+  }
+}

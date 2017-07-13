@@ -16,6 +16,12 @@ const createEvent = (req, res) => {
   })
   .spread((response, isCreated) => {
     if (isCreated) {
+      Table.User_Event.findOrCreate({
+        where: {
+          userId: req.body.userId,
+          eventId: response.id
+        }
+      });
       res.status(201).send(response);
     } else {
       res.send(existed);

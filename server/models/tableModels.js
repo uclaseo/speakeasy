@@ -18,6 +18,7 @@ const User = db.define('user', {
 // });
 
 
+
 const Event = db.define('event', {
   eventName: Sequelize.STRING,
   password: Sequelize.STRING,  // integer for simplicity or string?
@@ -25,6 +26,11 @@ const Event = db.define('event', {
   longitude: Sequelize.FLOAT,  // Sequelize has GEOMETRY type, I'll look into it
   isLive: Sequelize.BOOLEAN
 });
+
+
+// const SuggestedFriends = db.define('suggestedFriends',{
+
+// })
 
 const Message = db.define('message', {
   text: Sequelize.TEXT

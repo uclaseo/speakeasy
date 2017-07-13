@@ -8,7 +8,7 @@ import Direct_Messages from '../containers/direct_messages';
 import User_Friends from '../containers/user_friends';
 import Home from '../containers/home';
 import Event_Setting from '../containers/event_setting';
-
+import Event_Chat from '../containers/eventChat';
 
 import Callback from '../Auth0/Callback';
 import Auth from '../Auth0/Auth0';
@@ -39,6 +39,7 @@ export default class App extends Component {
                 <Route path='/dm' component={Direct_Messages} />
                 <Route path='/friends' component={User_Friends} />
                 <Route path='/event_setting' component={Event_Setting}/>
+                <Route path='/event_chat' component={Event_Chat}/>
                 <Route path="/callback" render={(props) => {
                    handleAuthentication(props);
                    return <Callback {...props} /> 
