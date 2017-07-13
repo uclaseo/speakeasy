@@ -1,16 +1,14 @@
 import axios from 'axios';
 
-/*
-///// EXAMPLE ACTION CREATOR WITH AXIOS REQUEST /////
+export const EDIT_PROFILE = 'EDIT_PROFILE';
 
-export const FETCH_WEATHER = 'FETCH_WEATHER';
+export function editUserProfile(values, id) {
+  const url = `api/user/profile/${id}`;
 
-export function fetchWeather(city, country = 'US') {
-  let url = `http://someUrlWhatever.com/etc`;
-  let request = axios.get(url);
+  const request = axios.get(url)
+    .then(res => console.log('AXIOS:', res)); //change
   return {
-    type: FETCH_WEATHER,
+    type: EDIT_PROFILE,
     payload: request
   };
 }
-*/

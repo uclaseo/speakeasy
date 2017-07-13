@@ -8,6 +8,16 @@ const User = db.define('user', {
   longitude: Sequelize.FLOAT
 });
 
+// const User = db.define('user', {
+//   name: Sequelize.STRING,
+//   handle: Sequelize.STRING,
+//   email: Sequelize.STRING,
+//   photo: Sequelize.TEXT,
+//   latitude: Sequelize.FLOAT,
+//   longitude: Sequelize.FLOAT
+// });
+
+
 const Event = db.define('event', {
   eventName: Sequelize.STRING,
   password: Sequelize.STRING,  // integer for simplicity or string?

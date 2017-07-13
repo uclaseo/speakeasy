@@ -21,6 +21,7 @@
   "homepage": "https://github.com/joshuabahr/speakeasy#readme",
   "dependencies": {
     "auth0-js": "^8.8.0",
+    "axios": "^0.16.2",
     "body-parser": "^1.17.2",
     "cors": "^2.8.3",
     "express": "^4.15.3",
@@ -31,7 +32,6 @@
     "nodemon": "^1.11.0",
     "pg": "^6.4.0",
     "react": "^15.6.1",
-    "react-bootstrap": "^0.31.0",
     "react-dom": "^15.6.1",
     "react-dropzone": "^3.13.2",
     "react-materialize": "^1.0.1",
@@ -40,7 +40,6 @@
     "react-router-dom": "^4.1.1",
     "react-scrollbars": "0.0.5",
     "react-tap-event-plugin": "^2.0.1",
-    "reactstrap": "^4.8.0",
     "reducers": "^3.0.0-alpha",
     "redux": "^3.0.4",
     "redux-form": "^7.0.0",

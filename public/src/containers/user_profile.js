@@ -1,16 +1,18 @@
 import React, { Component } from 'react';
-import Auth from '../Auth0/Auth0'
-import {fetchProfile} from '../actions/authAction';
-import {connect} from 'react-redux';
-import {bindActionCreators} from 'redux';
+import { bindActionCreators } from 'redux';
+import { connect } from 'react-redux';
+import { Field, reduxForm } from 'redux-form';
+import { Link } from 'react-router-dom';
+import Auth from '../Auth0/Auth0';
+import { fetchProfile } from '../actions/authAction';
+import { editUserProfile } from '../actions/index';
 
 const auth = new Auth();
 
 class User_Profile extends Component {
+  
   constructor(props) {
     super(props);
-
-    // this.getProfile = this.getProfile.bind(this);
   }
 
   componentDidMount() {
@@ -20,52 +22,119 @@ class User_Profile extends Component {
     auth.getProfile((error, profile) => {
       this.props.fetchProfile(profile);
     })
+  }
 
-    // this.setState({ 
-    //    profile: {} 
-    // });
-    // const { userProfile, getProfile } = auth;
-    // if (!userProfile) {
-    //   this.props.fetchProfile((err, profile) => {
-    //     this.setState({ profile });
-    //   });
-    // } else {
-    //   this.setState({ profile: userProfile });
-    // }
+  renderField(field) {
+    const { meta: { touched, error } } = field;
+    const className = `form-group ${touched && error ? 'has-error' : ''}`;
+
+    return (
+      <div className={className}>
+        <label>
+          {field.label}
+        </label>
+        <input className="form-control" type="text" {...field.input} />
+        <div className="help-block">
+          {touched ? error : ''}
+        </div>
+      </div>
+    );
+  }
+
+  onSubmit(values, id) {
+    console.log('values:', values);
+    this.props.editUserProfile(values, 6);
   }
 
   render() {
-    // if (!this.state.profile) {
-    //   return <div>LOADING</div>
-    // }
+    const { handleSubmit } = this.props;
 
-    const {profile} = this.props;
-    console.log('profile in container', profile);
-    console.log('props in container', this.props);
-    if (!this.props.profile) {
-      return <div>LOADING PROFILE</div>
-    }
     return (
-      <div>
-         <p>name: {profile.name}</p>
-        <p>nickname: {profile.nickname}</p>
-        <p>sub: {profile.sub}</p> 
+      <div id="user-profile">
+        <form onSubmit={handleSubmit(this.onSubmit.bind(this))}>
+          <Field
+            label="Name"
+            name="name"
+            type="text"
+            component={this.renderField}
+          />
+
+          <Field
+            label="Handle"
+            name="handle"
+            type="text"
+            component={this.renderField}
+          />
+
+          <Field
+            label="Email"
+            name="email"
+            type="text"
+            component={this.renderField}
+          />
+
+          <Field
+            label="Password"
+            name="password"
+            type="text"
+            component={this.renderField}
+          />
+
+          <button type="submit" className="btn btn-secondary btn-lg myBtns">
+            Submit
+          </button>
+        </form>
       </div>
     );
   }
 }
 
+function validate(values) {
+  const error = {};
+
+  if (!values.name) {
+    error.name = 'Enter your name';
+  }
+
+  if (!values.handle) {
+    error.handle = 'Enter your handle';
+  }
+
+  if (!values.email) {
+    error.email = 'Enter your email';
+  }
+
+  if (!values.password) {
+    error.password = 'Enter your password';
+  }
+
+  return error;
+}
+
 function mapStateToProps(state) {
-  console.log(state);
   return {
    profile: state.authReducer.profile
   }
 }
 
-// function mapDispatchToProps(dispatch) {
-//   return bindActionCreators({fetchProfile: fetchProfile}, dispatch);
-// };
 
-export default connect(mapStateToProps, {fetchProfile})(User_Profile);
+export default reduxForm({
+  validate: validate,
+  form: 'ProfileForm'
+})(connect(mapStateToProps, { editUserProfile, fetchProfile })(User_Profile));
 
 
+
+// const {profile} = this.props;
+//     if (!this.props.profile) {
+//       return <div>LOADING PROFILE</div>
+//     }
+//     return (
+//       <div>
+//          <p>name: {profile.name}</p>
+//         <p>nickname: {profile.nickname}</p>
+//         <p>sub: {profile.sub}</p> 
+
+
+
+//
