@@ -50,6 +50,7 @@ class User_Profile extends Component {
          <p>name: {profile.name}</p>
         <p>nickname: {profile.nickname}</p>
         <p>sub: {profile.sub}</p> 
+        <p>email: {profile.email}</p>
       </div>
     );
   }
