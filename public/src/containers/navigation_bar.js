@@ -42,6 +42,7 @@ class Navigation_Bar extends Component {
               <li><Link to="/profile">Profile</Link></li> 
               <li><Link onClick={this.login} to="/">Login</Link></li>
               <li><Link onClick={this.logout} to="/">Logout</Link></li>
+              <li><Link to="/chat">Chat</Link></li>
             </ul>
           </div>
         </div>

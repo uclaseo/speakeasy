@@ -2,12 +2,13 @@ import React from 'react';
 import { Col, Grid, Row } from 'react-bootstrap';
 import ChatDetail from './chatDetail';
 
-const ChatLog = (props) => {
-  const messages = props.messages.map((message) => {
+
+const ChatLog = ({roomMessages}) => {
+  // console.log('these are the room messages ', roomMessages);
+  const messages = roomMessages.map((message) => {
     return (<ChatDetail 
-              user_name={message.user_name} 
-              message={message.text} 
-              event_id={message.event_id} 
+              message={message}
+              key={message._id}
             />)
   })
 

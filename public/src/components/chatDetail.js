@@ -1,13 +1,14 @@
 import React from 'react';
 import { Panel } from 'react-bootstrap';
 
-const ChatDetail = (props) => {
+const ChatDetail = ({message}) => {
   
   return (
     <div>
-      <Panel bsStyle="info" header={props.user}>
-        {props.message}
-        {props.event_id}
+      <Panel bsStyle="info" header={message.user_name}>
+        {message.text}
+        <br></br>
+        {message.event_id}
       </Panel>
     </div>
   )

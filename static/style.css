@@ -1,7 +1,3 @@
-.myBtns {
-  color: black;
-}
-
-#user-profile {
-  margin: 20px;
+#myNav {
+  float: right;
 }
