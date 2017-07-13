@@ -74,8 +74,6 @@ export default class Auth {
     this.auth0.client.userInfo(accessToken, (err, profile) => {
       if (profile) {
         this.userProfile = profile;
-        console.log('THIS IS PROFILE', profile);
-        console.log('THIS IS USERPROFILE', this.userProfile);
       }
       cb(err, profile);
     });

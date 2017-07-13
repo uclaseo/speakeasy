@@ -1,5 +1,8 @@
 import React, { Component } from 'react';
 import Auth from '../Auth0/Auth0'
+import {fetchProfile} from '../actions/authAction';
+import {connect} from 'react-redux';
+import {bindActionCreators} from 'redux';
 
 const auth = new Auth();
 
@@ -11,42 +14,58 @@ class User_Profile extends Component {
   }
 
   componentDidMount() {
-    this.setState({ 
-       profile: {} 
-    });
-    const { userProfile, getProfile } = this.props.auth;
-    if (!userProfile) {
-      getProfile((err, profile) => {
-        this.setState({ profile });
-      });
-    } else {
-      this.setState({ profile: userProfile });
+    if (!this.props.profile){
+      console.log('no profile')
     }
+    auth.getProfile((error, profile) => {
+      this.props.fetchProfile(profile);
+    })
+
+    // this.setState({ 
+    //    profile: {} 
+    // });
+    // const { userProfile, getProfile } = auth;
+    // if (!userProfile) {
+    //   this.props.fetchProfile((err, profile) => {
+    //     this.setState({ profile });
+    //   });
+    // } else {
+    //   this.setState({ profile: userProfile });
+    // }
   }
 
-  // getProfile() {
-  //   auth.getProfile((err, profile) => {
-  //     if (profile) {
-  //       console.log('profile', profile);
-  //     } else {
-  //       console.log('error', err);
-  //     }
-
-  //   })
-  // }
   render() {
-    if (!this.state.profile) {
-      return <div>LOADING</div>
+    // if (!this.state.profile) {
+    //   return <div>LOADING</div>
+    // }
+
+    const {profile} = this.props;
+    console.log('profile in container', profile);
+    console.log('props in container', this.props);
+    if (!this.props.profile) {
+      return <div>LOADING PROFILE</div>
     }
     return (
       <div>
-        <p>{this.state.profile.name}</p>
-        <p>{this.state.profile.nickname}</p>
-        <p>{this.state.profile.sub}</p>
-
+         <p>name: {profile.name}</p>
+        <p>nickname: {profile.nickname}</p>
+        <p>sub: {profile.sub}</p> 
       </div>
     );
   }
 }
 
-export default User_Profile;
+function mapStateToProps(state) {
+  console.log(state);
+  return {
+   profile: state.authReducer.profile
+  }
+}
+
+// function mapDispatchToProps(dispatch) {
+//   return bindActionCreators({fetchProfile: fetchProfile}, dispatch);
+// };
+
+export default connect(mapStateToProps, {fetchProfile})(User_Profile);
+
+
