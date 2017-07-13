@@ -18,7 +18,6 @@ class Home extends Component {
 
   componentDidMount() {
     auth.getProfile((error, profile) => {
-      this.props.fetchProfile(profile);
       this.registerUser(profile);
     });
 
@@ -29,7 +28,7 @@ registerUser(profile) {
   axios.post(`/api/user/signup`, profile)
   .then((response) => {
     console.log('this is response', response);
-    
+    this.props.fetchProfile(response.data);
   })
   .catch((error) => {
     console.log('this is error', error);
