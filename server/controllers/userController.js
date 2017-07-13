@@ -40,6 +40,7 @@ const editUserProfile = (req, res) => {
   Table.User
     .findOne({where: {id: id}}) //this will change for sure
     .then(response => {
+      console.log('SOME USER:', JSON.stringify(response.body));
       res.status(200).send(response);
     })
     .catch(error => {

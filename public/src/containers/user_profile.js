@@ -24,7 +24,7 @@ class User_Profile extends Component {
 
   onSubmit(values, id) {
     console.log('values:', values);
-    this.props.editUserProfile(values, 6);  //hardcoded 6
+    this.props.editUserProfile(values, 6);
   }
 
   render() {
@@ -92,9 +92,16 @@ function validate(values) {
   return error;
 }
 
+
 export default reduxForm({
   validate: validate,
-  form: 'ProfileForm;'
+  form: 'ProfileForm'
 })(connect(null, { editUserProfile })(User_Profile));
+
+
+
+
+
+
 
 //
