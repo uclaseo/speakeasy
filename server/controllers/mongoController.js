@@ -26,7 +26,7 @@ module.exports = {
     }
     const newMessage = new Message({
       user_name: user_name,
-      event_id: req.params.eventId,
+      event_id: req.body.eventId,
       text: text
     });
     newMessage.save((err, message) => {
@@ -54,7 +54,7 @@ module.exports = {
   postDirectMessage: (req, res) => {
     let { user_from_name, user_to_name, text } = req.body;
     let newDM = new DirectMessage({
-      dm_id: req.params.dmId,
+      dm_id: req.body.dmId,
       user_from_name: user_from_name,
       user_to_name: user_to_name,
       text: text

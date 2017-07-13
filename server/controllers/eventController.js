@@ -10,7 +10,7 @@ const createEvent = (req, res) => {
       password: req.body.password,
       latitude: req.body.latitude,
       longitude: req.body.longitude,
-      userId: req.params.userId,
+      userId: req.body.userId,
       isLive: req.body.isLive
     }
   })
@@ -51,7 +51,7 @@ const fetchUserEvents = (req, res) => {
 const joinEvent = (req, res) => {
   Table.User_Event.findOrCreate({
     where: {
-      userId: req.params.userId,
+      userId: req.body.userId,
       eventId: req.body.eventId
     }
   })

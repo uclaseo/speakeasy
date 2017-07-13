@@ -1,8 +1,27 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
+import Auth from '../Auth0/Auth0';
+const auth = new Auth();
+const { isAuthenticated } = auth;
 
 class Navigation_Bar extends Component {
+  constructor(props) {
+    super(props);
+    this.login = this.login.bind(this);
+    this.logout = this.logout.bind(this);
+  }
+
+  login() {
+    auth.login();
+  }
+
+  logout() {
+    auth.logout();
+  }
+
+  
   render() {
+
     return (
       <nav className="navbar navbar-inverse">
         <div className="container-fluid">
@@ -21,6 +40,8 @@ class Navigation_Bar extends Component {
               <li><Link to="/dm">Direct Messages</Link></li> 
               <li><Link to="/past">Previous Events</Link></li>
               <li><Link to="/profile">Profile</Link></li> 
+              <li><Link onClick={this.login} to="/">Login</Link></li>
+              <li><Link onClick={this.logout} to="/">Logout</Link></li>
             </ul>
           </div>
         </div>
