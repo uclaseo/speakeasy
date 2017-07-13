@@ -13,8 +13,8 @@ class Home extends Component {
   componentDidMount() {
     auth.getProfile((error, profile) => {
       this.props.fetchProfile(profile);
-      console.log(profile);
     });
+    console.log('component did mount', this.props);
   }
 
   render() {
@@ -79,7 +79,7 @@ class Home extends Component {
 }
 function mapStateToProps(state) {
   return {
-    profile: state.authReducer.profile
+    profile: state.profile
   };
 }
 

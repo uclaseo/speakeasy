@@ -34,12 +34,13 @@ class User_Profile extends Component {
 
   onSubmit(values, id) {
     console.log('values:', values);
+    console.log('this.props', this.props);
     this.props.editUserProfile(values, 6);
   }
 
   render() {
     const { handleSubmit } = this.props;
-
+    console.log('render in userprofile', this.props)
     return (
       <div id="user-profile">
         <form onSubmit={handleSubmit(this.onSubmit.bind(this))}>
@@ -49,7 +50,7 @@ class User_Profile extends Component {
             type="text"
             component={this.renderField}
           />
-
+    
           <Field
             label="Handle"
             name="handle"
@@ -74,6 +75,8 @@ class User_Profile extends Component {
           <button type="submit" className="btn btn-secondary btn-lg myBtns">
             Submit
           </button>
+
+
         </form>
       </div>
     );
@@ -82,7 +85,6 @@ class User_Profile extends Component {
 
 function validate(values) {
   const error = {};
-
   if (!values.name) {
     error.name = 'Enter your name';
   }
@@ -104,7 +106,7 @@ function validate(values) {
 
 function mapStateToProps(state) {
   return {
-   profile: state.authReducer.profile
+    profile: state.profile
   }
 }
 
