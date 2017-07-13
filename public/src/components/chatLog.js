@@ -4,10 +4,11 @@ import ChatDetail from './chatDetail';
 
 
 const ChatLog = ({roomMessages}) => {
-  console.log('these are the room messages ', roomMessages);
+  // console.log('these are the room messages ', roomMessages);
   const messages = roomMessages.map((message) => {
     return (<ChatDetail 
               message={message}
+              key={message._id}
             />)
   })
 

@@ -13,13 +13,12 @@ const socketEvents = (io) => {
       Message.find({ event_id: event.event_id })
         .select('createdAt text user_name event_id')
         .sort('-createdAt')
-        .limit(25)
+        .limit(7)
         .exec((err, messages) => {
           if (err) console.error('error getting recent messages ', err);
           console.log('enter event recent messages ', messages);
           io.sockets.in(event.event_id).emit('recentmessages', messages);
         })
-
     });
 
     socket.on('leaveevent', (event) => {

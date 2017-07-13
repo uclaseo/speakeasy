@@ -5,6 +5,5 @@ const dbUrl = 'postgres://oxnpckfb:zXf49-tRBzbO2vd7HqXgvNUh-ExBMlxE@pellefant.db
 let inseokElephantSQL =
   'postgres://yvkyoifu:Zz2k5is9ojQvyf1OgEduwdHdUjAmCHLm@pellefant.db.elephantsql.com:5432/yvkyoifu';
 
-let dbUrl = inseokElephantSQL;
 
 module.exports = dbUrl;

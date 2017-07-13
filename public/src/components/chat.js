@@ -14,14 +14,15 @@ class Chat extends Component {
   constructor() {
     super()
     this.state = {
-      user_name: 'steve',
-      event_id: 2,
+      user_name: '',
+      event_id: null,
       text: '',
-      messages: [{user_name: "steve", text: "whatever", event_id: 2}],
+      messages: [],
       name_chosen: false
     }
     this.handleInputChange = this.handleInputChange.bind(this)
     this.handleSubmitClick = this.handleSubmitClick.bind(this)
+    this.handleSendClick = this.handleSendClick.bind(this)
     this.handleUsernameClick = this.handleUsernameClick.bind(this)
     this._handleLogIn = this._handleLogIn.bind(this)
     this._handleRefreshMessages = this._handleRefreshMessages.bind(this)
@@ -40,17 +41,30 @@ class Chat extends Component {
     this.setState(() => {
       return input
     })
-    console.log(this.state);
+    // console.log(this.state);
   }
 
-  handleSubmitClick() {
-    // ev.preventDefault()
-    console.log('submit message click ')
+  handleSendClick(event) {
+    console.log('refs ', this.refs);
+    event.preventDefault()
     socket.emit('newmessage', {
       event_id: this.state.event_id,
       user_name: this.state.user_name,
       text: this.state.text
     })
+    this.setState({
+      text: ''
+    })
+   
+  }
+
+  handleSubmitClick(event) {
+    // event.preventDefault()
+    this.setState({
+      name_chosen: true
+    })
+    console.log('submit user name and event id ', this.state)
+    this._handleLogIn()
   }
 
   handleUsernameClick(e) {
@@ -73,7 +87,7 @@ class Chat extends Component {
     socket.on('recentmessages', (recentMessages) => {
       console.log('these are the recent messages ', recentMessages);
       let oldMessages = this.state.messages;
-      let newMessages = oldMessages.concat(recentMessages);
+      let newMessages = oldMessages.concat(recentMessages.reverse());
       console.log('these are the new messages: ', newMessages);
       this.setState({
         messages: newMessages
@@ -96,23 +110,25 @@ class Chat extends Component {
 
 
   render() {
-    console.log(this.state);
+    let UserEvent;
+    if (this.state.name_chosen === false) {
+      UserEvent = 
+        <div>
+          <input type="text" onChange={this.handleInputChange} name="user_name"/>
+          <input type="text" onChange={this.handleInputChange} name="event_id"/>
+          <Button bsStyle="primary" type="button" onClick={this.handleSubmitClick}>Submit</Button>
+        </div>
+       
+    } else {
+      UserEvent = '';
+    }
     return (
-      <div>
-      
+      <div>   
         <ChatLog roomMessages={this.state.messages}/>
-        <form>
-          <FormGroup>
-            <InputGroup>
-            <FormControl onChange={this.handleInputChange} name="text"/>
-            <InputGroup.Button> 
-              <Button bsStyle="primary" type="button" onClick={() => this.handleSubmitClick()}> Send </Button>
-            </InputGroup.Button>
-          </InputGroup>
-        </FormGroup>
-        </form>
-        <Button bsStyle="primary" type="button" onClick={() => this._handleLogIn()}>Log In</Button>
-   </div>
+        <input type="text" value={this.state.text} onChange={this.handleInputChange} name="text"/>             
+        <Button bsStyle="primary" type="button" onClick={this.handleSendClick}> Send </Button>        
+        {UserEvent}   
+      </div>
     );
   }
 }
