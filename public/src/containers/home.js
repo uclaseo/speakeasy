@@ -1,7 +1,12 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux'
 import { Link } from 'react-router-dom';
+import SimpleForm from './event_setting';
 
 class Home extends Component {
+  // submit(values){
+  //   console.log("values in submit function", values);
+  // }
   render() {
     return (
       <div>
@@ -57,10 +62,21 @@ class Home extends Component {
               type="button" className="btn btn-secondary btn-lg myBtns">Create Event
             </button>
           </Link>
+          {/*<SimpleForm onSubmit = {this.submit}/>*/}
+          {console.log(this.props)}
         </div>
       </div>
     );
   }
 }
 
-export default Home;
+
+
+
+function mapStateToProps(state) {
+  // Whatever is returned will show up as props inside of BookList
+  return {
+    form: state.form
+  }
+}
+export default connect(mapStateToProps)(Home)

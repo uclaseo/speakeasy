@@ -1,13 +1,14 @@
-/**
- * do we need state? how is state used?
- * how can we only update one state in redux 
- */
+import {fetchActiveEventId} from '../actions/index.js'
 
-export default function(state = null, action){
+export default function(state = {}, action){
+
   switch(action.type){
-    case 'UPDATE_ACTIVE_EVENT_ID':
-      return action.payload
+    case 'SET_ACTIVE_EVENT_ID':
+      console.log("3 event reducer's actionpayload", action.payload)
+      return {event_id: action.payload}
+    default:
+      return state;
   }
-
-  return state
 }
+
+//this.props.eventReducer.event_id
