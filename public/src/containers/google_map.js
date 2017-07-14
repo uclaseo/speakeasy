@@ -12,33 +12,29 @@ class Demo extends React.Component {
 
   }
 
-  // shouldComponentUpdate(nextProps, nextState){
-  //   console.log('next props', nextProps)
-  //   console.log('props in should component update', this.props)
-  //   console.log('next state', nextState)
-  //   console.log("is this.props.coords true?", this.props.coords)
-  //   if (this.props.coords) {
-  //     console.log("inside this.props.coords block")
-  //     this.props.setCurrentLocation({lat:this.props.coords.latitude,lng:this.props.coords.longitude})
-  //     if (this.props.coords.lat === nextProps.coords.latitude && this.props.coords.lng === nextProps.coords.longitude) {
-  //       console.log('inside of if block')
-  //       return false
-  //     }
-  //   }
-  //   console.log("it's about to hit true")
-  //   return true
-  // }
-
-  componentDidUpdate(){
-    console.log("inside ComponentDidMount")
-    if (this.props.coords) {
-      console.log("inside this.props.coords block")
-      this.props.setCurrentLocation({lat:this.props.coords.latitude,lng:this.props.coords.longitude})
-      if (this.props.coords.lat === nextProps.coords.latitude && this.props.coords.lng === nextProps.coords.longitude) {
+  shouldComponentUpdate(nextProps, nextState){
+    console.log('next props', nextProps)
+    console.log('props in should component update', this.props)
+    console.log('next state', nextState)
+    console.log("is this.props.coords true?", this.props.coords)
+    if (this.props.coords !== null) {
+      console.log("this.props.coords.lat", this.props.coords.lat)
+      console.log('nextprops coords lat', nextProps.coords.latitude)
+      console.log('comparison', this.props.coords.lat === nextProps.coords.latitude)
+      if (this.props.coords.latitude === nextProps.coords.latitude && this.props.coords.longitude === nextProps.coords.longitude) {
         console.log('inside of if block')
+        // this.props.setCurrentLocation({lat:nextProps.coords.latitude,lng:nextProps.coords.longitude})
+        return false
       }
     }
-  } 
+    console.log("it's about to hit true")
+    this.props.setCurrentLocation({lat:nextProps.coords.latitude,lng:nextProps.coords.longitude})
+    return true
+  }
+
+  componentDidUpdate(prevProps, prevState){
+    console.log("in componentDidUpdate")
+  }
 
 
   render() {
