@@ -1,4 +1,13 @@
 import React, { Component } from 'react';
-import { connect } from 'react-redux';
-import { bindActionCreators } from 'redux';
-import {}
+
+class Event_Chat extends Component {
+  render() {
+    return (
+      <div>
+        Event Chat
+      </div>
+    );
+  }
+}
+
+export default Event_Chat;
