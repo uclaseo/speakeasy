@@ -15,6 +15,7 @@ export default class Upload_Template extends Component {
   onDrop(acceptedFiles, rejectedFiles) {
     console.log('accepted : ', acceptedFiles)    
     console.log('rejected : ', rejectedFiles)
+    console.log('acceptedFile[0].name', acceptedFiles[0].name)
     this.setState({
       files: acceptedFiles
     })
@@ -24,7 +25,7 @@ export default class Upload_Template extends Component {
     return (
      <section>
         <div className="dropzone">
-          <Dropzone onDrop={this.onDrop.bind(this)}>
+          <Dropzone accept="image/jpeg, image/png" onDrop={this.onDrop.bind(this)}>
             <p>Try dropping some files here, or click to select files to upload.</p>
           </Dropzone>
         </div>
