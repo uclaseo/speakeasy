@@ -8,7 +8,7 @@ const ChatLog = ({roomMessages}) => {
   const messages = roomMessages.map((message) => {
     return (<ChatDetail 
               message={message}
-              key={message._id}
+              key={Math.random()}
             />)
   })
 

@@ -1,6 +1,8 @@
 import axios from 'axios';
 
 export const EDIT_PROFILE = 'EDIT_PROFILE';
+export const ENTER_EVENT = 'ENTER_EVENT';
+export const LEAVE_EVENT = 'LEAVE_EVENT';
 
 export function editUserProfile(values, id) {
   const url = `api/user/profile/${id}`;
@@ -18,6 +20,20 @@ export function setActiveEventId(activeEventId){
   return {
     type : "SET_ACTIVE_EVENT_ID",
     payload: activeEventId
+  }
+}
+
+export function enterEvent() {
+  return {
+    type: 'ENTER_EVENT',
+    payload: true
+  }
+}
+
+export function leaveEvent() {
+  return {
+    type: 'LEAVE_EVENT',
+    payload: false
   }
 }
 
