@@ -22,27 +22,25 @@ class EventChat extends Component {
     this.handleSendClick = this.handleSendClick.bind(this)
     this.handleKeyPress = this.handleKeyPress.bind(this)
     this._handleLogIn = this._handleLogIn.bind(this)
+    this._handleLogOut = this._handleLogOut.bind(this)
     this._handleRefreshMessages = this._handleRefreshMessages.bind(this)
     this._handleRecentMessages = this._handleRecentMessages.bind(this)   
   }
 
 
   componentDidMount() {
-    if (this.props.in_event === true) {
-      this._handleRecentMessages()
-      this._handleRefreshMessages()
-    } else {
-      this._handleLogIn()
-      this._handleRecentMessages()
-      this._handleRefreshMessages()
-    }
+    this._handleLogIn()
+    this._handleRecentMessages()
+    this._handleRefreshMessages()
+  }
+
+  componentWillUnmount() {
+    this._handleLogOut()
   }
 
   handleInputChange(e) {
-    let input = {}
-    input[e.target.name] = e.target.value
-    this.setState(() => {
-      return input
+    this.setState({
+      text: e.target.value
     })
   }
 
@@ -77,8 +75,14 @@ class EventChat extends Component {
       event_id: this.props.event_id,
       user_name: this.props.user_name
     })
-    this.props.enterEvent();
     console.log(this.props.messages);
+  }
+
+  _handleLogOut() {
+    socket.emit('leaveevent', {
+      user_name: this.props.user_name,
+      event_id: this.props.event_id
+    })
   }
 
   _handleRecentMessages() {
