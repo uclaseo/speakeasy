@@ -7,7 +7,6 @@ import eventReducer from './eventReducers';
 const rootReducer = combineReducers({
   profile: authReducer,
   form: formReducer,
-  authReducer,
   eventId:eventReducer
 });
 

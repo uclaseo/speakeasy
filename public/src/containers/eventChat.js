@@ -10,7 +10,7 @@ import { Image, Glyphicon, InputGroup, PageHeader, Col, Button, FormGroup, FormC
 
 const socket = io();
 
-class Chat extends Component {
+class EventChat extends Component {
   constructor(props) {
     super(props)
     this.state = {
@@ -151,11 +151,11 @@ class Chat extends Component {
                 name="text"
                 onKeyPress={this.handleKeyPress}
         />             
-        <Button bsStyle="primary" 
+         <Button bsStyle="primary" 
                 type="button" 
                 onClick={this.handleSendClick}
         > Send </Button>        
-        {UserEvent}   
+        {UserEvent}    
       </div>
     );
   }
@@ -173,4 +173,4 @@ function mapDispatchToProps(dispatch) {
 
 // export default Chat;
 
-export default connect(mapStateToProps, mapDispatchToProps)(Chat);;
+export default connect(mapStateToProps, mapDispatchToProps)(EventChat);;

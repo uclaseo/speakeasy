@@ -41,7 +41,7 @@ export default class App extends Component {
                 <Route path='/friends' component={User_Friends} />
                 <Route path='/chat' component={Chat} />
                 <Route path='/event_setting' component={Event_Setting}/>
-                <Route path='/event_chat' component={EventChat}/>
+                {/* <Route path='/active_event' component={EventChat}/> */}
               </Switch>
           </div>
       </BrowserRouter>
