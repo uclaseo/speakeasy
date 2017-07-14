@@ -21,6 +21,7 @@
   "homepage": "https://github.com/joshuabahr/speakeasy#readme",
   "dependencies": {
     "auth0-js": "^8.8.0",
+    "aws-sdk": "^2.84.0",
     "axios": "^0.16.2",
     "body-parser": "^1.17.2",
     "cors": "^2.8.3",
@@ -35,8 +36,12 @@
     "react": "^15.6.1",
     "react-bootstrap": "^0.31.1",
     "react-dom": "^15.6.1",
+<<<<<<< HEAD
     "react-dropzone": "^3.13.2",
     "react-geolocated": "^2.0.0",
+=======
+    "react-dropzone": "^3.13.3",
+>>>>>>> drop files to upload
     "react-materialize": "^1.0.1",
     "react-redux": "^4.0.0",
     "react-router": "^4.1.1",
