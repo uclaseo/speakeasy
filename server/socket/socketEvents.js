@@ -22,8 +22,8 @@ const socketEvents = (io) => {
     });
 
     socket.on('leaveevent', (event) => {
-      socket.leave(event);
-      console.log('user left room ', event);
+      socket.leave(event.event_id);
+      console.log('user ', event.user_name, 'left room ', event);
     });
 
     socket.on('newmessage', (data) => {

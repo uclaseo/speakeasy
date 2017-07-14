@@ -9,7 +9,7 @@ import User_Friends from '../containers/user_friends';
 import Chat from '../components/chat';
 import Home from '../containers/home';
 import Event_Setting from '../containers/event_setting';
-import Event_Chat from '../containers/eventChat';
+import EventChat from '../containers/eventChat';
 
 import Callback from '../Auth0/Callback';
 import Auth from '../Auth0/Auth0';
@@ -39,8 +39,9 @@ export default class App extends Component {
                 <Route path='/past' component={User_Events} />
                 <Route path='/dm' component={Direct_Messages} />
                 <Route path='/friends' component={User_Friends} />
-                <Route path='/chat' component={Chat} />
+                
                 <Route path='/event_setting' component={Event_Setting}/>
+                <Route path='/active_event' component={EventChat}/> 
               </Switch>
           </div>
       </BrowserRouter>

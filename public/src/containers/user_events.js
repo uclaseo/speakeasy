@@ -12,16 +12,16 @@ class User_Events extends Component {
 
   componentWillMount(){
     axios.get('/api/event/fetchuserevents/1')
-         .then((response)=>{
-            console.log("getting stuff from user 1's events", response.data)
-            this.setState ({
-              userEvents: response.data,
-            })
-            
-         })
-         .catch((error)=>{
-            consol.log("not getting user1's event", error);
-         })
+      .then((response)=>{
+        // console.log("getting stuff from user 1's events", response.data)
+        this.setState ({
+          userEvents: response.data,
+        })
+        
+      })
+      .catch((error)=>{
+        consol.log("not getting user1's event", error);
+      })
   }
   
   render() {
