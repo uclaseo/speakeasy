@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import Dropzone from 'react-dropzone';
+import axios from 'axios';
 
 export default class Upload_Template extends Component {
   constructor() {
@@ -14,12 +15,17 @@ export default class Upload_Template extends Component {
 
   onDrop(acceptedFiles, rejectedFiles) {
     console.log('accepted : ', acceptedFiles)    
-    console.log('rejected : ', rejectedFiles)
     console.log('acceptedFile[0].name', acceptedFiles[0].name)
-    this.setState({
-      files: acceptedFiles
+    let array = this.state.files
+    acceptedFiles.map(file => {
+      array.push(file);
     })
+    this.setState({
+      files: array
+    })
+    console.log('array', array);
   }
+
 
   render() {
     return (
@@ -33,9 +39,10 @@ export default class Upload_Template extends Component {
           <h2>Dropped files</h2>
           <ul>
             {
-              this.state.files.map(f => <li key={f.name}>{f.name} - {f.size} bytes</li>)
+              this.state.files.map(file => <li>{file.name} - {file.size} bytes</li>)
             }
           </ul>
+          <button> upload </button>
         </aside>
       </section>
     )
