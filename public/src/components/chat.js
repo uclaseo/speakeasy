@@ -76,9 +76,7 @@ class Chat extends Component {
   }
 
   handleKeyPress(event) {
-    console.log('key press ', event.key);
     if (event.key === 'Enter') {
-      // this.handleSendClick()
       socket.emit('newmessage', {
         event_id: this.state.event_id,
         user_name: this.state.user_name,
