@@ -6,6 +6,7 @@ export default class Upload_Template extends Component {
   constructor() {
     super()
     this.state = {files: []}
+    this.upload = this.upload.bind(this);
   }
   
 
@@ -24,6 +25,25 @@ export default class Upload_Template extends Component {
       files: array
     })
     console.log('array', array);
+    console.log(this.state.files);
+  }
+
+  upload() {
+    console.log('upload clicked');
+    const images = {};
+    this.state.files.map((file, index) => {
+      images[index] = file.name
+    });
+    console.log(images);
+    axios.post(`/api/event/image/upload`, images)
+    .then((response) => {
+      console.log('response in upload', response)
+
+      axios.put(`${response.data}`, this.state.files[0])
+    })
+    .catch((error) => {
+      console.log('error in upload', error);
+    })
   }
 
 
@@ -39,10 +59,10 @@ export default class Upload_Template extends Component {
           <h2>Dropped files</h2>
           <ul>
             {
-              this.state.files.map(file => <li>{file.name} - {file.size} bytes</li>)
+              this.state.files.map(file => <li key={file.name}>{file.name} - {file.size} bytes</li>)
             }
           </ul>
-          <button> upload </button>
+          <button onClick={this.upload}> upload </button>
         </aside>
       </section>
     )
