@@ -9,7 +9,7 @@ import User_Friends from '../containers/user_friends';
 import Chat from '../components/chat';
 import Home from '../containers/home';
 import Event_Setting from '../containers/event_setting';
-
+import Event_Chat from '../containers/eventChat';
 
 import Callback from '../Auth0/Callback';
 import Auth from '../Auth0/Auth0';

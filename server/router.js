@@ -21,6 +21,8 @@ router.post('/dm/', mongoController.postDirectMessage);
 router.get('/user/fetchUsers', userController.fetchUsers);
 router.post('/user/signup', userController.signupUser);
 router.get('/user/profile/:userId', userController.editUserProfile); //nate
+// router.get('/user/fetchSuggestedFriends', userController.fetchSuggestedFriends) //Michael
+
 
 router.post('/event/create/', eventController.createEvent);
 router.post('/event/joinevent/', eventController.joinEvent);

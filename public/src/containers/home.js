@@ -1,10 +1,13 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux'
 import { Link } from 'react-router-dom';
 import axios from 'axios';
 import Auth from '../Auth0/Auth0';
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 import {fetchProfile} from '../actions/authAction';
+import SimpleForm from './event_setting';
+
 const ROOT_URL = 'localhost:8080';
 
 const auth = new Auth();
@@ -24,19 +27,20 @@ class Home extends Component {
 
   }
 
-registerUser(profile) {
-  axios.post(`/api/user/signup`, profile)
-  .then((response) => {
-    console.log('this is response', response);
-    this.props.fetchProfile(response.data);
-  })
-  .catch((error) => {
-    console.log('this is error', error);
-  })
-}
+  registerUser(profile) {
+    axios.post(`/api/user/signup`, profile)
+    .then((response) => {
+      console.log('this is response', response);
+      this.props.fetchProfile(response.data);
+    })
+    .catch((error) => {
+      console.log('this is error', error);
+    })
+  }
 
-getUserInfo() {
-}
+  getUserInfo() {
+  }
+
 
   render() {
     
@@ -94,7 +98,7 @@ getUserInfo() {
               type="button" className="btn btn-secondary btn-lg myBtns">Create Event
             </button>
           </Link>
-        <Link to="/friends" type="button" className="btn btn-secondary btn-lg">Create Event</Link>
+        
         </div>
       </div>
     );
