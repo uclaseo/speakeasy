@@ -3,7 +3,6 @@ import { connect } from 'react-redux'
 import { Link } from 'react-router-dom';
 import axios from 'axios';
 import Auth from '../Auth0/Auth0';
-import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 import {fetchProfile} from '../actions/authAction';
 import SimpleForm from './event_setting';

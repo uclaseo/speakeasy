@@ -8,7 +8,7 @@ const rootReducer = combineReducers({
   profile: authReducer,
   form: formReducer,
   authReducer,
-  eventReducer
+  eventId:eventReducer
 });
 
 
