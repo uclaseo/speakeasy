@@ -38,9 +38,9 @@ class Navigation_Bar extends Component {
               <li><Link to="/home">Home</Link></li>
               <li><Link to="/friends">Friends</Link></li>
               <li><Link to="/dm">Direct Messages</Link></li> 
-              <li><Link to="/events">Previous Events</Link></li>
+              <li><Link to="/past">Previous Events</Link></li>
               <li><Link to="/profile">Profile</Link></li>
-              <li><Link to="/event">Active Event</Link></li> 
+              <li><Link to="/active_event">Event Chat</Link></li> 
               <li><Link onClick={this.logout} to="/">Logout</Link></li>
             </ul>
           </div>

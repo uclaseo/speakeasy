@@ -67,7 +67,7 @@ export default class App extends Component {
                   : <Direct_Messages auth={auth} {...props} />}
             />
             <Route
-              path="/events"
+              path="/past"
               render={props =>
                 !auth.isAuthenticated()
                   ? <Redirect to="/" />
@@ -95,11 +95,11 @@ export default class App extends Component {
                   : <Event_Setting auth={auth} {...props} />}
             />
             <Route
-              path="/event"
+              path="/active_event"
               render={props =>
                 !auth.isAuthenticated()
                   ? <Redirect to="/" />
-                  : <Chat auth={auth} {...props} />}
+                  : <Event_Chat auth={auth} {...props} />}
             />
           </Switch>
         </div>
