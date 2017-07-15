@@ -28,6 +28,7 @@ class User_Events extends Component {
     return (
       
       <ul>
+          <h3>Previous Event </h3>
           {/*{console.log("what's userID in user_events", this.props.profile.userID)}*/}
           {console.log("userEvents", this.state.userEvents)}
           {this.state.userEvents ? this.state.userEvents.map((userEvent) =>{
