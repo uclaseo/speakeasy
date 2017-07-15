@@ -12,8 +12,6 @@ class Upload_Template extends Component {
   
 
   onDrop(acceptedFiles, rejectedFiles) {
-    console.log('accepted : ', acceptedFiles)    
-    console.log('acceptedFile[0].name', acceptedFiles[0].name)
     let array = this.state.files
     acceptedFiles.map(file => {
       array.push(file);
@@ -21,26 +19,19 @@ class Upload_Template extends Component {
     this.setState({
       files: array
     })
-    console.log('array', array);
-    console.log(this.state.files);
   }
 
   upload() {
-    console.log('upload clicked');
     const images = {};
     this.state.files.map((file, index) => {
-      images[index] = file.name
+      images[index] = Math.floor(Math.random() * 10000) + file.name
     });
-    console.log(images);
-    axios.post(`/api/event/image/upload/geturl`, images)
+     axios.post(`/api/event/image/upload/geturl`, images)
     .then((response) => {
-      console.log('response in upload', response)
       let counter = 0;
       response.data.map((eachFile) => {
-        console.log('counter : ', counter)
-        console.log('file to send at this counter : ' , this.state.files[counter])
         axios.put(eachFile.url, this.state.files[counter])
-        .then(() => {
+        .then((awsResponse) => {
           counter++;
           this.registerImageUrl(eachFile);
         })
@@ -55,14 +46,12 @@ class Upload_Template extends Component {
   registerImageUrl(eachFile) {
     const imageData = {
       name: eachFile.fileName,
-      imageLink: eachFile.url,
+      imageLink: `https://s3-us-west-1.amazonaws.com/inseokspeakeasy/${eachFile.fileName}`,
       userId: this.props.profile.id,
       eventId: 1
     };
-    console.log('image data', imageData);
     axios.post('/api/event/image/upload', imageData)
     .then((response) => {
-      console.log('response', response);
       this.setState({
         files: []
       })

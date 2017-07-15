@@ -46,7 +46,6 @@ const upload = (req, res) => {
     res.status(201).send(response);
   })
   .catch((error) => {
-    console.log('ERRRROR', error);
     res.send(error);
   })
 }
