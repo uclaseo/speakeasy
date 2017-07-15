@@ -17,6 +17,7 @@ import Chat from '../components/chat';
 import DMChat from '../containers/dmChat';
 
 import Upload_Template from '../containers/upload_template';
+import Landing_Page from '../containers/landing_page';
 
 const auth = new Auth();
 const handleAuthentication = (nextState, replace) => {
