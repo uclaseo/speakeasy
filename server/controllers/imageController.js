@@ -26,7 +26,7 @@ const getUrl = (req, res) => {
       if(error) {
         console.log(error);
       }
-      signedUrlList.push(signedUrl);
+      signedUrlList.push({fileName: images[image], url: signedUrl});
     })
   }
 

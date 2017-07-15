@@ -36,11 +36,11 @@ class Upload_Template extends Component {
     .then((response) => {
       console.log('response in upload', response)
       let counter = 0;
-      response.data.map((url) => {
-        axios.put(url, this.state.files[counter])
+      response.data.map((eachFile) => {
+        axios.put(eachFile.url, this.state.files[counter])
         .then(() => {
           counter++;
-          this.registerImageUrl(url);
+          this.registerImageUrl(eachFile);
         })
       })
     })
@@ -49,10 +49,10 @@ class Upload_Template extends Component {
     })
   }
 
-  registerImageUrl(imageUrl) {
+  registerImageUrl(eachFile) {
     const imageData = {
-      name: 'whatever the fuck the file is',
-      imageLink: imageUrl,
+      name: eachFile.fileName,
+      imageLink: eachFile.url,
       userId: this.props.profile.id,
       eventId: 1
     };
