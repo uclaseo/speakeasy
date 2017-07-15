@@ -10,7 +10,8 @@ import Direct_Messages from '../containers/direct_messages';
 import User_Friends from '../containers/user_friends';
 import Home from '../containers/home';
 import Event_Setting from '../containers/event_setting';
-import Event_Chat from '../containers/eventChat';
+import EventChat from '../containers/eventChat';
+import OpenEventsList from '../containers/openEvents';
 import Landing_Page from '../containers/landing_page';
 import Chat from '../components/chat';
 
@@ -99,7 +100,14 @@ export default class App extends Component {
               render={props =>
                 !auth.isAuthenticated()
                   ? <Redirect to="/" />
-                  : <Event_Chat auth={auth} {...props} />}
+                  : <EventChat auth={auth} {...props} />}
+            />
+            <Route
+              path="/open_events"
+              render={props =>
+                !auth.isAuthenticated()
+                  ? <Redirect to="/" />
+                  : <OpenEventsList auth={auth} {...props} />}
             />
           </Switch>
         </div>
