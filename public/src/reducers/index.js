@@ -10,9 +10,14 @@ import openEventsReducers from './openEventsReducers';
 const rootReducer = combineReducers({
   profile: authReducer,
   form: formReducer,
+<<<<<<< HEAD
   eventId: eventReducer,
   event_messages: eventMessagesReducers,
   in_event: enterEventReducers,
+=======
+  eventId:eventReducer
+});
+>>>>>>> upload one photo
 
   open_events: openEventsReducers,
   event: eventReducer

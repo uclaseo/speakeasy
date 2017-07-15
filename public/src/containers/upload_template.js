@@ -1,18 +1,15 @@
 import React, {Component} from 'react';
 import Dropzone from 'react-dropzone';
 import axios from 'axios';
+import { connect } from 'react-redux';
 
-export default class Upload_Template extends Component {
-  constructor() {
-    super()
+class Upload_Template extends Component {
+  constructor(props) {
+    super(props)
     this.state = {files: []}
     this.upload = this.upload.bind(this);
   }
   
-
-  droppedFiles() {
-
-  }
 
   onDrop(acceptedFiles, rejectedFiles) {
     console.log('accepted : ', acceptedFiles)    
@@ -35,14 +32,34 @@ export default class Upload_Template extends Component {
       images[index] = file.name
     });
     console.log(images);
-    axios.post(`/api/event/image/upload`, images)
+    axios.post(`/api/event/image/upload/geturl`, images)
     .then((response) => {
       console.log('response in upload', response)
-
-      axios.put(`${response.data}`, this.state.files[0])
+      let imageUrl = response.data;
+      axios.put(imageUrl, this.state.files[0])
+      .then(() => {
+        this.registerImageUrl(imageUrl)
+      })
     })
     .catch((error) => {
       console.log('error in upload', error);
+    })
+  }
+
+  registerImageUrl(imageUrl) {
+    const imageData = {
+      name: 'whatever the fuck the file is',
+      imageLink: imageUrl,
+      userId: this.props.profile.id,
+      eventId: 1
+    };
+    console.log('image data', imageData);
+    axios.post('/api/event/image/upload', imageData)
+    .then((response) => {
+      console.log('response', response);
+    })
+    .catch((error) => {
+      console.log('error', error);
     })
   }
 
@@ -68,3 +85,11 @@ export default class Upload_Template extends Component {
     )
   }
 }
+
+function mapStateToProps(state) {
+  return {
+    profile: state.profile
+  }
+}
+
+export default connect(mapStateToProps, null)(Upload_Template);

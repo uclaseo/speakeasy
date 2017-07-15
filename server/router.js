@@ -32,7 +32,8 @@ router.get('/event/searchevents', eventController.searchEvents)
 
 //photo uploading
 
-router.post('/event/image/upload/', imageController.uploadImage);
+router.post('/event/image/upload/geturl', imageController.getUrl);
+router.post('/event/image/upload', imageController.upload);
 router.get('/event/image/fetcheventimages/:eventId', imageController.fetchEventImages);
 router.get('/event/image/fetchusereventimages/:userId/:eventId', imageController.fetchUserEventImages);
 
