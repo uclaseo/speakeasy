@@ -3,7 +3,7 @@ import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import { fetchOpenEvents } from './../actions/openEventsActions'
 import OpenEventDetail from './../components/openEventDetail'
-import { setActiveEventId } from './../actions/index'
+import { setActiveEvent } from './../actions/activeEventAction'
 import { clearEventMessages } from './../actions/eventMessagesActions'
 import { Link } from 'react-router-dom'
 
@@ -21,8 +21,7 @@ class OpenEventsList extends Component {
   }
 
   handleEventClick(event) {
-    
-    this.props.setActiveEventId(event.id);
+    this.props.setActiveEvent(event);
   }
 
   render() {
@@ -36,9 +35,7 @@ class OpenEventsList extends Component {
       <div>
         <ul>
           {events}
-        </ul>
-        <button type="button" onClick={this.props.clearEventMessages}>fuck</button>
-       
+        </ul>       
       </div>
     )
   }
@@ -53,7 +50,7 @@ function mapStateToProps(state) {
 function mapDispatchToProps(dispatch) {
   return bindActionCreators({
     fetchOpenEvents: fetchOpenEvents,
-    setActiveEventId: setActiveEventId,
+    setActiveEvent: setActiveEvent,
     clearEventMessages: clearEventMessages
   }, dispatch)
 }

@@ -27,15 +27,16 @@ class EventChat extends Component {
     this._handleRecentMessages = this._handleRecentMessages.bind(this)   
   }
 
-
   componentDidMount() {
     this._handleLogIn()
     this._handleRecentMessages()
     this._handleRefreshMessages()
+    console.log('user_name: ', this.props.user_name, ' event: ', this.props.event);
   }
 
   componentWillUnmount() {
-    socket.removeAllListeners();
+    socket.removeAllListeners()
+    this._handleLogOut()
   }
 
   handleInputChange(e) {
@@ -47,20 +48,19 @@ class EventChat extends Component {
   handleSendClick(event) {
     event.preventDefault()
     socket.emit('newmessage', {
-      event_id: this.props.event_id,
+      event_id: this.props.event.id,
       user_name: this.props.user_name,
       text: this.state.text
     })
     this.setState({
       text: ''
     })
-   
   }
 
   handleKeyPress(event) {
     if (event.key === 'Enter') {
       socket.emit('newmessage', {
-        event_id: this.props.event_id,
+        event_id: this.props.event.id,
         user_name: this.props.user_name,
         text: this.state.text
       })
@@ -73,16 +73,16 @@ class EventChat extends Component {
   _handleLogIn() {
     socket.connect();
     socket.emit('enterevent', {
-      event_id: this.props.event_id,
+      event_id: this.props.event.id,
       user_name: this.props.user_name
     })
-    console.log(this.props.messages);
+    console.log(this.props.messages)
   }
 
   _handleLogOut() {
     socket.emit('leaveevent', {
       user_name: this.props.user_name,
-      event_id: this.props.event_id
+      event_id: this.props.event.id
     })
   }
 
@@ -138,7 +138,7 @@ class EventChat extends Component {
 
 function mapStateToProps(state) {
   return { 
-    event_id: state.eventId.eventId, 
+    event: state.event, 
     user_name: state.profile.name,
     messages: state.event_messages,
     in_event: state.in_event
