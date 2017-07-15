@@ -12,7 +12,6 @@ const rootReducer = combineReducers({
   eventId: eventReducer,
   event_messages: eventMessagesReducers,
   in_event: enterEventReducers,
-  authReducer,
   event:eventReducer
   
 });

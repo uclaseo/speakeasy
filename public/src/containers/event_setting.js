@@ -9,7 +9,9 @@ import { setActiveEventId, setCurrentLocation } from '../actions/index';
 import axios from 'axios';
 import GoogleMap from './google_map';
 import { geolocated } from 'react-geolocated';
+import createBrowserHistory from 'history/createBrowserHistory';
 
+const history = createBrowserHistory({forceRefresh:true});
 
 class Event_Setting extends Component {
 
@@ -41,6 +43,7 @@ class Event_Setting extends Component {
   onSubmit(values) {
     console.log('values in event_setting 1:', values);
     console.log("gettign location from store?", this.props.currentLocation);
+    console.log("userid?", this.props.profile)
     axios.post('/api/event/create', {
       eventName: values.eventname,
       password: values.password,
@@ -51,6 +54,7 @@ class Event_Setting extends Component {
     }).then((response) => {
       console.log("what's event id?", response.data.id)
       this.props.setActiveEventId(response.data.id);
+      history.push("/active_event");
     }).catch((error) => {
       console.log(error)
     })
@@ -82,10 +86,11 @@ class Event_Setting extends Component {
             type="text"
             component={this.renderField}
           />
-
-          <button type="submit" className="btn btn-secondary btn-lg myBtns">
-              Submit
-          </button>
+          
+            <button type="submit" className="btn btn-secondary btn-lg myBtns">
+                Submit
+            </button>
+          
         </form>
         <GoogleMap />    
         {/* <div> latitude {this.props.coords.latitude} </div>
