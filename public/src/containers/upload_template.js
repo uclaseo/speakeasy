@@ -37,11 +37,14 @@ class Upload_Template extends Component {
       console.log('response in upload', response)
       let counter = 0;
       response.data.map((eachFile) => {
+        console.log('counter : ', counter)
+        console.log('file to send at this counter : ' , this.state.files[counter])
         axios.put(eachFile.url, this.state.files[counter])
         .then(() => {
           counter++;
           this.registerImageUrl(eachFile);
         })
+        counter++;
       })
     })
     .catch((error) => {
@@ -60,6 +63,9 @@ class Upload_Template extends Component {
     axios.post('/api/event/image/upload', imageData)
     .then((response) => {
       console.log('response', response);
+      this.setState({
+        files: []
+      })
     })
     .catch((error) => {
       console.log('error', error);
