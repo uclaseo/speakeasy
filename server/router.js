@@ -24,10 +24,11 @@ router.get('/user/profile/:userId', userController.editUserProfile); //nate
 // router.get('/user/fetchSuggestedFriends', userController.fetchSuggestedFriends) //Michael
 
 
-router.post('/event/create/', eventController.createEvent);
-router.post('/event/joinevent/', eventController.joinEvent);
+router.post('/event/create', eventController.createEvent);
+router.post('/event/joinevent', eventController.joinEvent);
 router.get('/event/fetchuserevents/:userId', eventController.fetchUserEvents);
 router.get('/event/searchevents', eventController.searchEvents)
+router.put('/event/close', eventController.closeEvent);
 
 
 //photo uploading

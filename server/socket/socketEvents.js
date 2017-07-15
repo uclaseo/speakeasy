@@ -43,6 +43,17 @@ const socketEvents = (io) => {
       })
     });
 
+    socket.on('closeevent', (data) => {
+      io.of('/').in(data.event_id).clients((error, clients) => {
+        if (error) throw error;
+        console.log('these are the room clients ', clients);
+        clients.forEach((client) => {
+          io.sockets.connected[client].leave(data.event_id);
+        });
+      });
+      io.sockets.in(data.event_id).emit('eventclosed');
+    });
+
     // direct message socket events
     socket.on('enterdm', (dmroom) => {
       socket.join(dmroom);

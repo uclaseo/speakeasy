@@ -5,6 +5,7 @@ import eventReducer from './eventReducers';
 import eventMessagesReducers from './eventMessagesReducers';
 import enterEventReducers from './enterEventReducers';
 import openEventsReducers from './openEventsReducers';
+import activeEventReducers from './activeEventReducers';
 
 
 const rootReducer = combineReducers({
@@ -15,7 +16,7 @@ const rootReducer = combineReducers({
   in_event: enterEventReducers,
 
   open_events: openEventsReducers,
-  event: eventReducer
+  active_event: activeEventReducers
 
 })
 

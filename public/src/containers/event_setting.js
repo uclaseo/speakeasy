@@ -3,6 +3,7 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { Field, reduxForm } from 'redux-form';
 import { Link } from 'react-router-dom';
+import { Redirect } from 'react-router-dom';
 import Auth from '../Auth0/Auth0';
 import { fetchProfile } from '../actions/authAction';
 import { setActiveEventId, setCurrentLocation } from '../actions/index';
@@ -10,14 +11,20 @@ import axios from 'axios';
 import GoogleMap from './google_map';
 import { geolocated } from 'react-geolocated';
 import createBrowserHistory from 'history/createBrowserHistory';
+import { setActiveEvent } from './../actions/activeEventAction';
 
-const history = createBrowserHistory({forceRefresh:true});
+const history = createBrowserHistory();
 
 class Event_Setting extends Component {
 
   constructor(props) {
     super(props);
+
+    this.state = {
+      redirect: false
+    }
   }
+
 
   componentDidMount() {
     // console.log("can i get location from here?", currentLocation);
@@ -53,8 +60,8 @@ class Event_Setting extends Component {
       isLive: values.isLive
     }).then((response) => {
       console.log("what's event id?", response.data.id)
-      this.props.setActiveEventId(response.data.id);
-      history.push("/active_event");
+      this.props.setActiveEvent(response.data)
+      this.setState({ redirect: true })
     }).catch((error) => {
       console.log(error)
     })
@@ -62,6 +69,10 @@ class Event_Setting extends Component {
 
   render() {
     const { handleSubmit } = this.props;
+
+    if (this.state.redirect === true) {
+      return <Redirect to='/active_event'/>;
+    }
 
     return (
       <div id="user-profile">
@@ -127,13 +138,13 @@ function validate(values) {
 }
 
 function mapDispatchToProps(dispatch) {
-  return bindActionCreators({ setActiveEventId, setCurrentLocation }, dispatch)
+  return bindActionCreators({ setActiveEvent, setCurrentLocation }, dispatch)
 }
 
 
 function mapStateToProps(state) {
   return {
-    currentLocation: state.event.currentLocation,
+    currentLocation: state.eventId.currentLocation,
     profile: state.profile
   }
 }
