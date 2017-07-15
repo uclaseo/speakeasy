@@ -16,6 +16,7 @@ class Home extends Component {
   constructor(props) {
     super(props);
     this.registerUser = this.registerUser.bind(this);
+    this.getNearbyEvents = this.getNearbyEvents.bind(this);
   }
 
   componentDidMount() {
@@ -37,7 +38,15 @@ class Home extends Component {
     })
   }
 
-  getUserInfo() {
+
+  getNearbyEvents(){
+    axios.get("/api/event/searchevents")
+    .then((response)=>{
+      console.log("getNearbyEvents",response)
+    })
+    .catch((error) =>{
+      console.log("getNearbyEvents get request failed", error)
+    })
   }
 
 
@@ -62,34 +71,8 @@ class Home extends Component {
                 alt="Image"
               />
             </div>
-            <div className="col-sm-3">
-              <p>Some event..</p>
-              <img
-                src="https://placehold.it/150x80?text=IMAGE"
-                className="img-responsive"
-                style={{ width: '100%' }}
-                alt="Image"
-              />
-            </div>
-            <div className="col-sm-3">
-              <p>Some event...</p>
-              <img
-                src="https://placehold.it/150x80?text=IMAGE"
-                className="img-responsive"
-                style={{ width: '100%' }}
-                alt="Image"
-              />
-            </div>
-            <div className="col-sm-3">
-              <p>Some event...</p>
-              <img
-                src="https://placehold.it/150x80?text=IMAGE"
-                className="img-responsive"
-                style={{ width: '100%' }}
-                alt="Image"
-              />
-            </div>
           </div>
+          {this.getNearbyEvents()}  
           <br />
           <br />
           <Link to="/event_setting">

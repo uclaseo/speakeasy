@@ -11,7 +11,9 @@ const rootReducer = combineReducers({
   form: formReducer,
   eventId: eventReducer,
   event_messages: eventMessagesReducers,
-  in_event: enterEventReducers
+  in_event: enterEventReducers,
+  event:eventReducer
+  
 });
 
 
