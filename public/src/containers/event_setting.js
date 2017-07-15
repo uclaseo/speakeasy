@@ -7,11 +7,18 @@ import Auth from '../Auth0/Auth0';
 import { fetchProfile } from '../actions/authAction';
 import { setActiveEventId } from '../actions/index';
 import axios from 'axios';
+import GoogleMap from './google_map';
+import { geolocated } from 'react-geolocated';
+
 
 class Event_Setting extends Component {
-  
+
   constructor(props) {
     super(props);
+  }
+
+  componentWillMount() {
+    // console.log("can i get location from here?", this.props.coords);
   }
 
   renderField(field) {
@@ -33,13 +40,14 @@ class Event_Setting extends Component {
 
   onSubmit(values) {
     console.log('values in event_setting 1:', values);
+    console.log("gettign location from store?", state.event);
     axios.post('/api/event/create', {
       eventName: values.eventname,
       password: values.password,
-      latitude: values.latitude,
-      longitude: values.longitude,
+      latitude: 100.1,
+      longitude: 100.2,
       isLive: values.isLive
-    }).then((response) =>{
+    }).then((response) => {
       console.log("what's event id?", response.data.id)
       this.props.setActiveEventId(response.data.id);
     }).catch((error) => {
@@ -67,7 +75,7 @@ class Event_Setting extends Component {
             component={this.renderField}
           />
 
-          <Field
+          {/* <Field
             label="Latitude"
             name="latitude"
             type="text"
@@ -79,7 +87,8 @@ class Event_Setting extends Component {
             name="longitude"
             type="text"
             component={this.renderField}
-          />
+          /> */}
+
           <Field
             label="IsLive"
             name="isLive"
@@ -88,9 +97,17 @@ class Event_Setting extends Component {
           />
 
           <button type="submit" className="btn btn-secondary btn-lg myBtns">
-            Submit
+            <Link to="/chat">
+              Submit
+            </Link>
           </button>
         </form>
+          <GoogleMap />    
+        {/* <div> latitude {this.props.coords.latitude} </div>
+        <div> longitude {this.props.coords.longitude} </div>  */}
+        
+
+
       </div>
     );
   }
@@ -123,13 +140,35 @@ function validate(values) {
 }
 
 function mapDispatchToProps(dispatch) {
-  return bindActionCreators({setActiveEventId}, dispatch)
+  return bindActionCreators({ setActiveEventId }, dispatch)
 }
 
+
+// function mapStateToProps(state) {
+//   return {
+//     event: state.event
+//   }
+// }
 
 export default reduxForm({
   validate: validate,
   form: 'EventSettingForm'
-})(connect(mapDispatchToProps, {setActiveEventId})(Event_Setting));
+})(connect( mapDispatchToProps,{ setActiveEventId })(Event_Setting));
 
 
+// geolocated({
+//   positionOptions: {
+//     enableHighAccuracy: false,
+//   },
+//   userDecisionTimeout: 5000,
+// })(Event_Setting);
+
+// export default reduxForm({
+//   validate: validate,
+//   form: 'EventSettingForm'
+// })(connect(mapDispatchToProps, { setActiveEventId })(geolocated({
+//   positionOptions: {
+//     enableHighAccuracy: false,
+//   },
+//   userDecisionTimeout: 5000,
+// })(Event_Setting)));

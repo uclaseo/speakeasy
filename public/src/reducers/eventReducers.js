@@ -7,6 +7,9 @@ export default function(state = {}, action){
       // console.log("3 event reducer's actionpayload", action.payload)
       // return {event_id: action.payload}
       return Object.assign({}, {eventId: action.payload})
+    case 'SET_CURRENT_LOCATION':
+      console.log("3 event reducer's location payload", action.payload)
+      return Object.assign({}, {currentLocation : action.payload})
     default:
       return state;
   }
