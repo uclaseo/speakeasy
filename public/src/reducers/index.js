@@ -17,6 +17,6 @@ const rootReducer = combineReducers({
   open_events: openEventsReducers,
   event: eventReducer
 
-
+})
 
 export default rootReducer;
