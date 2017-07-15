@@ -4,7 +4,6 @@ const Schema = mongoose.Schema;
 const messageSchema = new Schema({
   event_id: {
     type: Number,
-    unique: true,
     required: true
   },
   user_name: {

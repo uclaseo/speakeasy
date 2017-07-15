@@ -3,13 +3,14 @@ import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
 import { createStore, applyMiddleware } from 'redux';
 import { AppContainer } from 'react-hot-loader';
-import ReductPromise from 'redux-promise';
+import ReduxPromise from 'redux-promise';
 import rootReducer from './src/reducers/index';
 import App from './src/components/app';
+import thunk from 'redux-thunk';
 
 const store = createStore(
   rootReducer,
-  applyMiddleware()
+  applyMiddleware(ReduxPromise)
 );
 
 
