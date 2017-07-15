@@ -10,9 +10,17 @@ import { editUserProfile } from '../actions/index';
 const auth = new Auth();
 
 class User_Profile extends Component {
-  
   constructor(props) {
     super(props);
+
+    this.state = {
+      profile: this.props.profile,
+      defaultPic: 'http://bit.ly/2tRR5GW'
+    };
+  }
+
+  componentDidMount() {
+    console.log('user profile from redux:', this.props.profile);
   }
 
   renderField(field) {
@@ -24,7 +32,13 @@ class User_Profile extends Component {
         <label>
           {field.label}
         </label>
-        <input className="form-control" type="text" {...field.input} />
+        <input
+          className="form-control"
+          type={field.type}
+          value={field.value}
+          placeholder={field.placeholder}
+          {...field.input}
+        />
         <div className="help-block">
           {touched ? error : ''}
         </div>
@@ -32,88 +46,104 @@ class User_Profile extends Component {
     );
   }
 
+  renderProfilePhoto() {
+    return (
+      <div>
+        <img src={profile.photo || this.state.defaultPic} />
+      </div>
+    );
+  }
+
+  suggestName(name) {
+    name = name || '';
+    let idx = name.indexOf('@');
+    return idx > 0 ? name.substring(0, idx) : name;
+  }
+
+  suggestChatHandle(handle, name) {
+    handle = handle || '';
+    name = this.props.profile.name || '';
+    return handle ? handle : name.substring(0, 4);
+  }
+
   onSubmit(values, id) {
     console.log('values:', values);
-    console.log('this.props', this.props);
     this.props.editUserProfile(values, 6);
   }
 
   render() {
     const { handleSubmit } = this.props;
-    console.log('render in userprofile', this.props)
+    const { profile } = this.props;
+
     return (
       <div id="user-profile">
-        <form onSubmit={handleSubmit(this.onSubmit.bind(this))}>
-          <Field
-            label="Name"
-            name="name"
-            type="text"
-            component={this.renderField}
+        <div>
+          <img
+            src={profile.photo || 'http://bit.ly/2tRR5GW'}
+            id="user-profile-pic"
+            className="img-circle img-responsive"
+            width="304"
+            height="236"
           />
-    
+        </div>
+
+        <form onSubmit={handleSubmit(this.onSubmit.bind(this))}>
+          <div>
+            <Field
+              label="Your name"
+              name="name"
+              type="text"
+              placeholder={this.suggestName(profile.name)}
+              component={this.renderField}
+            />
+          </div>
           <Field
-            label="Handle"
+            label="Create a chat handle name"
             name="handle"
             type="text"
+            placeholder={this.suggestChatHandle(profile.handle, profile.name)}
             component={this.renderField}
           />
-
-          <Field
-            label="Email"
-            name="email"
-            type="text"
-            component={this.renderField}
-          />
-
-          <Field
-            label="Password"
-            name="password"
-            type="text"
-            component={this.renderField}
-          />
-
-          <button type="submit" className="btn btn-secondary btn-lg myBtns">
-            Submit
-          </button>
-
-
         </form>
+        <div className="container text-center">
+          <Link to="/home">
+            <button type="submit" className="btn btn-secondary btn-lg my-btns">
+              Submit
+            </button>
+          </Link>
+
+          <Link to="/home">
+            <button type="submit" className="btn btn-danger btn-lg my-btns">
+              Cancel
+            </button>
+          </Link>
+        </div>
       </div>
     );
   }
 }
 
-function validate(values) {
-  const error = {};
-  if (!values.name) {
-    error.name = 'Enter your name';
-  }
+//don't need validation right now, but let's keep this for now just in case
+// function validate(values) {
+//   const error = {};
+//   if (!values.name) {
+//     error.name = 'Enter your name';
+//   }
 
-  if (!values.handle) {
-    error.handle = 'Enter your handle';
-  }
+//   if (!values.handle) {
+//     error.handle = 'Enter a chat handle name';
+//   }
 
-  if (!values.email) {
-    error.email = 'Enter your email';
-  }
-
-  if (!values.password) {
-    error.password = 'Enter your password';
-  }
-
-  return error;
-}
+//   return error;
+// }
 
 function mapStateToProps(state) {
   return {
     profile: state.profile
-  }
+  };
 }
 
-
 export default reduxForm({
-  validate: validate,
+  // validate: validate,
   form: 'ProfileForm'
 })(connect(mapStateToProps, { editUserProfile, fetchProfile })(User_Profile));
-
-

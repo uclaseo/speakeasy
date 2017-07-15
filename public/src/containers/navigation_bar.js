@@ -35,15 +35,13 @@ class Navigation_Bar extends Component {
           </div>
           <div className="collapse navbar-collapse" id="myNavbar">
             <ul className="nav navbar-nav navbar-right">
-              <li><Link to="/">Home</Link></li>
+              <li><Link to="/home">Home</Link></li>
               <li><Link to="/friends">Friends</Link></li>
               <li><Link to="/dm">Direct Messages</Link></li> 
               <li><Link to="/past">Previous Events</Link></li>
-              <li><Link to="/profile">Profile</Link></li> 
-              <li><Link onClick={this.login} to="/">Login</Link></li>
-              <li><Link onClick={this.logout} to="/">Logout</Link></li>
-             
+              <li><Link to="/profile">Profile</Link></li>
               <li><Link to="/active_event">Event Chat</Link></li> 
+              <li><Link onClick={this.logout} to="/">Logout</Link></li>
             </ul>
           </div>
         </div>
