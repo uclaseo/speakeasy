@@ -10,22 +10,28 @@ AWS.config.secretAccessKey = env.AWS_SECRET_ACCESS_KEY;
 
 const getUrl = (req, res) => {
 
-  var s3 = new AWS.S3({
+  const s3 = new AWS.S3({
     signatureVersion: 'v4'
   });
-  var s3_params = {
-    Bucket: env.BUCKET,
-    Key: req.body[0],
-    Expires: 250
+  const signedUrlList = [];
+  const images = req.body;
+  
+  for (let image in images) {
+    let s3_params = {
+      Bucket: env.BUCKET,
+      Key: images[image],
+      Expires: 250
+    };
+    s3.getSignedUrl('putObject', s3_params, function(error, signedUrl) {
+      if(error) {
+        console.log(error);
+      }
+      signedUrlList.push(signedUrl);
+    })
   }
 
-  s3.getSignedUrl('putObject', s3_params, function(error, signedUrl) {
-    if(error) {
-      console.log(error);
-    }
-    res.send(signedUrl);
-  })
-};
+  res.status(201).send(signedUrlList);
+}
 
 const upload = (req, res) => {
   Table.Image.findOrCreate({

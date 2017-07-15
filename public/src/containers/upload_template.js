@@ -35,10 +35,13 @@ class Upload_Template extends Component {
     axios.post(`/api/event/image/upload/geturl`, images)
     .then((response) => {
       console.log('response in upload', response)
-      let imageUrl = response.data;
-      axios.put(imageUrl, this.state.files[0])
-      .then(() => {
-        this.registerImageUrl(imageUrl)
+      let counter = 0;
+      response.data.map((url) => {
+        axios.put(url, this.state.files[counter])
+        .then(() => {
+          counter++;
+          this.registerImageUrl(url);
+        })
       })
     })
     .catch((error) => {
