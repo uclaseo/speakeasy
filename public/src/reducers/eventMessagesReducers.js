@@ -4,7 +4,7 @@ export default function(state = [], action) {
       if (action.payload.length === 0) {
         return state;
       } else {
-        return [...state, action.payload];
+        return action.payload;
       }
     case 'NEW_EVENT_MESSAGE':
       return [...state, action.payload];

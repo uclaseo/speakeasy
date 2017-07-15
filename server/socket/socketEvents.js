@@ -2,11 +2,13 @@ const Message = require('./../models/messageModel');
 const DirectMessage = require('./../models/dmModel');
 
 const socketEvents = (io) => {
-  io.on('connection', (socket) => {
+  io.on('connect', (socket) => {
     console.log('is socket working?????', socket.connected);
 
     // Event message socket events
     socket.on('enterevent', (event) => {
+      
+    
       socket.join(event.event_id);
       socket.room = event.event_id;
       console.log('user ', event.user_name, 'joined room ', socket.room);
@@ -25,7 +27,6 @@ const socketEvents = (io) => {
 
     socket.on('leaveevent', (event) => {
       socket.leave(event.event_id);
-      console.log('user ', event.user_name, 'left room ', event);
     });
 
     socket.on('newmessage', (data) => {
