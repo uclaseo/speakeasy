@@ -28,7 +28,11 @@ class OpenEventsList extends Component {
   render() {
     let events = this.props.open_events.map((event) => {
       return (
+<<<<<<< HEAD
         <OpenEventDetail event={event} key={event.id} eventClick={this.handleEventClick}/>
+=======
+        <OpenEventDetail event={event} eventClick={this.handleEventClick}/>
+>>>>>>> add clear event messages
       )
     })
 

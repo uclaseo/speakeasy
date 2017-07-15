@@ -35,7 +35,11 @@ class EventChat extends Component {
   }
 
   componentWillUnmount() {
+<<<<<<< HEAD
     socket.removeAllListeners();
+=======
+    socket.disconnect()
+>>>>>>> add clear event messages
   }
 
   handleInputChange(e) {
