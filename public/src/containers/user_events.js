@@ -28,7 +28,6 @@ class User_Events extends Component {
   
   render() {
     return (
-      
       <ul>
           <h3>Previous Event </h3>
           {/*{console.log("what's userID in user_events", this.props.profile.userID)}*/}
@@ -39,8 +38,7 @@ class User_Events extends Component {
           {/*{this.state.userEvents[0].eventName}*/}
           {/*{console.log("userEvents",this.state.userEvents[0])}*/}
       </ul>
-      
-    );
+    )
   }
 }
 
