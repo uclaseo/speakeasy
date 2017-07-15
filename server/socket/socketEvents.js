@@ -10,6 +10,8 @@ const socketEvents = (io) => {
       socket.join(event.event_id);
       socket.room = event.event_id;
       console.log('user ', event.user_name, 'joined room ', socket.room);
+      var room = io.sockets.adapter.rooms[socket.room];
+      console.log('room number is ', room.length);
       Message.find({ event_id: event.event_id })
         .select('createdAt text user_name event_id')
         .sort('-createdAt')

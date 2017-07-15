@@ -8,6 +8,9 @@ export default function(state = [], action) {
       }
     case 'NEW_EVENT_MESSAGE':
       return [...state, action.payload];
+
+    case 'CLEAR_EVENT_MESSAGES':
+      return action.payload;
     default: return state;
   }
 }

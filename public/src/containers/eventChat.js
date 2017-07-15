@@ -35,7 +35,7 @@ class EventChat extends Component {
   }
 
   componentWillUnmount() {
-    this._handleLogOut()
+    socket.disconnect()
   }
 
   handleInputChange(e) {
@@ -71,6 +71,7 @@ class EventChat extends Component {
   }
   
   _handleLogIn() {
+    socket.connect();
     socket.emit('enterevent', {
       event_id: this.props.event_id,
       user_name: this.props.user_name
@@ -153,4 +154,4 @@ function mapDispatchToProps(dispatch) {
   }, dispatch)
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(EventChat);
+export default connect(mapStateToProps, mapDispatchToProps)(EventChat)
