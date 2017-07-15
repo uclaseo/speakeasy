@@ -13,11 +13,9 @@ const rootReducer = combineReducers({
   eventId: eventReducer,
   event_messages: eventMessagesReducers,
   in_event: enterEventReducers,
+
   open_events: openEventsReducers,
   event: eventReducer
-  
-
-});
 
 
 
