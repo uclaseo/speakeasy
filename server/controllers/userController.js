@@ -6,10 +6,7 @@ const signupUser = (req, res) => {
   Table.User
     .findOrCreate({
       where: {
-        name: req.body.name,
         email: req.body.email,
-        latitude: '100.00101010',
-        longitude: '100.1010100101'
       }
     })
     .spread((response, isCreated) => {
@@ -40,14 +37,10 @@ const fetchUsers = (req, res) => {
 
 const editUserProfile = (req, res) => {
   let id = req.params.userId;
-  console.log('req.params.id:', id);
-  console.log('req:', req);
-    
-
   Table.User
     .update({
-      'name': 'blah-ba-blahrrr',
-      'handle': 'suga-bear'
+      'name': req.body.name,
+      'handle': req.body.handle
     }, {
       where: {
         'id': id

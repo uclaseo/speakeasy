@@ -11,8 +11,6 @@ const User = db.define('user', {
   longitude: Sequelize.FLOAT
 });
 
-
-
 const Event = db.define('event', {
   eventName: Sequelize.STRING,
   password: Sequelize.STRING,  // integer for simplicity or string?

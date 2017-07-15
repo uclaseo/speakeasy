@@ -11,13 +11,13 @@ const auth = new Auth();
 
 class User_Profile extends Component {
   constructor(props) {
-    super(props);
-
+    super(props)
     this.state = {
-      profile: this.props.profile, //not necessary
-      defaultPic: 'http://bit.ly/2tRR5GW'
-    };
+      submitted: false
+    }
   }
+
+
 
   componentDidMount() {
     console.log('user profile from redux:', this.props.profile);
@@ -45,29 +45,34 @@ class User_Profile extends Component {
     );
   }
 
-  renderProfilePhoto() {
-    return (
-      <div>
-        <img src={profile.photo || this.state.defaultPic} />
-      </div>
-    );
+  renderSuccess() {
+    if (this.state.submitted) {
+      return(
+        <div>Successfully updated profile</div>
+      )
+    } else {
+      return(
+        <div></div>
+      )
+    }
   }
 
-  suggestName(name) {
-    name = name || '';
-    let idx = name.indexOf('@');
-    return idx > 0 ? name.substring(0, idx) : name;
+  suggestName() {
+    const { email, name, handle } = this.props.profile;
+    let tmp = email || '';
+    return name || tmp.substring(0, tmp.indexOf('@'))
   }
 
-  suggestChatHandle(handle, name) {
-    handle = handle || '';
-    name = this.props.profile.name || '';
-    return handle ? handle : name.substring(0, 4);
+  suggestChatHandle() {
+    const { email, name, handle } = this.props.profile;
+    let tmp = email || '';
+    return handle ? handle : tmp.substring(0, 4);
   }
 
   onSubmit(values) {
     console.log('values:', values, this.props.profile.id);
     this.props.editUserProfile(values, this.props.profile.id);
+    this.setState({submitted: true})
   }
 
   render() {
@@ -94,7 +99,7 @@ class User_Profile extends Component {
               label="Your name"
               name="name"
               type="text"
-              placeholder={this.suggestName(profile.name)}
+              placeholder={this.suggestName()}
               component={this.renderField}
             />
           </div>
@@ -102,7 +107,7 @@ class User_Profile extends Component {
             label="Create a chat handle name"
             name="handle"
             type="text"
-            placeholder={this.suggestChatHandle(profile.handle, profile.name)}
+            placeholder={this.suggestChatHandle()}
             component={this.renderField}
           />
 
@@ -115,7 +120,10 @@ class User_Profile extends Component {
               Cancel
             </button>
           </Link>
+
+
         </form>
+          {this.renderSuccess()}
       </div>
     );
   }
@@ -136,7 +144,7 @@ function validate(values) {
 
 function mapStateToProps(state) {
   return {
-    profile: state.profile
+    profile: state.profile,
   };
 }
 
