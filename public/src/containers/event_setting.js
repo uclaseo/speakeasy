@@ -5,7 +5,7 @@ import { Field, reduxForm } from 'redux-form';
 import { Link } from 'react-router-dom';
 import Auth from '../Auth0/Auth0';
 import { fetchProfile } from '../actions/authAction';
-import { setActiveEventId } from '../actions/index';
+import { setActiveEventId, setCurrentLocation } from '../actions/index';
 import axios from 'axios';
 import GoogleMap from './google_map';
 import { geolocated } from 'react-geolocated';
@@ -17,8 +17,8 @@ class Event_Setting extends Component {
     super(props);
   }
 
-  componentWillMount() {
-    // console.log("can i get location from here?", this.props.coords);
+  componentDidMount() {
+    // console.log("can i get location from here?", currentLocation);
   }
 
   renderField(field) {
@@ -40,12 +40,13 @@ class Event_Setting extends Component {
 
   onSubmit(values) {
     console.log('values in event_setting 1:', values);
-    console.log("gettign location from store?", state.event);
+    console.log("gettign location from store?", this.props.currentLocation);
     axios.post('/api/event/create', {
       eventName: values.eventname,
       password: values.password,
-      latitude: 100.1,
-      longitude: 100.2,
+      latitude: this.props.currentLocation.lat,
+      longitude: this.props.currentLocation.lng,
+      userId: this.props.profile.id,
       isLive: values.isLive
     }).then((response) => {
       console.log("what's event id?", response.data.id)
@@ -75,20 +76,6 @@ class Event_Setting extends Component {
             component={this.renderField}
           />
 
-          {/* <Field
-            label="Latitude"
-            name="latitude"
-            type="text"
-            component={this.renderField}
-          />
-
-          <Field
-            label="Longitude"
-            name="longitude"
-            type="text"
-            component={this.renderField}
-          /> */}
-
           <Field
             label="IsLive"
             name="isLive"
@@ -97,17 +84,12 @@ class Event_Setting extends Component {
           />
 
           <button type="submit" className="btn btn-secondary btn-lg myBtns">
-            <Link to="/chat">
               Submit
-            </Link>
           </button>
         </form>
-          <GoogleMap />    
+        <GoogleMap />    
         {/* <div> latitude {this.props.coords.latitude} </div>
         <div> longitude {this.props.coords.longitude} </div>  */}
-        
-
-
       </div>
     );
   }
@@ -140,20 +122,21 @@ function validate(values) {
 }
 
 function mapDispatchToProps(dispatch) {
-  return bindActionCreators({ setActiveEventId }, dispatch)
+  return bindActionCreators({ setActiveEventId, setCurrentLocation }, dispatch)
 }
 
 
-// function mapStateToProps(state) {
-//   return {
-//     event: state.event
-//   }
-// }
+function mapStateToProps(state) {
+  return {
+    currentLocation: state.event.currentLocation,
+    profile: state.profile
+  }
+}
 
 export default reduxForm({
   validate: validate,
   form: 'EventSettingForm'
-})(connect( mapDispatchToProps,{ setActiveEventId })(Event_Setting));
+})(connect( mapStateToProps,mapDispatchToProps)(Event_Setting));
 
 
 // geolocated({
