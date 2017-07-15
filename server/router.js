@@ -29,9 +29,15 @@ router.post('/event/joinevent/', eventController.joinEvent);
 router.get('/event/fetchuserevents/:userId', eventController.fetchUserEvents);
 router.get('/event/searchevents', eventController.searchEvents)
 
-router.post('/image/upload/', imageController.uploadImage);
-router.get('/image/fetcheventimages/:eventId', imageController.fetchEventImages);
-router.get('/image/fetchusereventimages/:userId/:eventId', imageController.fetchUserEventImages);
+
+//photo uploading
+
+router.post('/event/image/upload/geturl', imageController.getUrl);
+router.post('/event/image/upload', imageController.upload);
+router.get('/event/image/fetcheventimages/:eventId', imageController.fetchEventImages);
+router.get('/event/image/fetchusereventimages/:userId/:eventId', imageController.fetchUserEventImages);
+
+
 
 
 

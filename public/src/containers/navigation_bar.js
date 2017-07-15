@@ -43,6 +43,7 @@ class Navigation_Bar extends Component {
               <li><Link to="/open_events">Events</Link></li>
               <li><Link to="/active_event">Event Chat</Link></li> 
               <li><Link onClick={this.logout} to="/">Logout</Link></li>
+              <li><Link to="/upload">UPLOAD</Link></li>
             </ul>
           </div>
         </div>
