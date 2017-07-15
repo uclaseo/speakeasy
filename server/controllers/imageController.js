@@ -1,9 +1,39 @@
 const Table = require('../models/tableModels');
 const existed = {status: 'already exists'};
 
+const env = require('../../aws.config');
+const AWS = require('aws-sdk');
+AWS.config = new AWS.Config();
+AWS.config.region = 'us-west-1';
+AWS.config.accessKeyId = env.AWS_ACCESS_KEY;
+AWS.config.secretAccessKey = env.AWS_SECRET_ACCESS_KEY;
 
+const getUrl = (req, res) => {
 
-const uploadImage = (req, res) => {
+  const s3 = new AWS.S3({
+    signatureVersion: 'v4'
+  });
+  const signedUrlList = [];
+  const images = req.body;
+  
+  for (let image in images) {
+    let s3_params = {
+      Bucket: env.BUCKET,
+      Key: images[image],
+      Expires: 250
+    };
+    s3.getSignedUrl('putObject', s3_params, function(error, signedUrl) {
+      if(error) {
+        console.log(error);
+      }
+      signedUrlList.push({fileName: images[image], url: signedUrl});
+    })
+  }
+
+  res.status(201).send(signedUrlList);
+}
+
+const upload = (req, res) => {
   Table.Image.findOrCreate({
     where: {
       name: req.body.name,
@@ -12,17 +42,15 @@ const uploadImage = (req, res) => {
       eventId: req.body.eventId
     }
   })
-  .spread((response, isCreated) => {
-    if (isCreated) {
-      res.status(201).send(response);
-    } else {
-      res.send(existed);
-    }
+  .then((response) => {
+    res.status(201).send(response);
   })
   .catch((error) => {
     res.send(error);
-  });
-};
+  })
+}
+
+
 
 
 const fetchEventImages = (req, res) => {
@@ -61,7 +89,8 @@ const fetchUserEventImages = (req, res) => {
 
 
 module.exports = {
-  uploadImage: uploadImage,
+  getUrl: getUrl,
+  upload: upload,
   fetchEventImages: fetchEventImages,
   fetchUserEventImages: fetchUserEventImages
 }

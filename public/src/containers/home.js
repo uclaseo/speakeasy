@@ -80,7 +80,6 @@ class Home extends Component {
               type="button" className="btn btn-secondary btn-lg myBtns">Create Event
             </button>
           </Link>
-        
         </div>
       </div>
     );

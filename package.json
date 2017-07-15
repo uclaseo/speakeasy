@@ -21,6 +21,7 @@
   "homepage": "https://github.com/joshuabahr/speakeasy#readme",
   "dependencies": {
     "auth0-js": "^8.8.0",
+    "aws-sdk": "^2.84.0",
     "axios": "^0.16.2",
     "body-parser": "^1.17.2",
     "cors": "^2.8.3",

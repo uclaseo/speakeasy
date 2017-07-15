@@ -51,7 +51,7 @@ const DM_Message = db.define('dm_message', {
 
 const Image = db.define('image', {
   name: Sequelize.STRING,
-  imageLink: Sequelize.STRING
+  imageLink: Sequelize.TEXT,
 });
 
 const User_Event = db.define('user_event', {

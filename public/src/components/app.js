@@ -15,6 +15,8 @@ import OpenEventsList from '../containers/openEvents';
 import Landing_Page from '../containers/landing_page';
 import Chat from '../components/chat';
 
+import Upload_Template from '../containers/upload_template';
+
 const auth = new Auth();
 const handleAuthentication = (nextState, replace) => {
   if (/access_token|id_token|error/.test(nextState.location.hash)) {
@@ -109,6 +111,8 @@ export default class App extends Component {
                   ? <Redirect to="/" />
                   : <OpenEventsList auth={auth} {...props} />}
             />
+                {/* texting upload  */}
+            <Route path='/upload' component={Upload_Template}/>
           </Switch>
         </div>
       </BrowserRouter>
