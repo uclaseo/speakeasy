@@ -17,8 +17,6 @@ class User_Profile extends Component {
     }
   }
 
-
-
   componentDidMount() {
     console.log('user profile from redux:', this.props.profile);
   }
