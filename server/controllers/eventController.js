@@ -87,11 +87,24 @@ const searchEvents = (req, res) => {
   });
 };
 
+const closeEvent = (req, res) => {
+  Table.Event.update({
+    isLive: false
+  },{ where: { id: req.body.event_id }})
+    .then(() => {
+      res.status(201).send('event closed');
+    })
+    .catch((err) => {
+      console.error('error closing event ', err);
+    })
+}
+
 
 module.exports = {
 
   createEvent: createEvent,
   fetchUserEvents: fetchUserEvents,
   joinEvent: joinEvent,
-  searchEvents: searchEvents
+  searchEvents: searchEvents,
+  closeEvent: closeEvent
 }

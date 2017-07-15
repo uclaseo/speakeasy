@@ -6,7 +6,9 @@ import ChatDetail from '../components/chatDetail'
 import ChatLog from '../components/chatLog'
 import { Image, Glyphicon, InputGroup, PageHeader, Col, Button, FormGroup, FormControl } from 'react-bootstrap'
 import { recentEventMessages, newEventMessage } from '../actions/eventMessagesActions'
-import { enterEvent, leaveEvent } from '../actions/index';
+import { enterEvent, leaveEvent } from '../actions/index'
+import { Redirect } from 'react-router-dom'
+import axios from 'axios'
 
 const socket = io();
 
@@ -15,22 +17,26 @@ class EventChat extends Component {
     super(props);
 
     this.state = {
-      text: ''
+      text: '',
+      closed: false
     };
 
     this.handleInputChange = this.handleInputChange.bind(this)
     this.handleSendClick = this.handleSendClick.bind(this)
     this.handleKeyPress = this.handleKeyPress.bind(this)
+    this.handleCloseClick = this.handleCloseClick.bind(this)
     this._handleLogIn = this._handleLogIn.bind(this)
     this._handleLogOut = this._handleLogOut.bind(this)
     this._handleRefreshMessages = this._handleRefreshMessages.bind(this)
-    this._handleRecentMessages = this._handleRecentMessages.bind(this)   
+    this._handleRecentMessages = this._handleRecentMessages.bind(this) 
+    this._handleClosedEvent = this._handleClosedEvent.bind(this)  
   }
 
   componentDidMount() {
     this._handleLogIn()
     this._handleRecentMessages()
     this._handleRefreshMessages()
+    this._handleClosedEvent()
     console.log('user_name: ', this.props.user_name, ' event: ', this.props.event);
   }
 
@@ -69,6 +75,17 @@ class EventChat extends Component {
       })
     }
   }
+
+  handleCloseClick(event) {
+    event.preventDefault()
+    socket.emit('closeevent', { event_id: this.props.event.id });
+    axios.put('/api/event/close', { event_id: this.props.event.id })
+      .then(() => {
+        this.setState({
+          closed: true
+        })
+      })
+  }
   
   _handleLogIn() {
     socket.connect();
@@ -98,9 +115,34 @@ class EventChat extends Component {
     })
   }
 
+  _handleClosedEvent() {
+    socket.on('eventclosed', () => {
+      this.setState({
+        closed: true
+      })
+    })
+  }
+
   render() {
+    let closeEvent;
+    
+    if (this.props.user_id === this.props.event.userId) {
+      closeEvent =  <button type="button"
+                            onClick={this.handleCloseClick}
+                    >Close Event</button>
+    } else {
+      closeEvent = '';
+    }
+
+    if (this.state.closed === true) {
+      return (
+        <Redirect to='/open_events' />
+      )
+    }
+
     if (this.props.messages.length === 0) {
       return  <div>
+                {closeEvent}
                 <input  
                   type="text" 
                   value={this.state.text}
@@ -120,6 +162,7 @@ class EventChat extends Component {
 
     return (
       <div>   
+        {closeEvent}
         <ChatLog roomMessages={this.props.messages}/>
         <input  
           type="text" 
@@ -138,8 +181,9 @@ class EventChat extends Component {
 
 function mapStateToProps(state) {
   return { 
-    event: state.event, 
+    event: state.active_event, 
     user_name: state.profile.name,
+    user_id: state.profile.id,
     messages: state.event_messages,
     in_event: state.in_event
   }

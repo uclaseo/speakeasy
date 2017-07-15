@@ -16,7 +16,7 @@ const rootReducer = combineReducers({
   in_event: enterEventReducers,
 
   open_events: openEventsReducers,
-  event: eventReducer
+  active_event: activeEventReducers
 
 })
 

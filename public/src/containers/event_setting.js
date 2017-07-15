@@ -11,6 +11,7 @@ import axios from 'axios';
 import GoogleMap from './google_map';
 import { geolocated } from 'react-geolocated';
 import createBrowserHistory from 'history/createBrowserHistory';
+import { setActiveEvent } from './../actions/activeEventAction';
 
 const history = createBrowserHistory();
 
@@ -59,7 +60,7 @@ class Event_Setting extends Component {
       isLive: values.isLive
     }).then((response) => {
       console.log("what's event id?", response.data.id)
-      this.props.setActiveEventId(response.data.id)
+      this.props.setActiveEvent(response.data)
       this.setState({ redirect: true })
     }).catch((error) => {
       console.log(error)
@@ -137,13 +138,13 @@ function validate(values) {
 }
 
 function mapDispatchToProps(dispatch) {
-  return bindActionCreators({ setActiveEventId, setCurrentLocation }, dispatch)
+  return bindActionCreators({ setActiveEvent, setCurrentLocation }, dispatch)
 }
 
 
 function mapStateToProps(state) {
   return {
-    currentLocation: state.event.currentLocation,
+    currentLocation: state.eventId.currentLocation,
     profile: state.profile
   }
 }
