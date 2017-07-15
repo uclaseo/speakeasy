@@ -40,12 +40,18 @@ const fetchUsers = (req, res) => {
 
 const editUserProfile = (req, res) => {
   let id = req.params.userId;
+  console.log('req.params.id:', id);
+  console.log('req:', req);
+    
 
   Table.User
-    .findOne({where: {id: id}}) //this will change for sure
-    .then(response => {
-      console.log('SOME USER:', JSON.stringify(response.body));
-      res.status(200).send(response);
+    .update({
+      'name': 'blah-ba-blahrrr',
+      'handle': 'suga-bear'
+    }, {
+      where: {
+        'id': id
+      }
     })
     .catch(error => {
       res.send(error);

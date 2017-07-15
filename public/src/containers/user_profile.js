@@ -14,7 +14,7 @@ class User_Profile extends Component {
     super(props);
 
     this.state = {
-      profile: this.props.profile,
+      profile: this.props.profile, //not necessary
       defaultPic: 'http://bit.ly/2tRR5GW'
     };
   }
@@ -34,8 +34,7 @@ class User_Profile extends Component {
         </label>
         <input
           className="form-control"
-          type={field.type}
-          value={field.value}
+          type="text"
           placeholder={field.placeholder}
           {...field.input}
         />
@@ -66,14 +65,16 @@ class User_Profile extends Component {
     return handle ? handle : name.substring(0, 4);
   }
 
-  onSubmit(values, id) {
-    console.log('values:', values);
-    this.props.editUserProfile(values, 6);
+  onSubmit(values) {
+    console.log('values:', values, this.props.profile.id);
+    this.props.editUserProfile(values, this.props.profile.id);
   }
 
   render() {
     const { handleSubmit } = this.props;
     const { profile } = this.props;
+
+    console.log('this.props from user_profile:', this.props);
 
     return (
       <div id="user-profile">
@@ -104,38 +105,34 @@ class User_Profile extends Component {
             placeholder={this.suggestChatHandle(profile.handle, profile.name)}
             component={this.renderField}
           />
-        </form>
-        <div className="container text-center">
-          <Link to="/home">
+
             <button type="submit" className="btn btn-secondary btn-lg my-btns">
               Submit
             </button>
-          </Link>
 
           <Link to="/home">
-            <button type="submit" className="btn btn-danger btn-lg my-btns">
+            <button type="button" className="btn btn-danger btn-lg my-btns">
               Cancel
             </button>
           </Link>
-        </div>
+        </form>
       </div>
     );
   }
 }
 
-//don't need validation right now, but let's keep this for now just in case
-// function validate(values) {
-//   const error = {};
-//   if (!values.name) {
-//     error.name = 'Enter your name';
-//   }
+function validate(values) {
+  const error = {};
+  if (!values.name) {
+    error.name = 'Enter your name';
+  }
 
-//   if (!values.handle) {
-//     error.handle = 'Enter a chat handle name';
-//   }
+  if (!values.handle) {
+    error.handle = 'Enter a chat handle name';
+  }
 
-//   return error;
-// }
+  return error;
+}
 
 function mapStateToProps(state) {
   return {
@@ -144,6 +141,6 @@ function mapStateToProps(state) {
 }
 
 export default reduxForm({
-  // validate: validate,
+  validate: validate,
   form: 'ProfileForm'
 })(connect(mapStateToProps, { editUserProfile, fetchProfile })(User_Profile));

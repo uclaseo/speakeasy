@@ -15,8 +15,8 @@ import { setActiveEvent } from './../actions/activeEventAction';
 
 const history = createBrowserHistory();
 
+const history = createBrowserHistory({forceRefresh:true});
 class Event_Setting extends Component {
-
   constructor(props) {
     super(props);
 
@@ -32,7 +32,6 @@ class Event_Setting extends Component {
   renderField(field) {
     const { meta: { touched, error } } = field;
     const className = `form-group ${touched && error ? 'has-error' : ''}`;
-
     return (
       <div className={className}>
         <label>
@@ -45,6 +44,7 @@ class Event_Setting extends Component {
       </div>
     );
   }
+<<<<<<< 9529065264db8835610f6fd0072d386c3cc24582
 
   componentDidMount(){
     this.getEventLocation();
@@ -66,6 +66,8 @@ class Event_Setting extends Component {
     }
   }
 
+=======
+>>>>>>> Making profile change db
   onSubmit(values) {
     console.log("this.state in onSubmit", this.state)
 
@@ -84,14 +86,16 @@ class Event_Setting extends Component {
       console.log(error)
     })
   }
-
   render() {
     const { handleSubmit } = this.props;
+<<<<<<< 9529065264db8835610f6fd0072d386c3cc24582
 
     if (this.state.redirect === true) {
       return <Redirect to='/active_event'/>;
     }
 
+=======
+>>>>>>> Making profile change db
     return (
       <div id="user-profile">
         <form onSubmit={handleSubmit(this.onSubmit.bind(this))}>
@@ -101,14 +105,12 @@ class Event_Setting extends Component {
             type="text"
             component={this.renderField}
           />
-
           <Field
             label="Password"
             name="password"
             type="text"
             component={this.renderField}
           />
-
           <Field
             label="IsLive"
             name="isLive"
@@ -128,58 +130,44 @@ class Event_Setting extends Component {
     );
   }
 }
-
 function validate(values) {
   const error = {};
-
   if (!values.eventname) {
     error.eventname = 'Enter your eventname';
   }
-
   if (!values.pasword) {
     error.pasword = 'Enter your pasword';
   }
-
   if (!values.latitude) {
     error.latitude = 'Enter your latitude';
   }
-
   if (!values.Longitude) {
     error.Longitude = 'Enter your Longitude';
   }
-
   if (!values.isLive) {
     error.isLive = 'Enter your isLive';
   }
-
   return error;
 }
-
 function mapDispatchToProps(dispatch) {
   return bindActionCreators({ setActiveEvent, setCurrentEventLocation }, dispatch)
 }
-
-
 function mapStateToProps(state) {
   return {
     currentLocation: state.active_event_location,
     profile: state.profile
   }
 }
-
 export default reduxForm({
   validate: validate,
   form: 'EventSettingForm'
 })(connect( mapStateToProps,mapDispatchToProps)(Event_Setting));
-
-
 // geolocated({
 //   positionOptions: {
 //     enableHighAccuracy: false,
 //   },
 //   userDecisionTimeout: 5000,
 // })(Event_Setting);
-
 // export default reduxForm({
 //   validate: validate,
 //   form: 'EventSettingForm'

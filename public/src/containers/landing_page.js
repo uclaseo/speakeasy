@@ -44,7 +44,7 @@ class Landing_Page extends Component {
             type="button"
             className="btn btn-secondary btn-lg center-block"
           >
-            Join us
+            Join
           </button>
         </Link>
       </div>

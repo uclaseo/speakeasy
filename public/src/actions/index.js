@@ -5,9 +5,9 @@ export const ENTER_EVENT = 'ENTER_EVENT';
 export const LEAVE_EVENT = 'LEAVE_EVENT';
 
 export function editUserProfile(values, id) {
+  console.log('editUserProfile action creator fired!:', values, id);
   const url = `api/user/profile/${id}`;
-
-  const request = axios.get(url)
+  const request = axios.put(url)
     .then(res => console.log('AXIOS:', res)); //change
   return {
     type: EDIT_PROFILE,
