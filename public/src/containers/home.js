@@ -6,7 +6,6 @@ import Auth from '../Auth0/Auth0';
 import {bindActionCreators} from 'redux';
 import {fetchProfile} from '../actions/authAction';
 import SimpleForm from './event_setting';
-// import turf from 'turf-distance'
 import turf from 'turf'
 const ROOT_URL = 'localhost:8080';
 
@@ -19,9 +18,9 @@ class Home extends Component {
 
     this.state = {
       userLocation : [],
-      nearByEvents : []
+      nearByEvents : [],
+      gettingUserLocation : true,
     }
-
     this.registerUser = this.registerUser.bind(this);
     this.getNearbyEvents = this.getNearbyEvents.bind(this);
     this.getUserLocation = this.getUserLocation.bind(this);
@@ -32,22 +31,15 @@ class Home extends Component {
       this.registerUser(profile);
     });
     this.getUserLocation(this.getNearbyEvents);
-    // this.getNearbyEvents();
   }
-
-
-
-  
-
   getUserLocation(cb){
-    console.log("are we in getUserLocation?")
     if (navigator.geolocation) {
         navigator.geolocation.getCurrentPosition((position)=>{
           // console.log("getting position via html5", position.coords)
           this.setState({
             userLocation : [position.coords.latitude, position.coords.longitude]
           }, () => {
-            console.log("what is the user location?", this.state.userLocation);
+            // console.log("what is the user location?", this.state.userLocation);
             cb();
           })
           
@@ -57,18 +49,19 @@ class Home extends Component {
     }
     
   }
-
-
   getNearbyEvents(){
     axios.get("/api/event/searchevents")
     .then((response)=>{
       console.log("before we compare, this.state.userLocation is", this.state.userLocation)
       for (var i = 0; i < response.data.length; i ++){
         if (this.getDistance([this.state.userLocation[0], this.state.userLocation[1]], [response.data[i].latitude, response.data[i].longitude])){
+          
           this.setState({
-            nearByEvents: [...this.state.nearByEvents, response.data[i]]
+            nearByEvents: [...this.state.nearByEvents, response.data[i]],
+            gettingUserLocation : false,
+            
           })
-          console.log("we got a nearByEvent", this.state.nearByEvents);
+          console.log("we got nearByEvent", this.state.nearByEvents);
         }
       } 
     })
@@ -99,7 +92,7 @@ class Home extends Component {
       "features": [from, to]
     };
     var distance = turf.distance(from, to, "miles");
-    console.log("distance between two points", distance);
+    // console.log("distance between two points", distance);
     return distance < 0.5;
   }
 
@@ -125,7 +118,7 @@ class Home extends Component {
           </div>
         </div>
         <div className="container-fluid bg-3 text-center">
-          <div className="row">
+          {/* <div className="row">
             <div className="col-sm-3">
               <p>Some event..</p>
               <img
@@ -135,7 +128,7 @@ class Home extends Component {
                 alt="Image"
               />
             </div>
-          </div>
+          </div> */}
           <br />
           <br />
           <Link to="/event_setting">
@@ -146,12 +139,8 @@ class Home extends Component {
           {this.state.nearByEvents.map((event)=>{
             return <div> {event.eventName} </div>
           })}
-      
-          {/* {this.getNearbyEvents() ? this.getNearbyEvents().map((event)=>{
-              return <li> {event.eventName}</li>
-          }): null}            */}
-          {/* {this.getUserLocation()} */}
-          {/* {console.log(this.getDistance([0,0],[0,0]))} */}
+          {this.state.gettingUserLocation ? <div> Getting Nearby Events, please wait.... </div> : null}
+
         </div>
       </div>
     );
