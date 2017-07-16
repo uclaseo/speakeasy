@@ -136,14 +136,11 @@ class Home extends Component {
               type="button" className="btn btn-secondary btn-lg myBtns">Create Event
             </button>
           </Link>
-<<<<<<< HEAD
-=======
           {this.state.nearByEvents.map((event)=>{
             return <div> {event.eventName} </div>
           })}
           {this.state.gettingUserLocation ? <div> Getting Nearby Events, please wait.... </div> : null}
 
->>>>>>> proximityEvents
         </div>
       </div>
     );
