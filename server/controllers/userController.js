@@ -6,7 +6,7 @@ const signupUser = (req, res) => {
   Table.User
     .findOrCreate({
       where: {
-        email: req.body.email,
+        email: req.body.email
       }
     })
     .spread((response, isCreated) => {
@@ -38,14 +38,32 @@ const fetchUsers = (req, res) => {
 const editUserProfile = (req, res) => {
   let id = req.params.userId;
   Table.User
-    .update({
-      'name': req.body.name,
-      'handle': req.body.handle
-    }, {
-      where: {
-        'id': id
+    .update(
+      {
+        name: req.body.name,
+        handle: req.body.handle
+      },
+      {
+        where: {
+          id: id
+        }
       }
+    )
+    .catch(error => {
+      res.send(error);
+    });
+};
+
+const fetchUserProfile = (req, res) => {
+  console.log('req', 'res');
+  let id = req.params.userId;
+  console.log('***** id *****', id);
+
+  Table.User
+    .findOne({
+      where: { id: id }
     })
+    .then(() => console.log('##### response from fetchUserProfile #####'))
     .catch(error => {
       res.send(error);
     });
@@ -54,5 +72,6 @@ const editUserProfile = (req, res) => {
 module.exports = {
   signupUser: signupUser,
   fetchUsers: fetchUsers,
-  editUserProfile: editUserProfile
+  editUserProfile: editUserProfile,
+  fetchUserProfile: fetchUserProfile
 };

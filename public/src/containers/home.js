@@ -9,14 +9,10 @@ import SimpleForm from './event_setting';
 import turf from 'turf'
 import {setNearbyEvents} from '../actions/index.js';
 const ROOT_URL = 'localhost:8080';
-
 const auth = new Auth();
-
 class Home extends Component {
-
   constructor(props) {
     super(props);
-
     this.state = {
       userLocation : [],
       nearByEvents : [],
@@ -26,7 +22,6 @@ class Home extends Component {
     this.getNearbyEvents = this.getNearbyEvents.bind(this);
     this.getUserLocation = this.getUserLocation.bind(this);
   }
-
   componentDidMount() {
     auth.getProfile((error, profile) => {
       this.registerUser(profile);
@@ -34,7 +29,6 @@ class Home extends Component {
     this.getUserLocation(this.getNearbyEvents);
     this.props.setNearbyEvents();
   }
-
   getUserLocation(cb){
     if (navigator.geolocation) {
         navigator.geolocation.getCurrentPosition((position)=>{
@@ -49,17 +43,7 @@ class Home extends Component {
     } else { 
         console.log("Geolocation is not supported by this browser.");
     }
-  registerUser(profile) {
-    axios.post(`/api/user/signup`, profile)
-    .then((response) => {
-      console.log('User signed-up:', response);
-      this.props.fetchProfile(response.data);
-    })
-    .catch((error) => {
-      console.log('this is error', error);
-    })
   }
-
   getNearbyEvents(){
     axios.get("/api/event/searchevents")
     .then((response)=>{
@@ -81,7 +65,6 @@ class Home extends Component {
       console.log("getNearbyEvents get request failed", error)
     })
   }
-
   getDistance(fromPoint, toPoint){
     var from = {
       "type": "Feature",
@@ -107,7 +90,6 @@ class Home extends Component {
     // console.log("distance between two points", distance);
     return distance < 0.5;
   }
-
   registerUser(profile) {
     console.log("what's registerUser profile arg", profile)
     axios.post(`/api/user/signup`, profile)
@@ -119,7 +101,6 @@ class Home extends Component {
       console.log('this is registerUser error', error);
     })
   }
-
   render() {
     return (
       <div>
@@ -152,7 +133,6 @@ class Home extends Component {
             return <div> {event.eventName} </div>
           })}
           {this.state.gettingUserLocation ? <div> Getting Nearby Events, please wait.... </div> : null}
-
         </div>
       </div>
     );
@@ -164,9 +144,7 @@ function mapStateToProps(state) {
     // nearbyEvents:state.nearbyEvents
   };
 }
-
 function mapDispatchToProps(dispatch){
   return bindActionCreators({setNearbyEvents,fetchProfile}, dispatch)
 }
-
 export default connect(mapStateToProps,mapDispatchToProps )(Home);

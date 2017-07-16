@@ -3,22 +3,25 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { Field, reduxForm } from 'redux-form';
 import { Link } from 'react-router-dom';
+import Dropzone from 'react-dropzone';
 import Auth from '../Auth0/Auth0';
-import { fetchProfile } from '../actions/authAction';
-import { editUserProfile } from '../actions/index';
+
+import { fetchProfile, editUserProfile } from '../actions/user_actions';
 
 const auth = new Auth();
 
 class User_Profile extends Component {
   constructor(props) {
-    super(props)
+    super(props);
     this.state = {
-      submitted: false
-    }
+      submitted: false,
+      files: []
+    };
+    // this.upload = this.upload.bind(this);
   }
 
   componentDidMount() {
-    console.log('user profile from redux:', this.props.profile);
+    console.log('user profile from REDUX:', this.props.profile);
   }
 
   renderField(field) {
@@ -45,20 +48,26 @@ class User_Profile extends Component {
 
   renderSuccess() {
     if (this.state.submitted) {
-      return(
-        <div>Successfully updated profile</div>
-      )
+      return <div>Successfully updated profile</div>;
     } else {
-      return(
-        <div></div>
-      )
+      return <div />;
     }
+  }
+
+  onDrop(acceptedFiles, rejectedFiles) {
+    let array = this.state.files;
+    acceptedFiles.map(file => {
+      array.push(file);
+    });
+    this.setState({
+      files: array
+    });
   }
 
   suggestName() {
     const { email, name, handle } = this.props.profile;
     let tmp = email || '';
-    return name || tmp.substring(0, tmp.indexOf('@'))
+    return name || tmp.substring(0, tmp.indexOf('@'));
   }
 
   suggestChatHandle() {
@@ -68,16 +77,15 @@ class User_Profile extends Component {
   }
 
   onSubmit(values) {
-    console.log('values:', values, this.props.profile.id);
+    this.props.fetchProfile(this.props.profile)
     this.props.editUserProfile(values, this.props.profile.id);
-    this.setState({submitted: true})
+    this.props.fetchProfile(null, this.props.profile.id)
+    this.setState({ submitted: true });
   }
 
   render() {
     const { handleSubmit } = this.props;
     const { profile } = this.props;
-
-    console.log('this.props from user_profile:', this.props);
 
     return (
       <div id="user-profile">
@@ -109,19 +117,19 @@ class User_Profile extends Component {
             component={this.renderField}
           />
 
-            <button type="submit" className="btn btn-secondary btn-lg my-btns">
-              Submit
-            </button>
+          <button type="submit" className="btn btn-secondary btn-lg my-btns">
+            Submit
+          </button>
 
           <Link to="/home">
             <button type="button" className="btn btn-danger btn-lg my-btns">
               Cancel
             </button>
           </Link>
-
-
         </form>
+        <div>
           {this.renderSuccess()}
+        </div>
       </div>
     );
   }
@@ -142,7 +150,7 @@ function validate(values) {
 
 function mapStateToProps(state) {
   return {
-    profile: state.profile,
+    profile: state.profile
   };
 }
 

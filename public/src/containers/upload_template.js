@@ -116,7 +116,7 @@ class Upload_Template extends Component {
   render() {
     return (
      <section>
-        <div className="dropzone">
+        <div className="dropzone text-center">
           <Dropzone accept="image/jpeg, image/png" onDrop={this.onDrop.bind(this)}>
             <p>Try dropping some files here, or click to select files to upload.</p>
           </Dropzone>

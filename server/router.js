@@ -24,7 +24,9 @@ router.delete('/dmrooms/delete', dmController.deleteDMRoom);
 
 router.get('/user/fetchUsers', userController.fetchUsers);
 router.post('/user/signup', userController.signupUser);
-router.put('/user/profile/:userId', userController.editUserProfile); //nate
+
+router.get('/user/profile/:userId', userController.fetchUsers); //nate
+router.put('/user/profile/:userId', userController.fetchUserProfile); //nate
 // router.get('/user/fetchSuggestedFriends', userController.fetchSuggestedFriends) //Michael
 
 

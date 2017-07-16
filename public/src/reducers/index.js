@@ -1,6 +1,7 @@
 import { combineReducers } from 'redux';
 import { reducer as formReducer } from 'redux-form';
-import authReducer from './authReducers';
+
+import fetchUserProfileReducer from './fetchUserProfileReducer';
 import eventReducer from './eventReducers';
 import eventMessagesReducers from './eventMessagesReducers';
 import enterEventReducers from './enterEventReducers';
@@ -14,7 +15,7 @@ import dmMessageReducers from './dmMessageReducers';
 
 
 const rootReducer = combineReducers({
-  profile: authReducer,
+  profile: fetchUserProfileReducer,
   form: formReducer,
   eventId: eventReducer,
   event_messages: eventMessagesReducers,
