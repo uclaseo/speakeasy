@@ -6,6 +6,7 @@ export default function(state = [], action) {
       } else {
         return action.payload;
       }
+      
     case 'NEW_EVENT_MESSAGE':
       return [...state, action.payload];
 
