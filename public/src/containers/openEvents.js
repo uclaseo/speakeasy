@@ -21,7 +21,7 @@ class OpenEventsList extends Component {
   }
 
   handleEventClick(event) {
-    this.props.setActiveEvent(event);
+    this.props.setActiveEvent(event, this.props.user_id);
   }
 
   render() {
@@ -43,7 +43,8 @@ class OpenEventsList extends Component {
 
 function mapStateToProps(state) {
   return {
-    open_events: state.open_events
+    open_events: state.open_events,
+    user_id: state.profile.id
   }
 }
 
