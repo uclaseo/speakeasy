@@ -21,7 +21,8 @@ class User_Profile extends Component {
   }
 
   componentDidMount() {
-    console.log('user profile from REDUX:', this.props.profile);
+    this.props.fetchProfile(this.props.profile)    
+    console.log('PROFILE REDUX:', this.props.profile);
   }
 
   renderField(field) {
@@ -64,34 +65,32 @@ class User_Profile extends Component {
     });
   }
 
-  suggestName() {
-    const { email, name, handle } = this.props.profile;
+  showName() {
+    const { email, name, handle } = this.props.profile.data;
     let tmp = email || '';
     return name || tmp.substring(0, tmp.indexOf('@'));
   }
 
-  suggestChatHandle() {
-    const { email, name, handle } = this.props.profile;
+  showHandle() {
+    const { email, name, handle } = this.props.profile.data;
     let tmp = email || '';
     return handle ? handle : tmp.substring(0, 4);
   }
 
   onSubmit(values) {
-    this.props.fetchProfile(this.props.profile)
-    this.props.editUserProfile(values, this.props.profile.id);
-    this.props.fetchProfile(null, this.props.profile.id)
+    this.props.editUserProfile(values, this.props.profile.data.id);
     this.setState({ submitted: true });
   }
 
   render() {
     const { handleSubmit } = this.props;
-    const { profile } = this.props;
+    const { profile } = this.props.profile;
 
     return (
       <div id="user-profile">
         <div>
           <img
-            src={profile.photo || 'http://bit.ly/2tRR5GW'}
+            src={'http://bit.ly/2tRR5GW'}             
             id="user-profile-pic"
             className="img-circle img-responsive"
             width="304"
@@ -105,7 +104,7 @@ class User_Profile extends Component {
               label="Your name"
               name="name"
               type="text"
-              placeholder={this.suggestName()}
+              placeholder={this.showName()}
               component={this.renderField}
             />
           </div>
@@ -113,7 +112,7 @@ class User_Profile extends Component {
             label="Create a chat handle name"
             name="handle"
             type="text"
-            placeholder={this.suggestChatHandle()}
+            placeholder={this.showHandle()}
             component={this.renderField}
           />
 
