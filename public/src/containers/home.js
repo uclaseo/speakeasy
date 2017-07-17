@@ -7,6 +7,7 @@ import {bindActionCreators} from 'redux';
 import {fetchProfile} from '../actions/authAction';
 import SimpleForm from './event_setting';
 import turf from 'turf'
+import {setNearbyEvents} from '../actions/index.js';
 const ROOT_URL = 'localhost:8080';
 
 const auth = new Auth();
@@ -62,6 +63,7 @@ class Home extends Component {
             
           })
           console.log("we got nearByEvent", this.state.nearByEvents);
+          this.props.setNearbyEvents(this.state.nearByEvents);
         }
       } 
     })
@@ -109,7 +111,6 @@ class Home extends Component {
   }
 
   render() {
-    
     return (
       <div>
         <div className="jumbotron">
@@ -153,4 +154,8 @@ function mapStateToProps(state) {
   };
 }
 
-export default connect(mapStateToProps, {fetchProfile})(Home);
+function mapDispatchToProps(dispatch){
+  return bindActionCreators({setNearbyEvents}, dispatch)
+}
+
+export default connect(mapStateToProps, mapDispatchToProps, {fetchProfile})(Home);

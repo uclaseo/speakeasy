@@ -7,7 +7,7 @@ import enterEventReducers from './enterEventReducers';
 import openEventsReducers from './openEventsReducers';
 import activeEventReducers from './activeEventReducers';
 import activeEventLocationReducers from './activeEventLocationReducer';
-
+import nearbyEventReducers from './nearbyEventReducers';
 
 const rootReducer = combineReducers({
   profile: authReducer,
@@ -17,7 +17,8 @@ const rootReducer = combineReducers({
   in_event: enterEventReducers,
   open_events: openEventsReducers,
   active_event: activeEventReducers,
-  active_event_Location: activeEventLocationReducers
+  active_event_Location: activeEventLocationReducers,
+  nearbyEvents : nearbyEventReducers
 })
 
 export default rootReducer;

@@ -44,6 +44,14 @@ export function setCurrentEventLocation(currentEventLocation){
   }
 }
 
+export function setNearbyEvents (nearbyEvents){
+  console.log("nearbyEvents step 2, nearbyEvents are", nearbyEvents);
+  return{
+    type: "SET_NEARBY_EVENTS",
+    payload: nearbyEvents
+  }
+}
+
 // export function fetchActiveEventId(activeEventId){
 //   console.log("activeEventId in action index.js", activeEventId)
 //   return {
