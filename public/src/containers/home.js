@@ -32,6 +32,7 @@ class Home extends Component {
       this.registerUser(profile);
     });
     this.getUserLocation(this.getNearbyEvents);
+    this.props.setNearbyEvents();
   }
 
   getUserLocation(cb){
@@ -56,14 +57,14 @@ class Home extends Component {
       console.log("before we compare, this.state.userLocation is", this.state.userLocation)
       for (var i = 0; i < response.data.length; i ++){
         if (this.getDistance([this.state.userLocation[0], this.state.userLocation[1]], [response.data[i].latitude, response.data[i].longitude])){
-          
           this.setState({
             nearByEvents: [...this.state.nearByEvents, response.data[i]],
             gettingUserLocation : false,
             
+          },()=>{
+            this.props.setNearbyEvents(this.state.nearByEvents);
+            console.log("we got nearByEvent", this.state.nearByEvents);
           })
-          console.log("we got nearByEvent", this.state.nearByEvents);
-          this.props.setNearbyEvents(this.state.nearByEvents);
         }
       } 
     })
@@ -150,12 +151,13 @@ class Home extends Component {
 }
 function mapStateToProps(state) {
   return {
-    profile: state.profile
+    profile: state.profile,
+    // nearbyEvents:state.nearbyEvents
   };
 }
 
 function mapDispatchToProps(dispatch){
-  return bindActionCreators({setNearbyEvents}, dispatch)
+  return bindActionCreators({setNearbyEvents,fetchProfile}, dispatch)
 }
 
-export default connect(mapStateToProps, mapDispatchToProps, {fetchProfile})(Home);
+export default connect(mapStateToProps,mapDispatchToProps )(Home);
