@@ -44,23 +44,7 @@ const editUserProfile = (req, res) => {
     {
       name: req.body.name,
       handle: req.body.handle,
-    },
-    {
-      where: {
-        id: id
-      }
-    }
-    )
-    .then(res => res.status(200).send(res))
-    .catch(error => res.send(error));
-};
-
-const editUserProfilePic = (req, res) => {
-  let id = req.params.userId;
-  Table.User
-    .update(
-    {
-      photo: req.body.pic,
+      photo: req.body.photo
     },
     {
       where: {
@@ -86,7 +70,7 @@ const fetchUserProfile = (req, res) => {
 };
 
 module.exports = {
-  editUserProfilePic: editUserProfilePic,
+  // editUserProfilePic: editUserProfilePic,
   signupUser: signupUser,
   fetchUsers: fetchUsers,
   editUserProfile: editUserProfile,

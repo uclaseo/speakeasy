@@ -14,13 +14,16 @@ class User_Profile extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      profile: this.props.profile,
       submitted: false,
-      pic: 'http://bit.ly/2vvoFk1'
+      defaultPic: 'http://bit.ly/2vvoFk1'
     };
   }
 
   componentDidMount() {
     console.log('REDUX PROFILE:', this.props.profile);
+    console.log('STATE PROFILE:', this.state.profile);
+    
     this.props.fetchProfile(this.props.profile)
   }
 
@@ -47,7 +50,7 @@ class User_Profile extends Component {
   }
 
   renderPhoto() {
-    let profilePhoto = (this.props.profile.data.photo) ? this.props.profile.data.photo : this.state.pic;
+    let profilePhoto = (this.props.profile.data.photo) ? this.props.profile.data.photo : this.state.defaultPic;
     // console.log('profilePhoto:', profilePhoto);
     return (
       <div>
@@ -90,7 +93,9 @@ class User_Profile extends Component {
   }
 
   onSubmit(values) {
-    this.props.editUserProfile(values, this.props.profile.data.id, this.state.pic);
+    values.photo = 'rjekfjerjfrehfhre';
+    console.log('values', values);
+    this.props.editUserProfile(values, this.state.profile.data.id);
     this.setState({ submitted: true });
   }
 
