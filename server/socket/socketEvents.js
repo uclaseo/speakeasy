@@ -7,8 +7,6 @@ const socketEvents = (io) => {
 
     // Event message socket events
     socket.on('enterevent', (event) => {
-      
-    
       socket.join(event.event_id);
       socket.room = event.event_id;
       console.log('user ', event.user_name, 'joined room ', socket.room);
@@ -60,9 +58,9 @@ const socketEvents = (io) => {
       socket.room = dmroom;
       console.log('user joined dm room ', socket.room);
       DirectMessage.find({ dm_id: dmroom })
-        .select('createdAt user_from_name text')
+        .select('createdAt user_from_name text dm_id')
         .sort('-createdAt')
-        .limit(25)
+        .limit(7)
         .exec((err, dms) => {
           if (err) console.error('error getting recent dms ', err);
           io.sockets.in(dmroom).emit('recentdms', dms);
@@ -84,7 +82,7 @@ const socketEvents = (io) => {
       });
       newDM.save((err, message) => {
         if (err) console.error('error posting DM ', err);
-        io.sockets.in(data.dm_id).emit('refreshmessages', message);
+        io.sockets.in(data.dm_id).emit('refreshdms', message);
       })
     });
 

@@ -8,7 +8,9 @@ import openEventsReducers from './openEventsReducers';
 import activeEventReducers from './activeEventReducers';
 import activeEventLocationReducers from './activeEventLocationReducer';
 import nearbyEventReducers from './nearbyEventReducers';
-import dmRoomReducers from './dmRoomReducers';
+import dmRoomsReducers from './dmRoomsReducers';
+import activeDMReducers from './activeDMReducers';
+// import dmMessageReducers from './dmMessageReducers';
 
 
 const rootReducer = combineReducers({
@@ -21,7 +23,9 @@ const rootReducer = combineReducers({
   active_event: activeEventReducers,
   active_event_Location: activeEventLocationReducers,
   nearbyEvents : nearbyEventReducers,
-  dm_room: dmRoomReducers
+  dmRooms: dmRoomsReducers,
+  activeDMRoom: activeDMReducers,
+  dmMessages: dmMessageReducers
 })
 
 export default rootReducer;

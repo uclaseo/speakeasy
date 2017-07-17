@@ -2,10 +2,10 @@ const Table = require('./../models/tableModels');
 
 const fetchDMRoomsForUser = (req, res) => {
   Table.DM_Room.findAll({
-    where: { userId: req.body.userId },
+    where: { userId: req.params.userId },
     include: [{ 
-      model: User,
-      as: anotherId
+      model: Table.User,
+      as: 'another'
     }]
   })
     .then((rooms) => {

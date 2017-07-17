@@ -18,7 +18,9 @@ router.post('/message/', mongoController.postMessageToEvent);
 
 router.get('/dm/:dmId', mongoController.fetchDirectMessages);
 router.post('/dm/', mongoController.postDirectMessage);
-router.get('/dmrooms', dmController.fetchDMRoomsForUser);
+router.get('/dmrooms/:userId', dmController.fetchDMRoomsForUser);
+router.post('/dmrooms/create', dmController.createDMRoom);
+router.delete('/dmrooms/delete', dmController.deleteDMRoom);
 
 router.get('/user/fetchUsers', userController.fetchUsers);
 router.post('/user/signup', userController.signupUser);

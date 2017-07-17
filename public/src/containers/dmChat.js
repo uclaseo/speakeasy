@@ -2,11 +2,9 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import io from 'socket.io-client'
-import ChatDetail from '../components/chatDetail'
-import ChatLog from '../components/chatLog'
+import DMLog from '../components/dmLog'
 import { Image, Glyphicon, InputGroup, PageHeader, Col, Button, FormGroup, FormControl } from 'react-bootstrap'
-import { recentEventMessages, newEventMessage } from '../actions/eventMessagesActions'
-import { enterEvent, leaveEvent } from '../actions/index'
+import { recentDirectMessages, newDirectMessages } from '../actions/eventMessagesActions'
 import { Redirect } from 'react-router-dom'
 import axios from 'axios'
 
@@ -17,8 +15,7 @@ class EventChat extends Component {
     super(props);
 
     this.state = {
-      text: '',
-      closed: false
+      text: ''
     };
 
     this.handleInputChange = this.handleInputChange.bind(this)
@@ -29,7 +26,7 @@ class EventChat extends Component {
     this._handleLogOut = this._handleLogOut.bind(this)
     this._handleRefreshMessages = this._handleRefreshMessages.bind(this)
     this._handleRecentMessages = this._handleRecentMessages.bind(this) 
-    this._handleClosedEvent = this._handleClosedEvent.bind(this)  
+    // this._handleClosedEvent = this._handleClosedEvent.bind(this)  
   }
 
   componentDidMount() {
@@ -52,8 +49,8 @@ class EventChat extends Component {
 
   handleSendClick(event) {
     event.preventDefault()
-    socket.emit('newmessage', {
-      event_id: this.props.event.id,
+    socket.emit('newdm', {
+      dm_id: this.props.event.id,
       user_name: this.props.user_name,
       text: this.state.text
     })
@@ -64,8 +61,8 @@ class EventChat extends Component {
 
   handleKeyPress(event) {
     if (event.key === 'Enter') {
-      socket.emit('newmessage', {
-        event_id: this.props.event.id,
+      socket.emit('newdm', {
+        dm_id: this.props.event.id,
         user_name: this.props.user_name,
         text: this.state.text
       })
@@ -75,20 +72,20 @@ class EventChat extends Component {
     }
   }
 
-  handleCloseClick(event) {
-    event.preventDefault()
-    socket.emit('closeevent', { event_id: this.props.event.id });
-    axios.put('/api/event/close', { event_id: this.props.event.id })
-      .then(() => {
-        this.setState({
-          closed: true
-        })
-      })
-  }
+  // handleCloseClick(event) {
+  //   event.preventDefault()
+  //   socket.emit('closeevent', { event_id: this.props.event.id });
+  //   axios.put('/api/event/close', { event_id: this.props.event.id })
+  //     .then(() => {
+  //       this.setState({
+  //         closed: true
+  //       })
+  //     })
+  // }
   
   _handleLogIn() {
     socket.connect();
-    socket.emit('enterevent', {
+    socket.emit('enterdm', {
       event_id: this.props.event.id,
       user_name: this.props.user_name
     })
@@ -103,45 +100,45 @@ class EventChat extends Component {
   }
 
   _handleRecentMessages() {
-    socket.on('recentmessages', (recentMessages) => {
-      this.props.recentEventMessages(recentMessages)
+    socket.on('recentdms', (recentMessages) => {
+      this.props.recentDirectMessages(recentMessages)
     })
   }
 
   _handleRefreshMessages() {
-    socket.on('refreshmessages', (newMessage) => {
-      this.props.newEventMessage(newMessage)
+    socket.on('refreshdms', (newMessage) => {
+      this.props.newDirectMessages(newMessage)
     })
   }
 
-  _handleClosedEvent() {
-    socket.on('eventclosed', () => {
-      this.setState({
-        closed: true
-      })
-    })
-  }
+  // _handleClosedEvent() {
+  //   socket.on('eventclosed', () => {
+  //     this.setState({
+  //       closed: true
+  //     })
+  //   })
+  // }
 
   render() {
-    let closeEvent;
+    // let closeEvent;
     
-    if (this.props.user_id === this.props.event.userId) {
-      closeEvent =  <button type="button"
-                            onClick={this.handleCloseClick}
-                    >Close Event</button>
-    } else {
-      closeEvent = '';
-    }
+    // if (this.props.user_id === this.props.event.userId) {
+    //   closeEvent =  <button type="button"
+    //                         onClick={this.handleCloseClick}
+    //                 >Close Event</button>
+    // } else {
+    //   closeEvent = '';
+    // }
 
-    if (this.state.closed === true) {
-      return (
-        <Redirect to='/open_events' />
-      )
-    }
+    // if (this.state.closed === true) {
+    //   return (
+    //     <Redirect to='/open_events' />
+    //   )
+    // }
 
     if (this.props.messages.length === 0) {
       return  <div>
-                {closeEvent}
+               
                 <input  
                   type="text" 
                   value={this.state.text}
@@ -162,7 +159,7 @@ class EventChat extends Component {
     return (
       <div>   
         {closeEvent}
-        <ChatLog roomMessages={this.props.messages}/>
+        <DMLog directMessages={this.props.dmMessages}/>
         <input  
           type="text" 
           onChange={this.handleInputChange}
@@ -180,20 +177,17 @@ class EventChat extends Component {
 
 function mapStateToProps(state) {
   return { 
-    event: state.active_event, 
+    dmRoom: state.activeDMRoom, 
     user_name: state.profile.name,
     user_id: state.profile.id,
-    messages: state.event_messages,
-    in_event: state.in_event
+    dmMessages: state.dmMessages,
   }
 }
 
 function mapDispatchToProps(dispatch) {
   return bindActionCreators({
-    recentEventMessages: recentEventMessages,
-    newEventMessage: newEventMessage,
-    enterEvent: enterEvent,
-    leaveEvent: leaveEvent
+    recentDirectMessages: recentDirectMessages,
+    newDirectMessages: newDirectMessages
   }, dispatch)
 }
 
