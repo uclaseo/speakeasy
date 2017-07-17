@@ -20,6 +20,7 @@
   },
   "homepage": "https://github.com/joshuabahr/speakeasy#readme",
   "dependencies": {
+    "@turf/distance": "^4.5.2",
     "auth0-js": "^8.8.0",
     "aws-sdk": "^2.84.0",
     "axios": "^0.16.2",
@@ -51,7 +52,9 @@
     "redux-thunk": "^2.2.0",
     "sequelize": "^4.2.1",
     "socket.io": "^2.0.3",
-    "socket.io-client": "^2.0.3"
+    "socket.io-client": "^2.0.3",
+    "turf": "^3.0.14",
+    "turf-distance": "^3.0.12"
   },
   "devDependencies": {
     "babel-core": "^6.25.0",
