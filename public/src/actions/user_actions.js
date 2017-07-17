@@ -2,7 +2,6 @@ import axios from 'axios';
 
 export const GET_PROFILE = 'GET_PROFILE';
 export function fetchProfile(profile) {
-  console.log('FETCH PROFILE ACTION PROFILE:', profile);
   const id = profile.data.id;
   const url = `api/user/profile/${id}`;
   const request = axios.get(url);

@@ -7,6 +7,8 @@ const signupUser = (req, res) => {
     .findOrCreate({
       where: {
         email: req.body.email
+      }, defaults: {
+        photo: req.body.photo
       }
     })
     .spread((response, isCreated) => {
@@ -39,15 +41,15 @@ const editUserProfile = (req, res) => {
   let id = req.params.userId;
   Table.User
     .update(
-      {
-        name: req.body.name,
-        handle: req.body.handle
-      },
-      {
-        where: {
-          id: id
-        }
+    {
+      name: req.body.name,
+      handle: req.body.handle,
+    },
+    {
+      where: {
+        id: id
       }
+    }
     )
     .then(res => res.status(200).send(res))
     .catch(error => res.send(error));

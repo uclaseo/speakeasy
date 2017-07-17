@@ -22,7 +22,6 @@ class User_Profile extends Component {
 
   componentDidMount() {
     this.props.fetchProfile(this.props.profile)    
-    console.log('PROFILE REDUX:', this.props.profile);
   }
 
   renderField(field) {
@@ -84,7 +83,7 @@ class User_Profile extends Component {
 
   render() {
     const { handleSubmit } = this.props;
-    const { profile } = this.props.profile;
+    const { profile } = this.props.profile.data;
 
     return (
       <div id="user-profile">

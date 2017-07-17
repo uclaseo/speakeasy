@@ -25,6 +25,7 @@ class Home extends Component {
   componentDidMount() {
     auth.getProfile((error, profile) => {
       this.registerUser(profile);
+      console.log('PROFILE FROM AUTH!!!', profile);
     });
     this.getUserLocation(this.getNearbyEvents);
     this.props.setNearbyEvents();
@@ -100,6 +101,28 @@ class Home extends Component {
     .catch((error) => {
       console.log('this is registerUser error', error);
     })
+
+  registerUser(profile) {
+    axios
+      .post(`/api/user/signup`, profile)
+      .then(response => {
+        console.log('User signed-up:', response);
+        this.props.fetchProfile(response);
+      })
+      .catch(error => {
+        console.log('this is error', error);
+      });
+  }
+
+  getNearbyEvents() {
+    axios
+      .get('/api/event/searchevents')
+      .then(response => {
+        console.log('getNearbyEvents', response);
+      })
+      .catch(error => {
+        console.log('getNearbyEvents get request failed', error);
+      });
   }
   render() {
     return (
