@@ -36,11 +36,11 @@ export function leaveEvent() {
     payload: false
   }
 }
-export function setCurrentLocation(currentLocation){
-  console.log("2, currentLocation in action, lat:", currentLocation.lat, "long: ", currentLocation.lng );
+export function setCurrentEventLocation(currentEventLocation){
+  console.log("2, currentLocation in action, lat:", currentEventLocation.lat, "long: ", currentEventLocation.lng );
   return {
-    type: "SET_CURRENT_LOCATION",
-    payload: currentLocation
+    type: "SET_CURRENT_EVENT_LOCATION",
+    payload: currentEventLocation
   }
 }
 

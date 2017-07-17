@@ -32,6 +32,7 @@ class Home extends Component {
     });
     this.getUserLocation(this.getNearbyEvents);
   }
+
   getUserLocation(cb){
     if (navigator.geolocation) {
         navigator.geolocation.getCurrentPosition((position)=>{
@@ -41,14 +42,13 @@ class Home extends Component {
           }, () => {
             // console.log("what is the user location?", this.state.userLocation);
             cb();
-          })
-          
+          })  
         });
     } else { 
         console.log("Geolocation is not supported by this browser.");
     }
-    
   }
+
   getNearbyEvents(){
     axios.get("/api/event/searchevents")
     .then((response)=>{
@@ -97,13 +97,14 @@ class Home extends Component {
   }
 
   registerUser(profile) {
+    console.log("what's registerUser profile arg", profile)
     axios.post(`/api/user/signup`, profile)
     .then((response) => {
-      console.log('this is response', response);
+      console.log('registerUser response', response);
       this.props.fetchProfile(response.data);
     })
     .catch((error) => {
-      console.log('this is error', error);
+      console.log('this is registerUser error', error);
     })
   }
 

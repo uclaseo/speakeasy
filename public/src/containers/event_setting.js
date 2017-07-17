@@ -6,9 +6,9 @@ import { Link } from 'react-router-dom';
 import { Redirect } from 'react-router-dom';
 import Auth from '../Auth0/Auth0';
 import { fetchProfile } from '../actions/authAction';
-import { setActiveEventId, setCurrentLocation } from '../actions/index';
+import { setActiveEventId, setCurrentEventLocation } from '../actions/index';
 import axios from 'axios';
-import GoogleMap from './google_map';
+
 import { geolocated } from 'react-geolocated';
 import createBrowserHistory from 'history/createBrowserHistory';
 import { setActiveEvent } from './../actions/activeEventAction';
@@ -21,14 +21,13 @@ class Event_Setting extends Component {
     super(props);
 
     this.state = {
-      redirect: false
+      redirect: false,
+      currenEventLocation: [],
+      
     }
+    this.getEventLocation = this.getEventLocation.bind(this)
   }
 
-
-  componentDidMount() {
-    // console.log("can i get location from here?", currentLocation);
-  }
 
   renderField(field) {
     const { meta: { touched, error } } = field;
@@ -47,15 +46,34 @@ class Event_Setting extends Component {
     );
   }
 
+  componentDidMount(){
+    this.getEventLocation();
+  }
+
+  getEventLocation(){
+    if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition((position)=>{
+          console.log("getting position via html5", position.coords)
+          this.setState({
+            currenEventLocation : [position.coords.latitude, position.coords.longitude]
+          }, () => {
+            console.log("what is the user location?", this.state.currenEventLocation);
+            // cb();
+          })  
+        });
+    } else { 
+        console.log("Geolocation is not supported by this browser.");
+    }
+  }
+
   onSubmit(values) {
-    console.log('values in event_setting 1:', values);
-    console.log("gettign location from store?", this.props.currentLocation);
-    console.log("userid?", this.props.profile)
+    console.log("this.state in onSubmit", this.state)
+
     axios.post('/api/event/create', {
       eventName: values.eventname,
       password: values.password,
-      latitude: this.props.currentLocation.lat,
-      longitude: this.props.currentLocation.lng,
+      latitude: this.state.currenEventLocation[0],
+      longitude: this.state.currenEventLocation[1],
       userId: this.props.profile.id,
       isLive: values.isLive
     }).then((response) => {
@@ -103,7 +121,7 @@ class Event_Setting extends Component {
             </button>
           
         </form>
-        <GoogleMap />    
+        {/* <GoogleMap />     */}
         {/* <div> latitude {this.props.coords.latitude} </div>
         <div> longitude {this.props.coords.longitude} </div>  */}
       </div>
@@ -138,13 +156,13 @@ function validate(values) {
 }
 
 function mapDispatchToProps(dispatch) {
-  return bindActionCreators({ setActiveEvent, setCurrentLocation }, dispatch)
+  return bindActionCreators({ setActiveEvent, setCurrentEventLocation }, dispatch)
 }
 
 
 function mapStateToProps(state) {
   return {
-    currentLocation: state.eventId.currentLocation,
+    currentLocation: state.active_event_location,
     profile: state.profile
   }
 }

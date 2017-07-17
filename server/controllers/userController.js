@@ -2,6 +2,7 @@ const Table = require('../models/tableModels');
 const existed = { status: 'already exists' };
 
 const signupUser = (req, res) => {
+  console.log("signupUser req.body", req.body)
   Table.User
     .findOrCreate({
       where: {
@@ -12,13 +13,16 @@ const signupUser = (req, res) => {
       }
     })
     .spread((response, isCreated) => {
+      console.log("signupUser res", response)
       if (isCreated) {
         res.status(201).send(response);
       } else {
+  
         res.send(response);
       }
     })
     .catch(error => {
+      console.log("error caught in signupUser", error)
       res.send(error);
     });
 };

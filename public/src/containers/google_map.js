@@ -2,13 +2,13 @@ import React from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import {geolocated} from 'react-geolocated';
-import {setCurrentLocation} from '../actions/index.js'
+import {setCurrentEventLocation} from '../actions/index.js'
  
 
 class UserLocation extends React.Component {
   constructor(props){
     super(props)
-    // console.log("setCurrentLocation in Demo constructor", setCurrentLocation);
+    // console.log("setCurrentEventLocation in Demo constructor", setCurrentEventLocation);
 
   }
 
@@ -27,7 +27,7 @@ class UserLocation extends React.Component {
       }
     }
     
-    this.props.setCurrentLocation({lat:nextProps.coords.latitude,lng:nextProps.coords.longitude})
+    this.props.setCurrentEventLocation({lat:nextProps.coords.latitude,lng:nextProps.coords.longitude})
     return true
   }
 
@@ -52,7 +52,7 @@ class UserLocation extends React.Component {
 }
 
 function mapDispatchToProps(dispatch) {
-  return bindActionCreators({setCurrentLocation}, dispatch)
+  return bindActionCreators({setCurrentEventLocation}, dispatch)
 }
 
 
@@ -61,4 +61,4 @@ export default geolocated({
     enableHighAccuracy: false,
   },
   userDecisionTimeout: 5000,
-})(connect(mapDispatchToProps,{setCurrentLocation})(UserLocation));
+})(connect(mapDispatchToProps,{setCurrentEventLocation})(UserLocation));

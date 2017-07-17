@@ -21,7 +21,7 @@ class Navigation_Bar extends Component {
 
   
   render() {
-
+    
     return (
       <nav className="navbar navbar-inverse">
         <div className="container-fluid">
