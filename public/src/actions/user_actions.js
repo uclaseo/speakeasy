@@ -12,7 +12,7 @@ export function fetchProfile(profile) {
 }
 
 export const EDIT_PROFILE = 'EDIT_PROFILE';
-export function editUserProfile(values, id) {
+export function editUserProfile(values, id, photo) {
   const url = `api/user/profile/${id}`;
   const request = axios.put(url, values);
 

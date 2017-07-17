@@ -15,13 +15,13 @@ class User_Profile extends Component {
     super(props);
     this.state = {
       submitted: false,
-      files: []
+      pic: 'http://bit.ly/2vvoFk1'
     };
-    // this.upload = this.upload.bind(this);
   }
 
   componentDidMount() {
-    this.props.fetchProfile(this.props.profile)    
+    console.log('REDUX PROFILE:', this.props.profile);
+    this.props.fetchProfile(this.props.profile)
   }
 
   renderField(field) {
@@ -46,12 +46,25 @@ class User_Profile extends Component {
     );
   }
 
+  renderPhoto() {
+    let profilePhoto = (this.props.profile.data.photo) ? this.props.profile.data.photo : this.state.pic;
+    // console.log('profilePhoto:', profilePhoto);
+    return (
+      <div>
+        <img
+          src={profilePhoto}
+          id="user-profile-pic"
+          className="img-rounded img-responsive"
+          width="304"
+          height="236"
+        />
+      </div>
+    )
+  }
+
   renderSuccess() {
-    if (this.state.submitted) {
-      return <div>Successfully updated profile</div>;
-    } else {
-      return <div />;
-    }
+    const success = (this.state.submitted) ? 'Successfully updated profile' : '';
+    return (<div>{success}</div>);
   }
 
   onDrop(acceptedFiles, rejectedFiles) {
@@ -77,25 +90,16 @@ class User_Profile extends Component {
   }
 
   onSubmit(values) {
-    this.props.editUserProfile(values, this.props.profile.data.id);
+    this.props.editUserProfile(values, this.props.profile.data.id, this.state.pic);
     this.setState({ submitted: true });
   }
 
   render() {
     const { handleSubmit } = this.props;
-    const { profile } = this.props.profile.data;
 
     return (
       <div id="user-profile">
-        <div>
-          <img
-            src={'http://bit.ly/2tRR5GW'}             
-            id="user-profile-pic"
-            className="img-circle img-responsive"
-            width="304"
-            height="236"
-          />
-        </div>
+        {this.renderPhoto()}
 
         <form onSubmit={handleSubmit(this.onSubmit.bind(this))}>
           <div>
@@ -108,7 +112,7 @@ class User_Profile extends Component {
             />
           </div>
           <Field
-            label="Create a chat handle name"
+            label="Create a chat handle"
             name="handle"
             type="text"
             placeholder={this.showHandle()}

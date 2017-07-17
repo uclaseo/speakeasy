@@ -25,7 +25,6 @@ class Home extends Component {
   componentDidMount() {
     auth.getProfile((error, profile) => {
       this.registerUser(profile);
-      console.log('PROFILE FROM AUTH!!!', profile);
     });
     this.getUserLocation(this.getNearbyEvents);
     this.props.setNearbyEvents();
@@ -106,7 +105,7 @@ class Home extends Component {
     axios
       .post(`/api/user/signup`, profile)
       .then(response => {
-        console.log('User signed-up:', response);
+        console.log('User signed-up:', response.data);
         this.props.fetchProfile(response);
       })
       .catch(error => {
