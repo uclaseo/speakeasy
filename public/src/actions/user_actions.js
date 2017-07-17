@@ -4,6 +4,9 @@ export const GET_PROFILE = 'GET_PROFILE';
 export function fetchProfile(profile, id) {
   const url = `api/user/profile/${id}`;
   const request = axios.get(url)
+    .then(res => console.log('AXIOS:', res))
+    .catch(err => 'axios error', err);
+    
   return {
     type: GET_PROFILE,
     payload: request
@@ -14,7 +17,9 @@ export const EDIT_PROFILE = 'EDIT_PROFILE';
 export function editUserProfile(values, id) {
   const url = `api/user/profile/${id}`;
   const request = axios.put(url, values)
-    .then(res => console.log('AXIOS:', res)); //change
+    .then(res => console.log('AXIOS:', res)) //change
+    .catch(err => 'axios error', err);
+
   return {
     type: EDIT_PROFILE,
     payload: request

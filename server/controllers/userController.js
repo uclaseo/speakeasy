@@ -55,7 +55,6 @@ const editUserProfile = (req, res) => {
 };
 
 const fetchUserProfile = (req, res) => {
-  console.log('req', 'res');
   let id = req.params.userId;
   console.log('***** id *****', id);
 
@@ -63,7 +62,9 @@ const fetchUserProfile = (req, res) => {
     .findOne({
       where: { id: id }
     })
-    .then(() => console.log('##### response from fetchUserProfile #####'))
+    .then(response => {
+      res.status(200).send(response);
+    })
     .catch(error => {
       res.send(error);
     });
