@@ -55,6 +55,23 @@ const editUserProfile = (req, res) => {
     .catch(error => res.send(error));
 };
 
+const editUserProfilePic = (req, res) => {
+  let id = req.params.userId;
+  Table.User
+    .update(
+    {
+      photo: req.body.pic,
+    },
+    {
+      where: {
+        id: id
+      }
+    }
+    )
+    .then(res => res.status(200).send(res))
+    .catch(error => res.send(error));
+};
+
 const fetchUserProfile = (req, res) => {
   let id = req.params.userId;
   console.log('*** id ***', id);
@@ -69,6 +86,7 @@ const fetchUserProfile = (req, res) => {
 };
 
 module.exports = {
+  editUserProfilePic: editUserProfilePic,
   signupUser: signupUser,
   fetchUsers: fetchUsers,
   editUserProfile: editUserProfile,
