@@ -1,10 +1,16 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux'
 import { Link } from 'react-router-dom';
+import { bindActionCreators } from 'redux';
 import axios from 'axios';
 import Auth from '../Auth0/Auth0';
+<<<<<<< b209c7f4992f5cef10b3548de8e204d1e8c54007
 import {bindActionCreators} from 'redux';
 import {fetchProfile} from '../actions/authAction';
+=======
+
+import { fetchProfile } from '../actions/user_actions';
+>>>>>>> Fix fetch of single user
 import SimpleForm from './event_setting';
 import turf from 'turf'
 import {setNearbyEvents} from '../actions/index.js';
@@ -29,6 +35,7 @@ class Home extends Component {
     this.getUserLocation(this.getNearbyEvents);
     this.props.setNearbyEvents();
   }
+<<<<<<< b209c7f4992f5cef10b3548de8e204d1e8c54007
   getUserLocation(cb){
     if (navigator.geolocation) {
         navigator.geolocation.getCurrentPosition((position)=>{
@@ -89,6 +96,19 @@ class Home extends Component {
     var distance = turf.distance(from, to, "miles");
     // console.log("distance between two points", distance);
     return distance < 0.5;
+=======
+
+  registerUser(profile) {
+    axios
+      .post(`/api/user/signup`, profile)
+      .then(response => {
+        console.log('User signed-up:', response.data);
+        this.props.fetchProfile(response.data);
+      })
+      .catch(error => {
+        console.log('this is error', error);
+      });
+>>>>>>> Fix fetch of single user
   }
   registerUser(profile) {
     console.log("what's registerUser profile arg", profile)

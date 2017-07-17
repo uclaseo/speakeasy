@@ -49,25 +49,21 @@ const editUserProfile = (req, res) => {
         }
       }
     )
-    .catch(error => {
-      res.send(error);
-    });
+    .then(res => res.status(200).send(res))
+    .catch(error => res.send(error));
 };
 
 const fetchUserProfile = (req, res) => {
   let id = req.params.userId;
-  console.log('***** id *****', id);
-
+  console.log('*** id ***', id);
   Table.User
     .findOne({
       where: { id: id }
     })
     .then(response => {
-      res.status(200).send(response);
+      res.status(200).send(response)
     })
-    .catch(error => {
-      res.send(error);
-    });
+    .catch(error => res.send(error));
 };
 
 module.exports = {
