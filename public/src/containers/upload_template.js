@@ -34,9 +34,12 @@ class Upload_Template extends Component {
 
   upload() {
     const images = {};
+    
     this.state.files.map((file, index) => {
       images[index] = Math.floor(Math.random() * 10000) + file.name
     });
+    console.log('images INSEOK:', images);
+
      axios.post(`/api/event/image/upload/geturl`, images)
     .then((response) => {
       let counter = 0;

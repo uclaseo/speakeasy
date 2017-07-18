@@ -5,6 +5,7 @@ import { Field, reduxForm } from 'redux-form';
 import { Link } from 'react-router-dom';
 import Dropzone from 'react-dropzone';
 import Auth from '../Auth0/Auth0';
+import axios from 'axios';
 
 import { fetchProfile, editUserProfile } from '../actions/user_actions';
 
@@ -16,15 +17,18 @@ class User_Profile extends Component {
     this.state = {
       profile: this.props.profile,
       submitted: false,
-      defaultPic: 'http://bit.ly/2vvoFk1'
+      defaultPic: 'http://bit.ly/2u3bnM4', //mila
+      newPic: '',
+      files: []
     };
+    this.upload = this.upload.bind(this);
+    this.onDrop = this.onDrop.bind(this);
   }
 
   componentDidMount() {
-    console.log('REDUX PROFILE:', this.props.profile);
-    console.log('STATE PROFILE:', this.state.profile);
-    
-    this.props.fetchProfile(this.props.profile)
+    console.log('REDUX PROFILE.data:', this.props.profile.data);
+    console.log('STATE PROFILE.data:', this.state.profile.data);
+    this.props.fetchProfile(this.props.profile);
   }
 
   renderField(field) {
@@ -50,18 +54,21 @@ class User_Profile extends Component {
   }
 
   renderPhoto() {
-    let profilePhoto = (this.props.profile.data.photo) ? this.props.profile.data.photo : this.state.defaultPic;
-    // console.log('profilePhoto:', profilePhoto);
     return (
-      <div>
-        <img
-          src={profilePhoto}
-          id="user-profile-pic"
-          className="img-rounded img-responsive"
-          width="304"
-          height="236"
-        />
-      </div>
+      <section id="user-profile-pic">
+        <div className="dropzone text-center center-block">
+          <Dropzone onDrop={this.onDrop} accept="image/jpeg, image/png" className="center-block">
+            <img
+              src={this.state.profile.data.photo} //state not redux
+              id="user-profile-pic"
+              className="img-rounded img-responsive center-block"
+              width="304"
+              height="236"
+            />
+          </Dropzone>
+          <p className="center-block">click to change your profile pic</p>
+        </div>
+      </section>
     )
   }
 
@@ -74,45 +81,96 @@ class User_Profile extends Component {
     let array = this.state.files;
     acceptedFiles.map(file => {
       array.push(file);
-    });
+    })
     this.setState({
       files: array
+    })
+    this.upload();
+  }
+
+  upload() {
+    const id = this.state.profile.data.id;
+    const images = {};
+
+    this.state.files.map((file, index) => {
+      images[index] = Math.floor(Math.random() * 10000) + file.name
     });
+    console.log('images NATE:', images);
+
+    axios.post(`/api/user/profile/${id}/geturl`, images)
+      .then((response) => {
+        let counter = 0;
+        response.data.map((eachFile) => {
+          axios.put(eachFile.url, this.state.files[counter])
+            .then((awsResponse) => {
+              counter++;
+              this.registerImageUrl(eachFile);
+            })
+          counter++;
+        })
+      })
+      .catch((error) => {
+        console.log('error in upload', error);
+      })
+    // .then( => {
+    //   //     let profile = this.state.profile;
+    //   //     profile.data.photo = response.data[0].url;
+    //   //     console.log('profile:::', profile);
+    //   //     this.props.editUserProfile(profile, this.state.profile.data.id)
+    //   //   })
+    //   this.props.fetchProfile(this.props.profile);
+    // })
+    // .catch((error) => {
+    //   console.log('error in upload', error);
+    // })
   }
 
-  showName() {
-    const { email, name, handle } = this.props.profile.data;
-    let tmp = email || '';
-    return name || tmp.substring(0, tmp.indexOf('@'));
-  }
-
-  showHandle() {
-    const { email, name, handle } = this.props.profile.data;
-    let tmp = email || '';
-    return handle ? handle : tmp.substring(0, 4);
+  registerImageUrl(eachFile) {
+    const imageData = {
+      name: eachFile.fileName,
+      imageLink: `https://s3-us-west-1.amazonaws.com/inseokspeakeasy/${eachFile.fileName}`,
+    };
+    axios.post('/api/event/image/upload', imageData)
+      .then((response) => {
+        this.setState({
+          files: []
+        })
+      })
+      .catch((error) => {
+        console.log('error', error);
+      })
   }
 
   onSubmit(values) {
-    values.photo = 'rjekfjerjfrehfhre';
     console.log('values', values);
     this.props.editUserProfile(values, this.state.profile.data.id);
     this.setState({ submitted: true });
+  }
+
+  showPlaceHolder(label) {
+    const { email, name, handle } = this.props.profile.data;
+    let tmp = email || '';
+    if (label === 'name') {
+      return name || tmp.substring(0, tmp.indexOf('@'));
+    } else if (label === 'handle') {
+      return handle ? handle : tmp.substring(0, 4);
+    }
   }
 
   render() {
     const { handleSubmit } = this.props;
 
     return (
-      <div id="user-profile">
+      <div id="user-profile" className="container-fluid bg-3 text-center" >
         {this.renderPhoto()}
 
-        <form onSubmit={handleSubmit(this.onSubmit.bind(this))}>
+        < form onSubmit={handleSubmit(this.onSubmit.bind(this))} >
           <div>
             <Field
               label="Your name"
               name="name"
               type="text"
-              placeholder={this.showName()}
+              placeholder={this.showPlaceHolder('name')}
               component={this.renderField}
             />
           </div>
@@ -120,7 +178,7 @@ class User_Profile extends Component {
             label="Create a chat handle"
             name="handle"
             type="text"
-            placeholder={this.showHandle()}
+            placeholder={this.showPlaceHolder('handle')}
             component={this.renderField}
           />
 
@@ -133,11 +191,11 @@ class User_Profile extends Component {
               Cancel
             </button>
           </Link>
-        </form>
+        </form >
         <div>
           {this.renderSuccess()}
         </div>
-      </div>
+      </div >
     );
   }
 }

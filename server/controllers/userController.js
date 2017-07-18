@@ -38,6 +38,7 @@ const fetchUsers = (req, res) => {
 };
 
 const editUserProfile = (req, res) => {
+  console.log('userController:=:=', req.body);
   let id = req.params.userId;
   Table.User
     .update(
@@ -52,7 +53,10 @@ const editUserProfile = (req, res) => {
       }
     }
     )
-    .then(res => res.status(200).send(res))
+    .then(response => {
+      console.log('response from controller', response);
+      res.status(200).send(res)
+    })
     .catch(error => res.send(error));
 };
 
@@ -70,7 +74,6 @@ const fetchUserProfile = (req, res) => {
 };
 
 module.exports = {
-  // editUserProfilePic: editUserProfilePic,
   signupUser: signupUser,
   fetchUsers: fetchUsers,
   editUserProfile: editUserProfile,
