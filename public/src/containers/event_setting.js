@@ -13,8 +13,6 @@ import { geolocated } from 'react-geolocated';
 import createBrowserHistory from 'history/createBrowserHistory';
 import { setActiveEvent } from './../actions/activeEventAction';
 
-const history = createBrowserHistory();
-
 const history = createBrowserHistory({forceRefresh:true});
 class Event_Setting extends Component {
   constructor(props) {
@@ -44,7 +42,6 @@ class Event_Setting extends Component {
       </div>
     );
   }
-<<<<<<< 9529065264db8835610f6fd0072d386c3cc24582
 
   componentDidMount(){
     this.getEventLocation();
@@ -66,8 +63,6 @@ class Event_Setting extends Component {
     }
   }
 
-=======
->>>>>>> Making profile change db
   onSubmit(values) {
     console.log("this.state in onSubmit", this.state)
 
@@ -88,14 +83,11 @@ class Event_Setting extends Component {
   }
   render() {
     const { handleSubmit } = this.props;
-<<<<<<< 9529065264db8835610f6fd0072d386c3cc24582
 
     if (this.state.redirect === true) {
       return <Redirect to='/active_event'/>;
     }
 
-=======
->>>>>>> Making profile change db
     return (
       <div id="user-profile">
         <form onSubmit={handleSubmit(this.onSubmit.bind(this))}>
