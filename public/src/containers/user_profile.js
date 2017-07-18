@@ -23,7 +23,6 @@ class User_Profile extends Component {
   }
 
   componentDidMount() {
-    console.log('REDUX :', this.props);
     this.props.fetchProfile(this.props.profile);
   }
 

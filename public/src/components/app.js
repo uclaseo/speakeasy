@@ -33,13 +33,27 @@ function protectPath(comp) {
       : <comp auth={auth} {...props} />;
 }
 
+function renderNavBar() {
+  if (auth.isAuthenticated()) {
+    return (
+      <div>
+        <Navigation_Bar />
+      </div>
+    )
+  } else {
+    return (
+      <div></div>
+    )
+  }
+}
+
 export default class App extends Component {
   render() {
 
     return (
       <BrowserRouter>
         <div>
-          <Navigation_Bar />
+          {renderNavBar()}
 
           <Switch>
             <Route
