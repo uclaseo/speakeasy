@@ -11,19 +11,6 @@ export function setActiveEventId(activeEventId){
   }
 }
 
-export function enterEvent() {
-  return {
-    type: 'ENTER_EVENT',
-    payload: true
-  }
-}
-
-export function leaveEvent() {
-  return {
-    type: 'LEAVE_EVENT',
-    payload: false
-  }
-}
 export function setCurrentEventLocation(currentEventLocation){
   console.log("2, currentLocation in action, lat:", currentEventLocation.lat, "long: ", currentEventLocation.lng );
   return {
