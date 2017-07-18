@@ -35,6 +35,7 @@ function protectPath(comp) {
 
 export default class App extends Component {
   render() {
+
     return (
       <BrowserRouter>
         <div>
@@ -122,6 +123,7 @@ export default class App extends Component {
                 {/* texting upload  */}
             <Route path='/upload' component={Upload_Template}/>
             <Route path='/dm_chat' component={DMChat} />
+            <Route path="/upload" component={Upload_Template} />
           </Switch>
         </div>
       </BrowserRouter>

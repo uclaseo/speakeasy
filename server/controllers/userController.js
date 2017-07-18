@@ -6,10 +6,9 @@ const signupUser = (req, res) => {
   Table.User
     .findOrCreate({
       where: {
-        name: req.body.name,
-        email: req.body.email,
-        latitude: '100.00101010',
-        longitude: '100.1010100101'
+        email: req.body.email
+      }, defaults: {
+        photo: req.body.photo
       }
     })
     .spread((response, isCreated) => {
@@ -39,21 +38,42 @@ const fetchUsers = (req, res) => {
 };
 
 const editUserProfile = (req, res) => {
-  let id = req.params.userId;
-
+  let id = req.body.data.id;
   Table.User
-    .findOne({where: {id: id}}) //this will change for sure
+    .update(
+    {
+      name: req.body.data.name,
+      handle: req.body.data.handle,
+      photo: req.body.data.photo
+    },
+    {
+      where: {
+        id: id
+      }
+    }
+    )
     .then(response => {
-      console.log('SOME USER:', JSON.stringify(response.body));
-      res.status(200).send(response);
+      res.status(200).send(res)
     })
-    .catch(error => {
-      res.send(error);
-    });
+    .catch(error => res.send(error));
+};
+
+const fetchUserProfile = (req, res) => {
+  let id = req.params.userId;
+  console.log('*** id ***', id);
+  Table.User
+    .findOne({
+      where: { id: id }
+    })
+    .then(response => {
+      res.status(200).send(response)
+    })
+    .catch(error => res.send(error));
 };
 
 module.exports = {
   signupUser: signupUser,
   fetchUsers: fetchUsers,
-  editUserProfile: editUserProfile
+  editUserProfile: editUserProfile,
+  fetchUserProfile: fetchUserProfile
 };

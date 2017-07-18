@@ -34,9 +34,12 @@ class Upload_Template extends Component {
 
   upload() {
     const images = {};
+    
     this.state.files.map((file, index) => {
       images[index] = Math.floor(Math.random() * 10000) + file.name
     });
+    console.log('images INSEOK:', images);
+
      axios.post(`/api/event/image/upload/geturl`, images)
     .then((response) => {
       let counter = 0;
@@ -116,7 +119,7 @@ class Upload_Template extends Component {
   render() {
     return (
      <section>
-        <div className="dropzone">
+        <div className="dropzone text-center">
           <Dropzone accept="image/jpeg, image/png" onDrop={this.onDrop.bind(this)}>
             <p>Try dropping some files here, or click to select files to upload.</p>
           </Dropzone>

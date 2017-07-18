@@ -24,7 +24,9 @@ router.delete('/dmrooms/delete', dmController.deleteDMRoom);
 
 router.get('/user/fetchUsers', userController.fetchUsers);
 router.post('/user/signup', userController.signupUser);
-router.get('/user/profile/:userId', userController.editUserProfile); //nate
+
+router.get('/user/profile/:userId', userController.fetchUserProfile); //nate
+router.put('/user/profile/:userId', userController.editUserProfile); //nate
 // router.get('/user/fetchSuggestedFriends', userController.fetchSuggestedFriends) //Michael
 
 
@@ -36,7 +38,7 @@ router.put('/event/close', eventController.closeEvent);
 
 
 //photo uploading
-
+router.post('/user/profile/:userId/geturl', imageController.getUrl) //nate
 router.post('/event/image/upload/geturl', imageController.getUrl);
 router.post('/event/image/upload', imageController.upload);
 router.get('/event/image/fetcheventimages/:eventId', imageController.fetchEventImages);

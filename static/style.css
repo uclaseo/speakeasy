@@ -1,13 +1,13 @@
-#user-profile {
+ #user-profile {
     margin: 20px;
     margin-top: 40px;
-}
+} 
 
-#user-profile-pic {
-    display: block;
-    margin: auto;
-    margin-bottom: 25px;
-}
+ #user-profile-pic {
+    /* display: block; */
+    /* margin: auto; */
+    margin-bottom: 50px;
+} 
 
 .my-btns {
   margin: 10px;
