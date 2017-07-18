@@ -105,6 +105,7 @@ class User_Profile extends Component {
             .then((awsResponse) => {
               counter++;
               this.registerImageUrl(eachFile);
+              console.log('awsResponse:', awsResponse);
             })
           counter++;
         })
