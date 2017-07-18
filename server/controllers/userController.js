@@ -13,7 +13,7 @@ const signupUser = (req, res) => {
       }
     })
     .spread((response, isCreated) => {
-      console.log("signupUser res", response)
+      // console.log("signupUser res", response)
       if (isCreated) {
         res.status(201).send(response);
       } else {

@@ -8,6 +8,10 @@ import openEventsReducers from './openEventsReducers';
 import activeEventReducers from './activeEventReducers';
 import activeEventLocationReducers from './activeEventLocationReducer';
 import nearbyEventReducers from './nearbyEventReducers';
+import dmRoomsReducers from './dmRoomsReducers';
+import activeDMReducers from './activeDMReducers';
+import dmMessageReducers from './dmMessageReducers';
+
 
 const rootReducer = combineReducers({
   profile: authReducer,
@@ -18,7 +22,10 @@ const rootReducer = combineReducers({
   open_events: openEventsReducers,
   active_event: activeEventReducers,
   active_event_Location: activeEventLocationReducers,
-  nearbyEvents : nearbyEventReducers
+  nearbyEvents : nearbyEventReducers,
+  dmRooms: dmRoomsReducers,
+  activeDMRoom: activeDMReducers,
+  dm_messages: dmMessageReducers
 })
 
 export default rootReducer;

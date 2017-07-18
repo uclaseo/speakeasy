@@ -1,12 +1,12 @@
 import React from 'react';
 import { Col, Grid, Row } from 'react-bootstrap';
-import ChatDetail from './chatDetail';
+import DMDetail from './dmDetail';
 
 
-const ChatLog = ({roomMessages}) => {
+const DMLog = ({directMessages}) => {
   // console.log('these are the room messages ', roomMessages);
-  const messages = roomMessages.map((message) => {
-    return (<ChatDetail 
+  const messages = directMessages.map((message) => {
+    return (<DMDetail 
               message={message}
               key={message._id}
             />)
@@ -23,4 +23,4 @@ const ChatLog = ({roomMessages}) => {
   )
 }
 
-export default ChatLog;
+export default DMLog;

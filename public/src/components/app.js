@@ -6,7 +6,7 @@ import Auth from '../Auth0/Auth0';
 import Navigation_Bar from '../containers/navigation_bar';
 import User_Profile from '../containers/user_profile';
 import User_Events from '../containers/user_events';
-import Direct_Messages from '../containers/direct_messages';
+import DirectMessageList from '../containers/directMessageList';
 import User_Friends from '../containers/user_friends';
 import Home from '../containers/home';
 import Event_Setting from '../containers/event_setting';
@@ -14,6 +14,7 @@ import EventChat from '../containers/eventChat';
 import OpenEventsList from '../containers/openEvents';
 import Landing_Page from '../containers/landing_page';
 import Chat from '../components/chat';
+import DMChat from '../containers/dmChat';
 
 import Upload_Template from '../containers/upload_template';
 
@@ -74,7 +75,7 @@ export default class App extends Component {
               render={props =>
                 !auth.isAuthenticated()
                   ? <Redirect to="/" />
-                  : <Direct_Messages auth={auth} {...props} />}
+                  : <DirectMessageList auth={auth} {...props} />}
             />
             <Route
               path="/past"
@@ -120,6 +121,7 @@ export default class App extends Component {
             />
                 {/* texting upload  */}
             <Route path='/upload' component={Upload_Template}/>
+            <Route path='/dm_chat' component={DMChat} />
           </Switch>
         </div>
       </BrowserRouter>
