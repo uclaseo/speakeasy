@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 import axios from 'axios';
 import Auth from '../Auth0/Auth0';
 import {bindActionCreators} from 'redux';
-import {fetchProfile} from '../actions/authAction';
+import { fetchProfile } from '../actions/user_actions';
 import SimpleForm from './event_setting';
 import turf from 'turf'
 import {setNearbyEvents} from '../actions/index.js';
@@ -29,6 +29,19 @@ class Home extends Component {
     this.getUserLocation(this.getNearbyEvents);
     this.props.setNearbyEvents();
   }
+
+  registerUser(profile) {
+    console.log("what's registerUser profile arg", profile)
+    axios.post(`/api/user/signup`, profile)
+    .then((response) => {
+      console.log('registerUser response', response);
+      this.props.fetchProfile(response);
+    })
+    .catch((error) => {
+      console.log('this is registerUser error', error);
+    })
+  }
+
   getUserLocation(cb){
     if (navigator.geolocation) {
         navigator.geolocation.getCurrentPosition((position)=>{
@@ -44,6 +57,7 @@ class Home extends Component {
         console.log("Geolocation is not supported by this browser.");
     }
   }
+
   getNearbyEvents(){
     axios.get("/api/event/searchevents")
     .then((response)=>{
@@ -65,6 +79,7 @@ class Home extends Component {
       console.log("getNearbyEvents get request failed", error)
     })
   }
+
   getDistance(fromPoint, toPoint){
     var from = {
       "type": "Feature",
@@ -90,17 +105,9 @@ class Home extends Component {
     // console.log("distance between two points", distance);
     return distance < 0.5;
   }
-  registerUser(profile) {
-    console.log("what's registerUser profile arg", profile)
-    axios.post(`/api/user/signup`, profile)
-    .then((response) => {
-      console.log('registerUser response', response);
-      this.props.fetchProfile(response.data);
-    })
-    .catch((error) => {
-      console.log('this is registerUser error', error);
-    })
-  }
+
+
+
   render() {
     return (
       <div>
