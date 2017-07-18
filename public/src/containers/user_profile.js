@@ -15,7 +15,6 @@ class User_Profile extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      profile: this.props.profile,
       submitted: false,
       files: []
     };
@@ -116,6 +115,8 @@ class User_Profile extends Component {
       name: eachFile.fileName,
       imageLink: `https://s3-us-west-1.amazonaws.com/hrlaspeakeasy/${eachFile.fileName}`,
     };
+
+    console.log('imageData.imageLink::', imageData.imageLink);
 
     let profile = this.props.profile;
     profile.photo = imageData.imageLink;

@@ -69,8 +69,13 @@ class Event_Setting extends Component {
   }
 
   onSubmit(values) {
+<<<<<<< 6c5b69f8a3959ddbb0d9d5c02c6a2a82e8225e3a
     
 
+=======
+    console.log("this.state in onSubmit", this.state)
+    console.log('this.props.profile.id EVENT SETTING:', this.props.profile.id);
+>>>>>>> Fix chat event conflicts
     axios.post('/api/event/create', {
       eventName: values.eventname,
       password: values.password,
@@ -81,7 +86,7 @@ class Event_Setting extends Component {
       eventPhoto: this.state.tempEventProfilePicture,
       description: values.description
     }).then((response) => {
-      console.log("what's event id?", response.data.id)
+      console.log("what's event id?", response.data.id) //here
       this.props.setActiveEvent(response.data)
       this.setState({ redirect: true })
     })

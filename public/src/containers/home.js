@@ -42,7 +42,7 @@ class Home extends Component {
     axios.post(`/api/user/signup`, profile)
     .then((response) => {
       console.log('registerUser response', response);
-      this.props.fetchProfile(response);
+      this.props.fetchProfile(response.data);
     })
     .catch((error) => {
       console.log('this is registerUser error', error);
