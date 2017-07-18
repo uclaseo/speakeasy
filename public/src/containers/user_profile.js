@@ -17,7 +17,6 @@ class User_Profile extends Component {
     this.state = {
       profile: this.props.profile,
       submitted: false,
-      defaultPic: 'http://bit.ly/2u3bnM4', //mila
       files: []
     };
     this.upload = this.upload.bind(this);
@@ -119,7 +118,6 @@ class User_Profile extends Component {
 
     let profile = this.props.profile;
     profile.data.photo = imageData.imageLink;
-    console.log('profile @@@@@@@ register:', profile);
     this.props.editUserProfile(profile, profile.data.id);
     this.setState({
       files: []
