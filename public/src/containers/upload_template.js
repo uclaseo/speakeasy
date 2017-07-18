@@ -157,7 +157,8 @@ class Upload_Template extends Component {
 
 function mapStateToProps(state) {
   return {
-    profile: state.profile
+    profile: state.profile,
+    active_event: state.active_event
   }
 }
 
