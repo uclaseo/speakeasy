@@ -115,9 +115,7 @@ class Event_Setting extends Component {
             </button>
           
         </form>
-        {/* <GoogleMap />     */}
-        {/* <div> latitude {this.props.coords.latitude} </div>
-        <div> longitude {this.props.coords.longitude} </div>  */}
+
       </div>
     );
   }

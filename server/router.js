@@ -16,8 +16,9 @@ const authCheck = jwt({
 router.get('/message/:eventId', mongoController.fetchMessagesForEvent);
 router.post('/message/', mongoController.postMessageToEvent);
 
+router.get('/dm', mongoController.fetchAllDirectMessages);
 router.get('/dm/:dmId', mongoController.fetchDirectMessages);
-router.post('/dm/', mongoController.postDirectMessage);
+router.post('/dm', mongoController.postDirectMessage);
 router.get('/dmrooms/:userId', dmController.fetchDMRoomsForUser);
 router.post('/dmrooms/create', dmController.createDMRoom);
 router.delete('/dmrooms/delete', dmController.deleteDMRoom);

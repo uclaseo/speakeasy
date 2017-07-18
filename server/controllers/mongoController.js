@@ -7,7 +7,7 @@ module.exports = {
   fetchMessagesForEvent: (req, res) => {
     Message
       .find({ event_id: req.params.eventId })
-      .select('createdAt text user_name')
+      .select('createdAt text user_name user_id')
       .sort('-createdAt')
       .exec((err, messages) => {
         if (err) console.error('error fetching messages ', err)
@@ -20,12 +20,13 @@ module.exports = {
   },
 
   postMessageToEvent: (req, res) => {
-    const { user_name, text } = req.body;
+    const { user_name, text, user_id } = req.body;
     if (!text) {
       res.status(400).send({ error: 'No message included'});
     }
     const newMessage = new Message({
       user_name: user_name,
+      user_id: user_id,
       event_id: req.body.eventId,
       text: text
     });
@@ -54,7 +55,7 @@ module.exports = {
   postDirectMessage: (req, res) => {
     let { user_from_name, user_to_name, text } = req.body;
     let newDM = new DirectMessage({
-      dm_id: req.body.dmId,
+      dm_id: req.body.dm_id,
       user_from_name: user_from_name,
       user_to_name: user_to_name,
       text: text
@@ -67,5 +68,18 @@ module.exports = {
         message: message
       })
     })
+  },
+
+  fetchAllDirectMessages: (req, res) => {
+    DirectMessage
+      .find()
+      .exec((err, messages) => {
+        if (err) console.error('error fetching all dms ', err);
+        res.json({
+          success: true,
+          response: 'fetching all',
+          messages: messages
+        })
+      })
   }
 }

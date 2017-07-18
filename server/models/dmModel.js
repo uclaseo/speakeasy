@@ -4,7 +4,7 @@ const Schema = mongoose.Schema;
 const directMessageSchema = new Schema({
   dm_id: {
     type: Number,
-    require: true
+    required: true
   },
   user_from_name: {
     type: String,

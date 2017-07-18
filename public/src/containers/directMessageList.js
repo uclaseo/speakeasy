@@ -3,7 +3,7 @@ import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import DMRoomDetail from './../components/dmRoomDetail'
 import { fetchDMRooms, setActiveDMRoom } from './../actions/dmRoomsActions'
-
+import { clearDirectMessages } from './../actions/directMessagesActions'
 
 
 class DirectMessageList extends Component {
@@ -14,6 +14,7 @@ class DirectMessageList extends Component {
   }
 
   componentDidMount() {
+    this.props.clearDirectMessages()
     this.props.fetchDMRooms(this.props.user_id)
   }
 
@@ -51,7 +52,8 @@ function mapStateToProps(state) {
 function mapDispatchToProps(dispatch) {
   return bindActionCreators({
     fetchDMRooms: fetchDMRooms,
-    setActiveDMRoom: setActiveDMRoom
+    setActiveDMRoom: setActiveDMRoom,
+    clearDirectMessages: clearDirectMessages
   }, dispatch)
 }
 

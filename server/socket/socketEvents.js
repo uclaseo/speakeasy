@@ -13,7 +13,7 @@ const socketEvents = (io) => {
       var room = io.sockets.adapter.rooms[socket.room];
       console.log('room number is ', room.length);
       Message.find({ event_id: event.event_id })
-        .select('createdAt text user_name event_id')
+        .select('createdAt text user_name event_id user_id _id')
         .sort('-createdAt')
         .limit(7)
         .exec((err, messages) => {
@@ -29,10 +29,11 @@ const socketEvents = (io) => {
 
     socket.on('newmessage', (data) => {
       console.log('posting a new message ', data);
-      const { event_id, user_name, text } = data;
+      const { event_id, user_name, text, user_id } = data;
       const newMessage = new Message({
         event_id: event_id,
         user_name: user_name,
+        user_id: user_id,
         text: text
       });
       newMessage.save((err, message) => {
@@ -58,7 +59,7 @@ const socketEvents = (io) => {
       socket.room = dmroom.dm_id;
       console.log('user joined dm room ', socket.room);
       DirectMessage.find({ dm_id: dmroom.dm_id })
-        .select('createdAt user_from_name text dm_id')
+        .select('createdAt user_from_name text dm_id _id')
         .sort('-createdAt')
         .limit(7)
         .exec((err, dms) => {
