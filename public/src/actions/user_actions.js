@@ -8,26 +8,15 @@ export function fetchProfile(profile) {
   return {
     type: GET_PROFILE,
     payload: request
-  }; 
+  };
 }
 
 export const EDIT_PROFILE = 'EDIT_PROFILE';
-export function editUserProfile(values, id, pic) {
-  const url = `api/user/profile/${id}`;
-  const request = axios.put(url, values);
-
+export function editUserProfile(profile, id) {
+  const request = axios.put(`api/user/profile/${id}`, profile);
+  console.log('profile!!!!! from action:', profile);
   return {
     type: EDIT_PROFILE,
     payload: request
   };
 }
-
-// export const EDIT_PROFILE_PIC = 'EDIT_PROFILE_PIC';
-// export function editUserProfilePic(values, id) {
-//   const url = `api/user/pic/${id}`;
-//   const request = axios.put(url, values);
-//   return {
-//     type: EDIT_PROFILE,
-//     payload: request
-//   };
-// }

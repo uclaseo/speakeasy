@@ -38,14 +38,13 @@ const fetchUsers = (req, res) => {
 };
 
 const editUserProfile = (req, res) => {
-  console.log('userController:=:=', req.body);
-  let id = req.params.userId;
+  let id = req.body.data.id;
   Table.User
     .update(
     {
-      name: req.body.name,
-      handle: req.body.handle,
-      photo: req.body.photo
+      name: req.body.data.name,
+      handle: req.body.data.handle,
+      photo: req.body.data.photo
     },
     {
       where: {
@@ -54,7 +53,6 @@ const editUserProfile = (req, res) => {
     }
     )
     .then(response => {
-      console.log('response from controller', response);
       res.status(200).send(res)
     })
     .catch(error => res.send(error));

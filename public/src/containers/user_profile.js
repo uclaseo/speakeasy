@@ -18,7 +18,6 @@ class User_Profile extends Component {
       profile: this.props.profile,
       submitted: false,
       defaultPic: 'http://bit.ly/2u3bnM4', //mila
-      newPic: '',
       files: []
     };
     this.upload = this.upload.bind(this);
@@ -26,8 +25,7 @@ class User_Profile extends Component {
   }
 
   componentDidMount() {
-    console.log('REDUX PROFILE.data:', this.props.profile.data);
-    console.log('STATE PROFILE.data:', this.state.profile.data);
+    console.log('REDUX :', this.props);
     this.props.fetchProfile(this.props.profile);
   }
 
@@ -59,7 +57,7 @@ class User_Profile extends Component {
         <div className="dropzone text-center center-block">
           <Dropzone onDrop={this.onDrop} accept="image/jpeg, image/png" className="center-block">
             <img
-              src={this.state.profile.data.photo} //state not redux
+              src={this.props.profile.data.photo}
               id="user-profile-pic"
               className="img-rounded img-responsive center-block"
               width="304"
@@ -89,14 +87,13 @@ class User_Profile extends Component {
   }
 
   upload() {
-    const id = this.state.profile.data.id;
+    const id = this.props.profile.data.id;
     const images = {};
 
     this.state.files.map((file, index) => {
       images[index] = Math.floor(Math.random() * 10000) + file.name
     });
-    console.log('images NATE:', images);
-
+    
     axios.post(`/api/user/profile/${id}/geturl`, images)
       .then((response) => {
         let counter = 0;
@@ -105,7 +102,6 @@ class User_Profile extends Component {
             .then((awsResponse) => {
               counter++;
               this.registerImageUrl(eachFile);
-              console.log('awsResponse:', awsResponse);
             })
           counter++;
         })
@@ -113,17 +109,6 @@ class User_Profile extends Component {
       .catch((error) => {
         console.log('error in upload', error);
       })
-    // .then( => {
-    //   //     let profile = this.state.profile;
-    //   //     profile.data.photo = response.data[0].url;
-    //   //     console.log('profile:::', profile);
-    //   //     this.props.editUserProfile(profile, this.state.profile.data.id)
-    //   //   })
-    //   this.props.fetchProfile(this.props.profile);
-    // })
-    // .catch((error) => {
-    //   console.log('error in upload', error);
-    // })
   }
 
   registerImageUrl(eachFile) {
@@ -131,20 +116,21 @@ class User_Profile extends Component {
       name: eachFile.fileName,
       imageLink: `https://s3-us-west-1.amazonaws.com/inseokspeakeasy/${eachFile.fileName}`,
     };
-    axios.post('/api/event/image/upload', imageData)
-      .then((response) => {
-        this.setState({
-          files: []
-        })
-      })
-      .catch((error) => {
-        console.log('error', error);
-      })
+
+    let profile = this.props.profile;
+    profile.data.photo = imageData.imageLink;
+    console.log('profile @@@@@@@ register:', profile);
+    this.props.editUserProfile(profile, profile.data.id);
+    this.setState({
+      files: []
+    });
   }
 
   onSubmit(values) {
-    console.log('values', values);
-    this.props.editUserProfile(values, this.state.profile.data.id);
+    let profile = this.props.profile;
+    profile.data.name = values.name;
+    profile.data.handle = values.handle;
+    this.props.editUserProfile(profile, profile.data.id);
     this.setState({ submitted: true });
   }
 

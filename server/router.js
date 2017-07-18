@@ -38,7 +38,7 @@ router.put('/event/close', eventController.closeEvent);
 
 
 //photo uploading
-router.post('/user/profile/:userId/geturl', imageController.getUrl)
+router.post('/user/profile/:userId/geturl', imageController.getUrl) //nate
 router.post('/event/image/upload/geturl', imageController.getUrl);
 router.post('/event/image/upload', imageController.upload);
 router.get('/event/image/fetcheventimages/:eventId', imageController.fetchEventImages);
