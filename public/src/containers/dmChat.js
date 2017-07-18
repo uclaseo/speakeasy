@@ -181,7 +181,7 @@ function mapStateToProps(state) {
   return { 
     dmRoom: state.activeDMRoom, 
     user_from_name: state.profile.name,
-    user_to_name: state.activeDMRoom.another.name,
+    user_to_name: state.activeDMRoom.user_to_name,
     user_id: state.profile.id,
     dmMessages: state.dm_messages
   }

@@ -1,4 +1,5 @@
 const Table = require('./../models/tableModels');
+const parseDMRooms = require('./controllerHelper');
 
 const fetchDMRoomsForUser = (req, res) => {
   let allRooms = [];
@@ -22,7 +23,11 @@ const fetchDMRoomsForUser = (req, res) => {
       })
       .then((rooms) => {
         allRooms.push(rooms);
-        res.status(201).send(allRooms);
+        let dm_rooms = parseDMRooms(allRooms);
+        console.log('this is the dm rooms output: ', dm_rooms);
+        res.status(201).send({
+          dm_rooms: dm_rooms
+        });
       })
     })
     .catch((err) => {

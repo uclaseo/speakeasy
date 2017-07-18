@@ -7,9 +7,9 @@ const DMRoomDetail = ({room, handleRoomClick}) => {
     <Link to="/dm_chat">
       <li onClick={() => handleRoomClick(room)}>
         
-        {room.another.name}
+        {room.user_to_name}
         <br></br>
-        {room.id}
+        {room.dm_id}
       </li>
     </Link>
   )

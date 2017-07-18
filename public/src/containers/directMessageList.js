@@ -23,10 +23,9 @@ class DirectMessageList extends Component {
 
   render() {
     let rooms = this.props.dmRooms.map((room) => {
-      console.log('this is the room object ', room.another.name);
       return (
         <DMRoomDetail room={room} 
-                      key={room.id} 
+                      key={room.dm_id} 
                       handleRoomClick={this.handleRoomClick}
         />
       )
