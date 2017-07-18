@@ -39,6 +39,9 @@ router.get('/event/image/fetcheventimages/:eventId', imageController.fetchEventI
 router.get('/event/image/fetchusereventimages/:userId/:eventId', imageController.fetchUserEventImages);
 
 
+router.post('/screenshot', imageController.screenshot);
+
+
 
 
 

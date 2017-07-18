@@ -88,9 +88,37 @@ const fetchUserEventImages = (req, res) => {
 }
 
 
+const screenshot = (req, res) => {
+
+
+  const s3 = new AWS.S3({
+    signatureVersion: 'v4'
+  });
+  var data = req.body.image.replace(/^data:image\/\w+;base64,/, "");
+  var buf = new Buffer(data, 'base64');
+  let s3_params = {
+    Bucket: env.BUCKET,
+    Key: req.body.fileName,
+    Body: buf,
+    Expires: 250
+  };
+
+
+s3.upload (s3_params, function (err, data) {
+  if (err) {
+    console.log("Error", err);
+  } if (data) {
+    console.log("Upload Success", data.Location);
+    res.status(201).send(data.Location);
+  }
+});
+
+}
+
 module.exports = {
   getUrl: getUrl,
   upload: upload,
   fetchEventImages: fetchEventImages,
-  fetchUserEventImages: fetchUserEventImages
+  fetchUserEventImages: fetchUserEventImages,
+  screenshot: screenshot
 }
