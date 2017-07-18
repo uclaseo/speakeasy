@@ -8,7 +8,8 @@ const signupUser = (req, res) => {
       where: {
         email: req.body.email
       }, defaults: {
-        photo: req.body.photo
+        photo: req.body.photo,
+        name: req.body.name
       }
     })
     .spread((response, isCreated) => {
@@ -38,13 +39,13 @@ const fetchUsers = (req, res) => {
 };
 
 const editUserProfile = (req, res) => {
-  let id = req.body.data.id;
+  let id = req.body.id;
   Table.User
     .update(
     {
-      name: req.body.data.name,
-      handle: req.body.data.handle,
-      photo: req.body.data.photo
+      name: req.body.name,
+      handle: req.body.handle,
+      photo: req.body.photo
     },
     {
       where: {

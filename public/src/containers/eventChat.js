@@ -8,7 +8,6 @@ import { Image, Glyphicon, InputGroup, PageHeader, Col, Button, FormGroup, FormC
 import { recentEventMessages, newEventMessage } from '../actions/eventMessagesActions'
 import { createDMRoom } from '../actions/dmRoomsActions'
 import { Redirect } from 'react-router-dom'
-import { createDMRoom } from '../actions/dmRoomsActions'
 import axios from 'axios'
 
 const socket = io();
@@ -57,6 +56,7 @@ class EventChat extends Component {
     socket.emit('newmessage', {
       event_id: this.props.event.id,
       user_name: this.props.user_name,
+      user_id: this.props.user_id,
       text: this.state.text
     });
     this.setState({
@@ -69,6 +69,7 @@ class EventChat extends Component {
       socket.emit('newmessage', {
         event_id: this.props.event.id,
         user_name: this.props.user_name,
+        user_id: this.props.user_id,
         text: this.state.text
       });
       this.setState({
@@ -178,7 +179,7 @@ class EventChat extends Component {
             onChange={this.handleInputChange}
           />
           <button type="button" onClick={this.handleSendClick}>
-            {' '}Send{' '}
+            Send
           </button>
         </div>
       );
@@ -202,7 +203,7 @@ class EventChat extends Component {
           onKeyPress={this.handleKeyPress}
         />
         <button type="button" onClick={this.handleSendClick}>
-          {' '}Send{' '}
+          Send
         </button>
       </div>
     );
@@ -211,7 +212,7 @@ class EventChat extends Component {
 
 function mapStateToProps(state) {
   return {
-    event_id: state.eventId.eventId,
+    event: state.active_event,
     user_name: state.profile.name,
     user_id: state.profile.id,
     messages: state.event_messages,

@@ -56,7 +56,7 @@ class User_Profile extends Component {
         <div className="dropzone text-center center-block">
           <Dropzone onDrop={this.onDrop} accept="image/jpeg, image/png" className="center-block">
             <img
-              src={this.props.profile.data.photo || 'https://s3-us-west-1.amazonaws.com/inseokspeakeasy/1722Speakeasy1.png'}
+              src={this.props.profile.photo || 'https://s3-us-west-1.amazonaws.com/inseokspeakeasy/1722Speakeasy1.png'}
               id="user-profile-pic"
               className="img-rounded img-responsive center-block"
               width="304"
@@ -86,7 +86,7 @@ class User_Profile extends Component {
   }
 
   upload() {
-    const id = this.props.profile.data.id;
+    const id = this.props.profile.id;
     const images = {};
 
     this.state.files.map((file, index) => {
@@ -117,8 +117,8 @@ class User_Profile extends Component {
     };
 
     let profile = this.props.profile;
-    profile.data.photo = imageData.imageLink;
-    this.props.editUserProfile(profile, profile.data.id);
+    profile.photo = imageData.imageLink;
+    this.props.editUserProfile(profile, profile.id);
     this.setState({
       files: []
     });
@@ -126,14 +126,14 @@ class User_Profile extends Component {
 
   onSubmit(values) {
     let profile = this.props.profile;
-    profile.data.name = values.name;
-    profile.data.handle = values.handle;
-    this.props.editUserProfile(profile, profile.data.id);
+    profile.name = values.name;
+    profile.handle = values.handle;
+    this.props.editUserProfile(profile, profile.id);
     this.setState({ submitted: true });
   }
 
   showPlaceHolder(label) {
-    const { email, name, handle } = this.props.profile.data;
+    const { email, name, handle } = this.props.profile;
     let tmp = email || '';
     if (label === 'name') {
       return name || tmp.substring(0, tmp.indexOf('@'));

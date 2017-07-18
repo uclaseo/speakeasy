@@ -13,7 +13,7 @@ const socketEvents = (io) => {
       var room = io.sockets.adapter.rooms[socket.room];
       console.log('room number is ', room.length);
       Message.find({ event_id: event.event_id })
-        .select('createdAt text user_name event_id user_id')
+        .select('createdAt text user_name event_id user_id _id')
         .sort('-createdAt')
         .limit(7)
         .exec((err, messages) => {
@@ -59,7 +59,7 @@ const socketEvents = (io) => {
       socket.room = dmroom.dm_id;
       console.log('user joined dm room ', socket.room);
       DirectMessage.find({ dm_id: dmroom.dm_id })
-        .select('createdAt user_from_name text dm_id')
+        .select('createdAt user_from_name text dm_id _id')
         .sort('-createdAt')
         .limit(7)
         .exec((err, dms) => {
