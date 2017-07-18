@@ -8,6 +8,7 @@ import { Image, Glyphicon, InputGroup, PageHeader, Col, Button, FormGroup, FormC
 import { recentEventMessages, newEventMessage } from '../actions/eventMessagesActions'
 import { createDMRoom } from '../actions/dmRoomsActions'
 import { Redirect } from 'react-router-dom'
+import { createDMRoom } from '../actions/dmRoomsActions'
 import axios from 'axios'
 
 const socket = io();
@@ -18,7 +19,8 @@ class EventChat extends Component {
 
     this.state = {
       text: '',
-      closed: false
+      closed: false,
+      dm: false
     };
 
     this.handleInputChange = this.handleInputChange.bind(this)
@@ -86,8 +88,25 @@ class EventChat extends Component {
       })
   }
   
-  handleDMClick(user) {
-    this.props.createDMRoom(this.props.user_id, user);
+  handleDMClick(message) {
+    if (this.props.user_id !== message.user_id) {
+      // axios.post('/api/dmrooms/create', {
+      //   userId: this.props.userId, 
+      //   anotherId: anotherId
+      // });
+      axios.post('/api/dmrooms/create', {
+        userId: this.props.user_id,
+        anotherId: message.user_id
+      })
+        .then((response) => {
+          let dm_id = response.data.room.id;
+          console.log('dm click response: ', dm_id)
+          this.props.createDMRoom(message.user_name, dm_id);
+          this.setState({ dm: true });
+        })
+    } else {
+      return;
+    }
   }
   
   _handleLogIn() {
@@ -140,6 +159,12 @@ class EventChat extends Component {
     if (this.state.closed === true) {
       return (
         <Redirect to='/open_events' />
+      )
+    }
+
+    if (this.state.dm === true) {
+      return (
+        <Redirect to='/dm_chat' />
       )
     }
 

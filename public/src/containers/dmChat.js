@@ -50,7 +50,7 @@ class DMChat extends Component {
   handleSendClick(event) {
     event.preventDefault()
     socket.emit('newdm', {
-      dm_id: this.props.dmRoom.id,
+      dm_id: this.props.dmRoom.dm_id,
       user_from_name: this.props.user_from_name,
       user_to_name: this.props.user_to_name,
       text: this.state.text
@@ -63,7 +63,7 @@ class DMChat extends Component {
   handleKeyPress(event) {
     if (event.key === 'Enter') {
       socket.emit('newdm', {
-        dm_id: this.props.dmRoom.id,
+        dm_id: this.props.dmRoom.dm_id,
         user_from_name: this.props.user_from_name,
         user_to_name: this.props.user_to_name,
         text: this.state.text
@@ -88,7 +88,7 @@ class DMChat extends Component {
   _handleLogIn() {
     socket.connect();
     socket.emit('enterdm', {
-      dm_id: this.props.dmRoom.id,
+      dm_id: this.props.dmRoom.dm_id,
       user_name: this.props.user_name
     })
     console.log(this.props.messages)
@@ -97,7 +97,7 @@ class DMChat extends Component {
   _handleLogOut() {
     socket.emit('leaveevent', {
       user_name: this.props.user_from_name,
-      dm_id: this.props.dmRoom.id
+      dm_id: this.props.dmRoom.dm_id
     })
   }
 

@@ -2,7 +2,7 @@ import axios from 'axios'
 
 export const FETCH_DM_ROOMS = 'FETCH_DM_ROOMS'
 export const SET_ACTIVE_DM_ROOM = 'SET_ACTIVE_DM_ROOM'
-// export const CREATE_DM_ROOM = 'CREATE_DM_ROOM'
+export const CREATE_DM_ROOM = 'CREATE_DM_ROOM'
 
 
 export function fetchDMRooms(userId) {
@@ -23,13 +23,16 @@ export function setActiveDMRoom(room) {
 }
 
 
-// export function createDMRoom(userId, anotherId) {
-//   let dmroom = axios.post('/api/dmrooms/create', {
-//     userId: userId,
-//     anotherId: anotherId
-//   })
-//   return {
-//     type: CREATE_DM_ROOM,
-//     payload: dmroom
-//   }
-// }
+export function createDMRoom(user_to_name, dm_id) {
+  // let dmroom = axios.post('/api/dmrooms/create', {
+  //   userId: userId,
+  //   anotherId: message.user_id
+  // })
+  return {
+    type: CREATE_DM_ROOM,
+    payload: { 
+      user_to_name: user_to_name,
+      dm_id: dm_id
+    }
+  }
+}

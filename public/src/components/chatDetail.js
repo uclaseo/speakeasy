@@ -5,8 +5,8 @@ import { Link } from 'react-router-dom'
 const ChatDetail = ({ message, dmClick }) => {
   
   return (
-    <Link to="/dm">
-      <div onClick={() => {dmClick(message.user_id)}}>
+    // <Link to="/dm_chat">
+      <div onClick={() => {dmClick(message)}}>
         <Panel 
           bsStyle="info" 
           header={message.user_name}
@@ -16,7 +16,7 @@ const ChatDetail = ({ message, dmClick }) => {
           {message.event_id}
         </Panel>
       </div>
-    </Link> 
+    // </Link> 
   )
 } 
 

@@ -55,7 +55,7 @@ module.exports = {
   postDirectMessage: (req, res) => {
     let { user_from_name, user_to_name, text } = req.body;
     let newDM = new DirectMessage({
-      dm_id: req.body.dmId,
+      dm_id: req.body.dm_id,
       user_from_name: user_from_name,
       user_to_name: user_to_name,
       text: text
@@ -68,5 +68,18 @@ module.exports = {
         message: message
       })
     })
+  },
+
+  fetchAllDirectMessages: (req, res) => {
+    DirectMessage
+      .find()
+      .exec((err, messages) => {
+        if (err) console.error('error fetching all dms ', err);
+        res.json({
+          success: true,
+          response: 'fetching all',
+          messages: messages
+        })
+      })
   }
 }
