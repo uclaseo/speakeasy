@@ -44,8 +44,15 @@ export default class App extends Component {
               exact
               path="/"
               render={props => {
-                handleAuthentication(props);
                 return <Landing_Page {...props} />;
+              }}
+            />
+            <Route
+              exact
+              path="/callback"
+              render={props => {
+                handleAuthentication(props);
+                return <Callback {...props} />;
               }}
             />
             <Route
