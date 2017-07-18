@@ -7,7 +7,7 @@ module.exports = {
   fetchMessagesForEvent: (req, res) => {
     Message
       .find({ event_id: req.params.eventId })
-      .select('createdAt text user_name')
+      .select('createdAt text user_name user_id')
       .sort('-createdAt')
       .exec((err, messages) => {
         if (err) console.error('error fetching messages ', err)
@@ -20,12 +20,13 @@ module.exports = {
   },
 
   postMessageToEvent: (req, res) => {
-    const { user_name, text } = req.body;
+    const { user_name, text, user_id } = req.body;
     if (!text) {
       res.status(400).send({ error: 'No message included'});
     }
     const newMessage = new Message({
       user_name: user_name,
+      user_id: user_id,
       event_id: req.body.eventId,
       text: text
     });

@@ -1,26 +1,3 @@
-<<<<<<< HEAD
-import React, { Component } from 'react';
-import { connect } from 'react-redux';
-import { bindActionCreators } from 'redux';
-import io from 'socket.io-client';
-import ChatDetail from '../components/chatDetail';
-import ChatLog from '../components/chatLog';
-import {
-  Image,
-  Glyphicon,
-  InputGroup,
-  PageHeader,
-  Col,
-  Button,
-  FormGroup,
-  FormControl
-} from 'react-bootstrap';
-import {
-  recentEventMessages,
-  newEventMessage
-} from '../actions/eventMessagesActions';
-import { enterEvent, leaveEvent } from '../actions/index';
-=======
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
@@ -32,7 +9,6 @@ import { recentEventMessages, newEventMessage } from '../actions/eventMessagesAc
 import { createDMRoom } from '../actions/dmRoomsActions'
 import { Redirect } from 'react-router-dom'
 import axios from 'axios'
->>>>>>> working on create dm room
 
 const socket = io();
 
@@ -45,15 +21,6 @@ class EventChat extends Component {
       closed: false
     };
 
-<<<<<<< HEAD
-    this.handleInputChange = this.handleInputChange.bind(this);
-    this.handleSendClick = this.handleSendClick.bind(this);
-    this.handleKeyPress = this.handleKeyPress.bind(this);
-    this._handleLogIn = this._handleLogIn.bind(this);
-    this._handleLogOut = this._handleLogOut.bind(this);
-    this._handleRefreshMessages = this._handleRefreshMessages.bind(this);
-    this._handleRecentMessages = this._handleRecentMessages.bind(this);
-=======
     this.handleInputChange = this.handleInputChange.bind(this)
     this.handleSendClick = this.handleSendClick.bind(this)
     this.handleKeyPress = this.handleKeyPress.bind(this)
@@ -64,7 +31,6 @@ class EventChat extends Component {
     this._handleRefreshMessages = this._handleRefreshMessages.bind(this)
     this._handleRecentMessages = this._handleRecentMessages.bind(this) 
     this._handleClosedEvent = this._handleClosedEvent.bind(this)  
->>>>>>> working on create dm room
   }
 
   componentDidMount() {
@@ -109,8 +75,6 @@ class EventChat extends Component {
     }
   }
 
-<<<<<<< HEAD
-=======
   handleCloseClick(event) {
     event.preventDefault()
     socket.emit('closeevent', { event_id: this.props.event.id });
@@ -126,7 +90,6 @@ class EventChat extends Component {
     this.props.createDMRoom(this.props.user_id, user);
   }
   
->>>>>>> working on create dm room
   _handleLogIn() {
     socket.connect();
     socket.emit('enterevent', {
@@ -201,12 +164,6 @@ class EventChat extends Component {
     }
 
     return (
-<<<<<<< HEAD
-      <div>
-        <ChatLog roomMessages={this.props.messages} />
-        <input
-          type="text"
-=======
       <div>   
         {closeEvent}
         <ChatLog 
@@ -215,7 +172,6 @@ class EventChat extends Component {
         />
         <input  
           type="text" 
->>>>>>> working on create dm room
           onChange={this.handleInputChange}
           value={this.state.text}
           onKeyPress={this.handleKeyPress}
@@ -239,23 +195,11 @@ function mapStateToProps(state) {
 }
 
 function mapDispatchToProps(dispatch) {
-<<<<<<< HEAD
-  return bindActionCreators(
-    {
-      recentEventMessages: recentEventMessages,
-      newEventMessage: newEventMessage,
-      enterEvent: enterEvent,
-      leaveEvent: leaveEvent
-    },
-    dispatch
-  );
-=======
   return bindActionCreators({
     recentEventMessages: recentEventMessages,
     newEventMessage: newEventMessage,
     createDMRoom: createDMRoom
   }, dispatch)
->>>>>>> working on create dm room
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(EventChat);

@@ -10,6 +10,10 @@ const messageSchema = new Schema({
     type: String,
     required: true
   },
+  user_id: {
+    type: Number,
+    required: true
+  },
   text: {
     type: String,
     required: true
