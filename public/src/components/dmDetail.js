@@ -5,7 +5,7 @@ const DMDetail = ({message}) => {
   
   return (
     <div>
-      <Panel bsStyle="info" header={message.user_name}>
+      <Panel bsStyle="info" header={message.user_from_name}>
         {message.text}
         <br></br>
         {message.dm_id}

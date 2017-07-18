@@ -8,7 +8,7 @@ const DMLog = ({directMessages}) => {
   const messages = directMessages.map((message) => {
     return (<DMDetail 
               message={message}
-              key={message.id}
+              key={message._id}
             />)
   })
 

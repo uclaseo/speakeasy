@@ -73,7 +73,7 @@ User.hasMany(Message);
 
 User.belongsToMany(User, {
   as: 'another',
-  through: 'dm_room'
+  through: DM_Room
 });
 DM_Room.belongsTo(User, {
   as: 'another'
@@ -91,8 +91,8 @@ User_Event.belongsTo(Event)
 // });
 
 
-DM_Message.belongsTo(DM_Room);
-DM_Room.hasMany(DM_Message);
+// DM_Message.belongsTo(DM_Room);
+// DM_Room.hasMany(DM_Message);
 
 
 module.exports = {

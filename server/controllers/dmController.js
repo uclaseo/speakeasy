@@ -1,16 +1,28 @@
 const Table = require('./../models/tableModels');
 
 const fetchDMRoomsForUser = (req, res) => {
-  Table.DM_Room.findAll({
-    where: { userId: req.params.userId },
+  let allRooms = [];
+  Table.User.findAll({
+    where: { id: req.params.userId },
     include: [{ 
       model: Table.User,
       as: 'another'
     }]
   })
     .then((rooms) => {
-      res.json({
-        dm_rooms: rooms
+      allRooms.push(rooms)
+    })
+    .then(() => {
+      Table.User.findAll({
+        include: [{
+          model: Table.User,
+          where: { id: req.params.userId },
+          as: 'another'
+        }]
+      })
+      .then((rooms) => {
+        allRooms.push(rooms);
+        res.status(201).send(allRooms);
       })
     })
     .catch((err) => {
@@ -19,46 +31,44 @@ const fetchDMRoomsForUser = (req, res) => {
 }
 
 const createDMRoom = (req, res) => {
-  Table.DM_Room.findOrCreate({
-    where: {
+  Table.DM_Room.findOne({ where: {
+    $or: [{
+      userId: req.body.userId,
+      anotherId: req.body.anotherId
+    },{
       userId: req.body.anotherId,
       anotherId: req.body.userId
-    }
-  })
-    .spread((response, isCreated) => {
-      if (isCreated) {
+    }]
+  }})
+    .then((response) => {
+      if (response === null) {
         Table.DM_Room.create({
           userId: req.body.userId,
           anotherId: req.body.anotherId
         })
           .then((room) => {
-            res.status(201).send(room);
+            res.send({ room: room })
           })
       } else {
-        res.send({
-          status: 'already exists'
-        })
+        res.json({ room: response })
       }
     })
-    .catch((err) => {
-      console.error('error creating DM room ', err);
+    .catch(err => {
+      console.error('error creating a new dm room ', err);
     })
 }
 
 const deleteDMRoom = (req, res) => {
   Table.DM_Room.destroy({ 
-    where: { 
-      userId: req.body.userId,
-      anotherId: req.body.anotherId
+    where: {
+      $or: [{
+        userId: req.body.userId,
+        anotherId: req.body.anotherId
+      },{
+        userId: req.body.anotherId,
+        anotherId: req.body.userId
+      }] 
     }})
-    .then(() => {
-      Table.DM_Room.destroy({
-        where: {
-          userId: req.body.anotherId,
-          anotherId: req.body.userId
-        }
-      })
-    })
     .then(() => {
       res.status(201).send('successfully deleted DM room');
     })

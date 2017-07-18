@@ -4,13 +4,13 @@ import { bindActionCreators } from 'redux'
 import io from 'socket.io-client'
 import DMLog from '../components/dmLog'
 import { Image, Glyphicon, InputGroup, PageHeader, Col, Button, FormGroup, FormControl } from 'react-bootstrap'
-import { recentDirectMessages, newDirectMessages } from '../actions/eventMessagesActions'
+import { recentDirectMessages, newDirectMessage } from '../actions/directMessagesActions'
 import { Redirect } from 'react-router-dom'
 import axios from 'axios'
 
 const socket = io();
 
-class EventChat extends Component {
+class DMChat extends Component {
   constructor(props) {
     super(props);
 
@@ -21,7 +21,7 @@ class EventChat extends Component {
     this.handleInputChange = this.handleInputChange.bind(this)
     this.handleSendClick = this.handleSendClick.bind(this)
     this.handleKeyPress = this.handleKeyPress.bind(this)
-    this.handleCloseClick = this.handleCloseClick.bind(this)
+    // this.handleCloseClick = this.handleCloseClick.bind(this)
     this._handleLogIn = this._handleLogIn.bind(this)
     this._handleLogOut = this._handleLogOut.bind(this)
     this._handleRefreshMessages = this._handleRefreshMessages.bind(this)
@@ -33,7 +33,7 @@ class EventChat extends Component {
     this._handleLogIn()
     this._handleRecentMessages()
     this._handleRefreshMessages()
-    this._handleClosedEvent()
+    // this._handleClosedEvent()
   }
 
   componentWillUnmount() {
@@ -50,8 +50,9 @@ class EventChat extends Component {
   handleSendClick(event) {
     event.preventDefault()
     socket.emit('newdm', {
-      dm_id: this.props.event.id,
-      user_name: this.props.user_name,
+      dm_id: this.props.dmRoom.id,
+      user_from_name: this.props.user_from_name,
+      user_to_name: this.props.user_to_name,
       text: this.state.text
     })
     this.setState({
@@ -62,8 +63,9 @@ class EventChat extends Component {
   handleKeyPress(event) {
     if (event.key === 'Enter') {
       socket.emit('newdm', {
-        dm_id: this.props.event.id,
-        user_name: this.props.user_name,
+        dm_id: this.props.dmRoom.id,
+        user_from_name: this.props.user_from_name,
+        user_to_name: this.props.user_to_name,
         text: this.state.text
       })
       this.setState({
@@ -86,7 +88,7 @@ class EventChat extends Component {
   _handleLogIn() {
     socket.connect();
     socket.emit('enterdm', {
-      event_id: this.props.event.id,
+      dm_id: this.props.dmRoom.id,
       user_name: this.props.user_name
     })
     console.log(this.props.messages)
@@ -94,8 +96,8 @@ class EventChat extends Component {
 
   _handleLogOut() {
     socket.emit('leaveevent', {
-      user_name: this.props.user_name,
-      event_id: this.props.event.id
+      user_name: this.props.user_from_name,
+      dm_id: this.props.dmRoom.id
     })
   }
 
@@ -107,7 +109,7 @@ class EventChat extends Component {
 
   _handleRefreshMessages() {
     socket.on('refreshdms', (newMessage) => {
-      this.props.newDirectMessages(newMessage)
+      this.props.newDirectMessage(newMessage)
     })
   }
 
@@ -136,7 +138,7 @@ class EventChat extends Component {
     //   )
     // }
 
-    if (this.props.messages.length === 0) {
+    if (this.props.dmMessages.length === 0) {
       return  <div>
                
                 <input  
@@ -152,13 +154,13 @@ class EventChat extends Component {
               </div>
     }
 
-    if (!this.props.user_name) {
+    if (!this.props.user_from_name) {
       return <div>You need to log in</div>
     }
 
     return (
       <div>   
-        {closeEvent}
+
         <DMLog directMessages={this.props.dmMessages}/>
         <input  
           type="text" 
@@ -178,17 +180,18 @@ class EventChat extends Component {
 function mapStateToProps(state) {
   return { 
     dmRoom: state.activeDMRoom, 
-    user_name: state.profile.name,
+    user_from_name: state.profile.name,
+    user_to_name: state.activeDMRoom.another.name,
     user_id: state.profile.id,
-    dmMessages: state.dmMessages,
+    dmMessages: state.dm_messages
   }
 }
 
 function mapDispatchToProps(dispatch) {
   return bindActionCreators({
     recentDirectMessages: recentDirectMessages,
-    newDirectMessages: newDirectMessages
+    newDirectMessage: newDirectMessage
   }, dispatch)
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(EventChat)
+export default connect(mapStateToProps, mapDispatchToProps)(DMChat)
