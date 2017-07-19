@@ -18,12 +18,13 @@ class Home extends Component {
 
     this.state = {
       gettingUserLocation : true,
+      noNearbyEvents: false
     }
 
     this.registerUser = this.registerUser.bind(this);
     this.getNearbyEvents = this.getNearbyEvents.bind(this);
     this.getUserLocation = this.getUserLocation.bind(this);
-    this.handleEventClick = this.handleEventClick.bind(this)
+    this.handleEventClick = this.handleEventClick.bind(this);
   }
 
   componentDidMount() {
@@ -115,22 +116,25 @@ class Home extends Component {
     this.props.setActiveEvent(event, this.props.profile.id);
   }
 
-
   render() {
-    let events;
+    let events = null;
     if (this.props.nearbyEvents.length !== 0) {
-      console.log('near by events: ', this.props.nearbyEvents);
       events = this.props.nearbyEvents.map((event) => {
-        return  <NearbyEventDetail 
-                  event={event} 
-                  key={event.id}
-                  handleEventClick={this.handleEventClick}
-                />
+        return (
+                  <NearbyEventDetail 
+                    event={event} 
+                    key={event.id}
+                    handleEventClick={this.handleEventClick}
+                  />
+        )
       })
-      console.log('events ', events);
-    } else {
-      events = '';
-    }
+    } 
+    let noEvents = null;
+    if (this.state.gettingUserLocation === false) {
+      if (this.props.nearbyEvents.length === 0) {
+        noEvents = <div>No events nearby</div>
+      } 
+    } 
     return (
       <div>
         <div className="jumbotron">
@@ -150,7 +154,9 @@ class Home extends Component {
             <ul>
               { events }
             </ul>
+            { noEvents }
           {this.state.gettingUserLocation ? <div> Getting Nearby Events, please wait.... </div> : null}
+          
         </div>
       </div>
     );

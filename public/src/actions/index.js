@@ -30,10 +30,3 @@ export function setNearbyEvents (nearbyEvents){
   }
 }
 
-// export function fetchActiveEventId(activeEventId){
-//   console.log("activeEventId in action index.js", activeEventId)
-//   return {
-//     type : GET_ACTIVE_EVENT_ID,
-//     payload: activeEventId
-//   }
-// }
