@@ -1,9 +1,14 @@
 import {setNearbyEvents} from '../actions/index.js'
 
-export default function(state = {}, action){
+export default function(state = [], action){
   switch(action.type){
     case 'SET_NEARBY_EVENTS':
-      return Object.assign({}, {nearbyEvents: action.payload})
+      console.log('set nearby events payload ', action.payload);
+      if (action.payload.length === 0) {
+        return state;
+      } else {
+        return action.payload;
+      }
     default:
       return state;
   }
