@@ -1,10 +1,10 @@
-import React, { Component } from 'react';
-import { connect } from 'react-redux'
-import { Link } from 'react-router-dom';
+import React, {Component} from 'react';
+import {connect} from 'react-redux'
+import {Link} from 'react-router-dom';
 import axios from 'axios';
 import Auth from '../Auth0/Auth0';
-import { bindActionCreators } from 'redux';
-import { fetchProfile } from '../actions/user_actions';
+import {bindActionCreators} from 'redux';
+import {fetchProfile} from '../actions/user_actions';
 import SimpleForm from './event_setting';
 import turf from 'turf'
 import { setNearbyEvents } from '../actions/index.js';
@@ -43,7 +43,9 @@ class Home extends Component {
     axios.post(`/api/user/signup`, profile)
       .then((response) => {
         console.log('registerUser response', response);
-        this.props.fetchProfile(response.data);
+        this
+          .props
+          .fetchProfile(response.data);
       })
       .catch((error) => {
         console.log('this is registerUser error', error);
@@ -146,7 +148,6 @@ class Home extends Component {
     } 
     return (
       <div>
-
         <header className="intro">
           <div className="intro-body">
             <div className="container">
@@ -168,7 +169,8 @@ class Home extends Component {
               <div className="col-lg-8 col-lg-offset-2">
                 <p>
                   <Link to="/event_setting" className="btnghost">
-                    <i className="fa fa-download"></i> Host an Event
+                    <i className="fa fa-download"></i>
+                    Host an Event
                   </Link>
                 </p>
               </div>
@@ -178,9 +180,9 @@ class Home extends Component {
 
         <section id="portfolio">
           <div className="gallery">
-            <ul>
+            <p></p>
 
-            </ul>
+            <ul></ul>
           </div>
 
 
@@ -201,12 +203,10 @@ class Home extends Component {
         </div>
         </section>
 
-
       </div>
     );
   }
 }
-
 function mapStateToProps(state) {
   return {
     nearbyEvents: state.nearbyEvents,

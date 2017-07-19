@@ -1,28 +1,33 @@
-import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
+import React, {Component} from 'react';
+import {Link} from 'react-router-dom';
 import Auth from '../Auth0/Auth0';
 const auth = new Auth();
-const { isAuthenticated } = auth;
+const {isAuthenticated} = auth;
 
 class Navigation_Bar extends Component {
   constructor(props) {
     super(props);
-    this.logout = this.logout.bind(this);
+    this.logout = this
+      .logout
+      .bind(this);
   }
 
   logout() {
     auth.logout();
   }
 
-
   render() {
 
     return (
       <nav className="navbar navbar-custom navbar-fixed-top" role="navigation">
         <div className="container">
-          
+
           <div className="navbar-header">
-            <button type="button" className="navbar-toggle" data-toggle="collapse" data-target=".navbar-main-collapse">
+            <button
+              type="button"
+              className="navbar-toggle"
+              data-toggle="collapse"
+              data-target=".navbar-main-collapse">
               <i className="fa fa-bars"></i>
             </button>
             <Link to="/home" className="navbar-brand page-scroll">
@@ -62,5 +67,3 @@ class Navigation_Bar extends Component {
 }
 
 export default Navigation_Bar;
-
-

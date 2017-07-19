@@ -342,9 +342,9 @@ p.lead {
 	display:inline-block;
 }
 .btnghost:hover {
-	background-color:#666;
+	background-color:#1ba39c;
 	color:#fff;
-	border:2px solid #666;
+	border:2px solid #1ba39c;
 }
 .bgcover {
 	background-size:cover;
