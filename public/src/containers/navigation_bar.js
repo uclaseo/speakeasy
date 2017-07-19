@@ -51,6 +51,9 @@ class Navigation_Bar extends Component {
               <li>
                 <Link to="/profile">Profile</Link>
               </li>
+                            <li>
+                <Link to="/open_events">Events</Link>
+              </li>
               <li>
                 <Link onClick={this.logout} to="/">Logout</Link>
               </li>

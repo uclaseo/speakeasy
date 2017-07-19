@@ -150,55 +150,29 @@ class Home extends Component {
       <div>
         <header className="intro">
           <div className="intro-body">
-            <div className="container">
+            <div className="container text-center">
               <div className="row">
                 <div className="col-md-8 col-md-offset-2">
                   <h1 className="brand-heading">SPEAKEASY</h1>
                   <p className="intro-text">
                     MORE STUFF ABOUT OUR APP AND STUFF
                   </p>
+                  <section>
+                    <p>
+                      <Link to="/event_setting" className="btnghost">
+                        <i className="fa"></i>
+                        Host an Event
+                      </Link>
+                    </p>
+                  </section>
                 </div>
               </div>
             </div>
           </div>
         </header>
 
-        <section>
-          <div className="container text-center">
-            <div className="row">
-              <div className="col-lg-8 col-lg-offset-2">
-                <p>
-                  <Link to="/event_setting" className="btnghost">
-                    <i className="fa fa-download"></i>
-                    Host an Event
-                  </Link>
-                </p>
-              </div>
-            </div>
-          </div>
-        </section>
-
         <section id="portfolio">
           <div className="gallery">
-            <p>loremLorem ipsum dolor sit amet, consectetur adipisicing elit. Expedita temporibus porro voluptatibus nesciunt maxime, voluptates. Ipsa est, ipsum quaerat eligendi fuga pariatur ullam quae, unde repudiandae tempore laboriosam alias nobis.</p>
-            <p>loremLorem ipsum dolor sit amet, consectetur adipisicing elit. Expedita temporibus porro voluptatibus nesciunt maxime, voluptates. Ipsa est, ipsum quaerat eligendi fuga pariatur ullam quae, unde repudiandae tempore laboriosam alias nobis.</p>
-            <p>loremLorem ipsum dolor sit amet, consectetur adipisicing elit. Expedita temporibus porro voluptatibus nesciunt maxime, voluptates. Ipsa est, ipsum quaerat eligendi fuga pariatur ullam quae, unde repudiandae tempore laboriosam alias nobis.</p>
-            <p>loremLorem ipsum dolor sit amet, consectetur adipisicing elit. Expedita temporibus porro voluptatibus nesciunt maxime, voluptates. Ipsa est, ipsum quaerat eligendi fuga pariatur ullam quae, unde repudiandae tempore laboriosam alias nobis.</p>
-            <p>loremLorem ipsum dolor sit amet, consectetur adipisicing elit. Expedita temporibus porro voluptatibus nesciunt maxime, voluptates. Ipsa est, ipsum quaerat eligendi fuga pariatur ullam quae, unde repudiandae tempore laboriosam alias nobis.</p>
-            <p>loremLorem ipsum dolor sit amet, consectetur adipisicing elit. Expedita temporibus porro voluptatibus nesciunt maxime, voluptates. Ipsa est, ipsum quaerat eligendi fuga pariatur ullam quae, unde repudiandae tempore laboriosam alias nobis.</p>
-            <p>loremLorem ipsum dolor sit amet, consectetur adipisicing elit. Expedita temporibus porro voluptatibus nesciunt maxime, voluptates. Ipsa est, ipsum quaerat eligendi fuga pariatur ullam quae, unde repudiandae tempore laboriosam alias nobis.</p>
-            <p>loremLorem ipsum dolor sit amet, consectetur adipisicing elit. Expedita temporibus porro voluptatibus nesciunt maxime, voluptates. Ipsa est, ipsum quaerat eligendi fuga pariatur ullam quae, unde repudiandae tempore laboriosam alias nobis.</p>
-            <p>loremLorem ipsum dolor sit amet, consectetur adipisicing elit. Expedita temporibus porro voluptatibus nesciunt maxime, voluptates. Ipsa est, ipsum quaerat eligendi fuga pariatur ullam quae, unde repudiandae tempore laboriosam alias nobis.</p>
-            <p>loremLorem ipsum dolor sit amet, consectetur adipisicing elit. Expedita temporibus porro voluptatibus nesciunt maxime, voluptates. Ipsa est, ipsum quaerat eligendi fuga pariatur ullam quae, unde repudiandae tempore laboriosam alias nobis.</p>
-            <p>loremLorem ipsum dolor sit amet, consectetur adipisicing elit. Expedita temporibus porro voluptatibus nesciunt maxime, voluptates. Ipsa est, ipsum quaerat eligendi fuga pariatur ullam quae, unde repudiandae tempore laboriosam alias nobis.</p>
-            <p>loremLorem ipsum dolor sit amet, consectetur adipisicing elit. Expedita temporibus porro voluptatibus nesciunt maxime, voluptates. Ipsa est, ipsum quaerat eligendi fuga pariatur ullam quae, unde repudiandae tempore laboriosam alias nobis.</p>
-            <p>loremLorem ipsum dolor sit amet, consectetur adipisicing elit. Expedita temporibus porro voluptatibus nesciunt maxime, voluptates. Ipsa est, ipsum quaerat eligendi fuga pariatur ullam quae, unde repudiandae tempore laboriosam alias nobis.</p>
-            <p>loremLorem ipsum dolor sit amet, consectetur adipisicing elit. Expedita temporibus porro voluptatibus nesciunt maxime, voluptates. Ipsa est, ipsum quaerat eligendi fuga pariatur ullam quae, unde repudiandae tempore laboriosam alias nobis.</p>
-            <p>loremLorem ipsum dolor sit amet, consectetur adipisicing elit. Expedita temporibus porro voluptatibus nesciunt maxime, voluptates. Ipsa est, ipsum quaerat eligendi fuga pariatur ullam quae, unde repudiandae tempore laboriosam alias nobis.</p>
-            <p>loremLorem ipsum dolor sit amet, consectetur adipisicing elit. Expedita temporibus porro voluptatibus nesciunt maxime, voluptates. Ipsa est, ipsum quaerat eligendi fuga pariatur ullam quae, unde repudiandae tempore laboriosam alias nobis.</p>
-            <p>loremLorem ipsum dolor sit amet, consectetur adipisicing elit. Expedita temporibus porro voluptatibus nesciunt maxime, voluptates. Ipsa est, ipsum quaerat eligendi fuga pariatur ullam quae, unde repudiandae tempore laboriosam alias nobis.</p>
-            <p>loremLorem ipsum dolor sit amet, consectetur adipisicing elit. Expedita temporibus porro voluptatibus nesciunt maxime, voluptates. Ipsa est, ipsum quaerat eligendi fuga pariatur ullam quae, unde repudiandae tempore laboriosam alias nobis.</p>
-
             <ul></ul>
           </div>
 
@@ -224,6 +198,7 @@ class Home extends Component {
     );
   }
 }
+
 function mapStateToProps(state) {
   return {
     nearbyEvents: state.nearbyEvents,
@@ -234,3 +209,20 @@ function mapDispatchToProps(dispatch){
   return bindActionCreators({ setNearbyEvents, fetchProfile, setActiveEvent, clearEventMessages }, dispatch)
 }
 export default connect(mapStateToProps, mapDispatchToProps)(Home);
+<<<<<<< ec14e556216202de4809067c9abedcbb5cd7205e
+=======
+{/* <div>
+  <h1>Speakeasy</h1>
+  <p>Some info about our application</p>
+
+
+
+  {this.state.nearByEvents.map((event) => {
+    return <div> {event.eventName} </div>
+  })}
+  {this.state.gettingUserLocation ? <div> Getting Nearby Events, please wait.... </div> : null}
+
+
+</div> */
+}
+>>>>>>> Consolidate some style
