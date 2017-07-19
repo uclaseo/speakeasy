@@ -180,7 +180,24 @@ class Home extends Component {
 
         <section id="portfolio">
           <div className="gallery">
-            <p></p>
+            <p>loremLorem ipsum dolor sit amet, consectetur adipisicing elit. Expedita temporibus porro voluptatibus nesciunt maxime, voluptates. Ipsa est, ipsum quaerat eligendi fuga pariatur ullam quae, unde repudiandae tempore laboriosam alias nobis.</p>
+            <p>loremLorem ipsum dolor sit amet, consectetur adipisicing elit. Expedita temporibus porro voluptatibus nesciunt maxime, voluptates. Ipsa est, ipsum quaerat eligendi fuga pariatur ullam quae, unde repudiandae tempore laboriosam alias nobis.</p>
+            <p>loremLorem ipsum dolor sit amet, consectetur adipisicing elit. Expedita temporibus porro voluptatibus nesciunt maxime, voluptates. Ipsa est, ipsum quaerat eligendi fuga pariatur ullam quae, unde repudiandae tempore laboriosam alias nobis.</p>
+            <p>loremLorem ipsum dolor sit amet, consectetur adipisicing elit. Expedita temporibus porro voluptatibus nesciunt maxime, voluptates. Ipsa est, ipsum quaerat eligendi fuga pariatur ullam quae, unde repudiandae tempore laboriosam alias nobis.</p>
+            <p>loremLorem ipsum dolor sit amet, consectetur adipisicing elit. Expedita temporibus porro voluptatibus nesciunt maxime, voluptates. Ipsa est, ipsum quaerat eligendi fuga pariatur ullam quae, unde repudiandae tempore laboriosam alias nobis.</p>
+            <p>loremLorem ipsum dolor sit amet, consectetur adipisicing elit. Expedita temporibus porro voluptatibus nesciunt maxime, voluptates. Ipsa est, ipsum quaerat eligendi fuga pariatur ullam quae, unde repudiandae tempore laboriosam alias nobis.</p>
+            <p>loremLorem ipsum dolor sit amet, consectetur adipisicing elit. Expedita temporibus porro voluptatibus nesciunt maxime, voluptates. Ipsa est, ipsum quaerat eligendi fuga pariatur ullam quae, unde repudiandae tempore laboriosam alias nobis.</p>
+            <p>loremLorem ipsum dolor sit amet, consectetur adipisicing elit. Expedita temporibus porro voluptatibus nesciunt maxime, voluptates. Ipsa est, ipsum quaerat eligendi fuga pariatur ullam quae, unde repudiandae tempore laboriosam alias nobis.</p>
+            <p>loremLorem ipsum dolor sit amet, consectetur adipisicing elit. Expedita temporibus porro voluptatibus nesciunt maxime, voluptates. Ipsa est, ipsum quaerat eligendi fuga pariatur ullam quae, unde repudiandae tempore laboriosam alias nobis.</p>
+            <p>loremLorem ipsum dolor sit amet, consectetur adipisicing elit. Expedita temporibus porro voluptatibus nesciunt maxime, voluptates. Ipsa est, ipsum quaerat eligendi fuga pariatur ullam quae, unde repudiandae tempore laboriosam alias nobis.</p>
+            <p>loremLorem ipsum dolor sit amet, consectetur adipisicing elit. Expedita temporibus porro voluptatibus nesciunt maxime, voluptates. Ipsa est, ipsum quaerat eligendi fuga pariatur ullam quae, unde repudiandae tempore laboriosam alias nobis.</p>
+            <p>loremLorem ipsum dolor sit amet, consectetur adipisicing elit. Expedita temporibus porro voluptatibus nesciunt maxime, voluptates. Ipsa est, ipsum quaerat eligendi fuga pariatur ullam quae, unde repudiandae tempore laboriosam alias nobis.</p>
+            <p>loremLorem ipsum dolor sit amet, consectetur adipisicing elit. Expedita temporibus porro voluptatibus nesciunt maxime, voluptates. Ipsa est, ipsum quaerat eligendi fuga pariatur ullam quae, unde repudiandae tempore laboriosam alias nobis.</p>
+            <p>loremLorem ipsum dolor sit amet, consectetur adipisicing elit. Expedita temporibus porro voluptatibus nesciunt maxime, voluptates. Ipsa est, ipsum quaerat eligendi fuga pariatur ullam quae, unde repudiandae tempore laboriosam alias nobis.</p>
+            <p>loremLorem ipsum dolor sit amet, consectetur adipisicing elit. Expedita temporibus porro voluptatibus nesciunt maxime, voluptates. Ipsa est, ipsum quaerat eligendi fuga pariatur ullam quae, unde repudiandae tempore laboriosam alias nobis.</p>
+            <p>loremLorem ipsum dolor sit amet, consectetur adipisicing elit. Expedita temporibus porro voluptatibus nesciunt maxime, voluptates. Ipsa est, ipsum quaerat eligendi fuga pariatur ullam quae, unde repudiandae tempore laboriosam alias nobis.</p>
+            <p>loremLorem ipsum dolor sit amet, consectetur adipisicing elit. Expedita temporibus porro voluptatibus nesciunt maxime, voluptates. Ipsa est, ipsum quaerat eligendi fuga pariatur ullam quae, unde repudiandae tempore laboriosam alias nobis.</p>
+            <p>loremLorem ipsum dolor sit amet, consectetur adipisicing elit. Expedita temporibus porro voluptatibus nesciunt maxime, voluptates. Ipsa est, ipsum quaerat eligendi fuga pariatur ullam quae, unde repudiandae tempore laboriosam alias nobis.</p>
 
             <ul></ul>
           </div>
