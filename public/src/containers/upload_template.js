@@ -60,7 +60,7 @@ class Upload_Template extends Component {
   registerImageUrl(eachFile) {
     const imageData = {
       name: eachFile.fileName,
-      imageLink: `https://s3-us-west-1.amazonaws.com/inseokspeakeasy/${eachFile.fileName}`,
+      imageLink: `https://s3-us-west-1.amazonaws.com/hrlaspeakeasy/${eachFile.fileName}`,
       userId: this.props.profile.id,
       eventId: 1
     };
