@@ -19,14 +19,15 @@ class Navigation_Bar extends Component {
     
     return (
       <div id="page-top" data-spy="scroll" data-target=".navbar-fixed-top">
+        <div className="container">
         <nav className="navbar navbar-custom navbar-fixed-top" role="navigation">
           <div className="container">
             <div className="navbar-header">
               <button type="button" className="navbar-toggle" data-toggle="collapse" data-target=".navbar-main-collapse">
                 <i className="fa fa-bars"></i>
                 </button>
-              {/* <a className="navbar-brand page-scroll" href="index.html">
-                SPEAKEASY</a> */}
+               <a className="navbar-brand page-scroll" href="index.html">
+                SPEAKEASY</a> 
             </div>
             <div className="collapse navbar-collapse navbar-right navbar-main-collapse">
 
@@ -57,13 +58,11 @@ class Navigation_Bar extends Component {
             </div>
           </div>
         </nav>
+        </div>
       </div>
     );
   }
 }
-
-
-
 
 export default Navigation_Bar;
 
