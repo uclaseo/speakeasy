@@ -27,7 +27,7 @@ class Landing_Page extends Component {
           <div className="container">
             <div className="row">
               <div className="col-md-8 col-md-offset-2">
-                <h1 className="brand-heading">SPEAKEASY</h1>
+                 <h1 className="brand-heading">SPEAKEASY</h1> 
                 <p className="intro-text">
                   DIY semiotics succulents, put a bird on it tattooed hoodie +1
                     letterpress woke. Umami knausgaard hexagon tumblr. Polaroid disrupt
@@ -38,7 +38,6 @@ class Landing_Page extends Component {
                 </p>
                 <Link to="/" onClick={this.login} className="btn btn-circle page-scroll">
                  <i className="fa fa-angle-double-down animated">JOIN</i> 
-                 
                 </Link>
               </div>
             </div>

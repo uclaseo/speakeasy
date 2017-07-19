@@ -44,7 +44,7 @@ export default class App extends Component {
       <div>
       <BrowserRouter>
       <div>
-          {renderNavBar()}
+      {renderNavBar()}
           <Switch>
             <Route
               exact
