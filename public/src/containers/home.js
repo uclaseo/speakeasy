@@ -12,6 +12,7 @@ import NearbyEventDetail from '../components/nearbyEventDetail';
 import { setActiveEvent } from '../actions/activeEventAction';
 import { clearEventMessages } from '../actions/eventMessagesActions';
 
+const ROOT_URL = 'localhost:8080';
 const auth = new Auth();
 class Home extends Component {
   constructor(props) {
@@ -40,16 +41,16 @@ class Home extends Component {
   registerUser(profile) {
     // console.log("what's registerUser profile arg", profile)
     axios.post(`/api/user/signup`, profile)
-    .then((response) => {
-      console.log('registerUser response', response);
-      this.props.fetchProfile(response.data);
-    })
-    .catch((error) => {
-      console.log('this is registerUser error', error);
-    })
+      .then((response) => {
+        console.log('registerUser response', response);
+        this.props.fetchProfile(response.data);
+      })
+      .catch((error) => {
+        console.log('this is registerUser error', error);
+      })
   }
 
-  getUserLocation(cb){
+  getUserLocation(cb) {
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition((position)=>{
         // console.log("getting position via html5", position.coords)
@@ -91,7 +92,7 @@ class Home extends Component {
     })
   }
 
-  getDistance(fromPoint, toPoint){
+  getDistance(fromPoint, toPoint) {
     var from = {
       "type": "Feature",
       "properties": {},
@@ -146,19 +147,44 @@ class Home extends Component {
     return (
       <div>
 
-
-          <div>
-            <h1>Speakeasy</h1>
-            <p>Some info about our application</p>
+        <header className="intro">
+          <div className="intro-body">
+            <div className="container">
+              <div className="row">
+                <div className="col-md-8 col-md-offset-2">
+                  <h1 className="brand-heading">SPEAKEASY</h1>
+                  <p className="intro-text">
+                    MORE STUFF ABOUT OUR APP AND STUFF
+                  </p>
+                </div>
+              </div>
+            </div>
           </div>
-<<<<<<< 0ae8d418cd238eef4e5f4e2a7e4e1d7e475cabf2
-        </div>
-        <div className="container-fluid bg-3 text-center">
-=======
+        </header>
 
-        
-        <div>
->>>>>>> Style landing page
+        <section>
+          <div className="container text-center">
+            <div className="row">
+              <div className="col-lg-8 col-lg-offset-2">
+                <p>
+                  <Link to="/event_setting" className="btnghost">
+                    <i className="fa fa-download"></i> Host an Event
+                  </Link>
+                </p>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section id="portfolio">
+          <div className="gallery">
+            <ul>
+
+            </ul>
+          </div>
+
+
+        <div className="container-fluid bg-3 text-center">
           <br />
           <br />
           <Link to="/event_setting">
@@ -173,10 +199,14 @@ class Home extends Component {
           {this.state.gettingUserLocation ? <div> Getting Nearby Events, please wait.... </div> : null}
           
         </div>
+        </section>
+
+
       </div>
     );
   }
 }
+
 function mapStateToProps(state) {
   return {
     nearbyEvents: state.nearbyEvents,
