@@ -62,11 +62,11 @@ class User_Events extends Component {
           </div>
 
           <div className="col-md-8">
-            <ul>
+            
               {this.state.photos ? this.state.photos.map((photo) => {
-                return <li><img src={photo.imageLink} /></li>
+                return <div className="col-md-3"><img src={photo.imageLink} /></div>
               }) : null}
-            </ul>
+            
           </div>
 
         </div>
