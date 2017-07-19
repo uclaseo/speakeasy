@@ -145,13 +145,20 @@ class Home extends Component {
     } 
     return (
       <div>
-        <div className="jumbotron">
-          <div className="container text-center">
+
+
+          <div>
             <h1>Speakeasy</h1>
             <p>Some info about our application</p>
           </div>
+<<<<<<< 0ae8d418cd238eef4e5f4e2a7e4e1d7e475cabf2
         </div>
         <div className="container-fluid bg-3 text-center">
+=======
+
+        
+        <div>
+>>>>>>> Style landing page
           <br />
           <br />
           <Link to="/event_setting">

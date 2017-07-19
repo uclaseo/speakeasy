@@ -22,31 +22,29 @@ class Landing_Page extends Component {
   render() {
     return (
       <div>
-        <div className="jumbotron">
-          <div className="container text-center">
-            <h1>Speakeasy</h1>
-            <h2>Landing Page</h2>
+        <header className="intro">
+        <div className="intro-body">
+          <div className="container">
+            <div className="row">
+              <div className="col-md-8 col-md-offset-2">
+                <h1 className="brand-heading">SPEAKEASY</h1>
+                <p className="intro-text">
+                  DIY semiotics succulents, put a bird on it tattooed hoodie +1
+                    letterpress woke. Umami knausgaard hexagon tumblr. Polaroid disrupt
+                    sartorial cliche prism retro cray bespoke. Authentic salvia kitsch
+                    twee literally. Kinfolk locavore YOLO twee PBR&B shoreditch echo
+                    park. Selfies ugh godard actually, biodiesel cliche pop-up jianbing
+                    vape mumblecore tacos chia tote bag taiyaki.
+                </p>
+                <Link to="/" onClick={this.login} className="btn btn-circle page-scroll">
+                 <i className="fa fa-angle-double-down animated">JOIN</i> 
+                 
+                </Link>
+              </div>
+            </div>
           </div>
         </div>
-        <div className="container text-center">
-          <p>
-            DIY semiotics succulents, put a bird on it tattooed hoodie +1
-            letterpress woke. Umami knausgaard hexagon tumblr. Polaroid disrupt
-            sartorial cliche prism retro cray bespoke. Authentic salvia kitsch
-            twee literally. Kinfolk locavore YOLO twee PBR&B shoreditch echo
-            park. Selfies ugh godard actually, biodiesel cliche pop-up jianbing
-            vape mumblecore tacos chia tote bag taiyaki.{' '}
-          </p>
-        </div>
-        <br />
-        <Link to="/" onClick={this.login} className="center-block">
-          <button
-            type="button"
-            className="btn btn-secondary btn-lg center-block"
-          >
-            Join
-          </button>
-        </Link>
+        </header>
       </div>
     );
   }
@@ -54,5 +52,3 @@ class Landing_Page extends Component {
 
 export default connect(null, null)(Landing_Page);
 
-// <li><Link onClick={this.login} to="/">Login</Link></li>
-// <li><Link onClick={this.logout} to="/">Logout</Link></li>

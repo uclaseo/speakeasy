@@ -41,10 +41,10 @@ export default class App extends Component {
   render() {
 
     return (
+      <div>
       <BrowserRouter>
-        <div>
+      <div>
           {renderNavBar()}
-
           <Switch>
             <Route
               exact
@@ -128,8 +128,9 @@ export default class App extends Component {
             <Route path='/dm_chat' component={DMChat} />
             <Route path="/upload" component={Upload_Template} />
           </Switch>
-        </div>
+          </div>
       </BrowserRouter>
+        </div>
     );
   }
 }
