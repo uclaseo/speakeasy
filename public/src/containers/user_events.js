@@ -64,7 +64,7 @@ class User_Events extends Component {
           <div className="col-md-8">
             
               {this.state.photos ? this.state.photos.map((photo) => {
-                return <div className="col-md-3"><img src={photo.imageLink} /></div>
+                return <div className="col-md-3"><img className="img-responsive"src={photo.imageLink} /></div>
               }) : null}
             
           </div>
