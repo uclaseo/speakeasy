@@ -91,10 +91,6 @@ class EventChat extends Component {
   
   handleDMClick(message) {
     if (this.props.user_id !== message.user_id) {
-      // axios.post('/api/dmrooms/create', {
-      //   userId: this.props.userId, 
-      //   anotherId: anotherId
-      // });
       axios.post('/api/dmrooms/create', {
         userId: this.props.user_id,
         anotherId: message.user_id
@@ -148,13 +144,12 @@ class EventChat extends Component {
 
   render() {
     let closeEvent;
-    
-    if (this.props.user_id === this.props.event.userId) {
+    if (this.props.user_id !== this.props.event.userId) {
       closeEvent =  <button type="button"
                             onClick={this.handleCloseClick}
                     >Close Event</button>
     } else {
-      closeEvent = '';
+      closeEvent = null;
     }
 
     if (this.state.closed === true) {
@@ -172,6 +167,7 @@ class EventChat extends Component {
     if (this.props.messages.length === 0) {
       return (
         <div>
+          {closeEvent}
           <input
             type="text"
             value={this.state.text}

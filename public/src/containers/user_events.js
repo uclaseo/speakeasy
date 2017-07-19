@@ -46,7 +46,6 @@ class User_Events extends Component {
 
 function mapStateToProps(state) {
   return {
-    currentLocation: state.active_event_Location,
     profile: state.profile
   }
 }
