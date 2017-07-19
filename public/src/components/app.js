@@ -34,17 +34,7 @@ function protectPath(comp) {
 }
 
 function renderNavBar() {
-  if (auth.isAuthenticated()) {
-    return (
-      <div>
-        <Navigation_Bar />
-      </div>
-    )
-  } else {
-    return (
-      <div></div>
-    )
-  }
+  return((auth.isAuthenticated()) ? <div><Navigation_Bar /></div> : <div></div>);
 }
 
 export default class App extends Component {
@@ -134,7 +124,6 @@ export default class App extends Component {
                   ? <Redirect to="/" />
                   : <OpenEventsList auth={auth} {...props} />}
             />
-                {/* texting upload  */}
             <Route path='/upload' component={Upload_Template}/>
             <Route path='/dm_chat' component={DMChat} />
             <Route path="/upload" component={Upload_Template} />
