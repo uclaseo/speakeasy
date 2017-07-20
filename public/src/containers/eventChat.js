@@ -58,12 +58,15 @@ class EventChat extends Component {
 
   handleSendClick(event) {
     event.preventDefault();
+    const images = {
+      imageUrls: this.state.imagePreviewUrls
+    };
     socket.emit('newmessage', {
       event_id: this.props.event.id,
       user_name: this.props.user_name,
       user_id: this.props.user_id,
       text: this.state.text
-    });
+    }, images);
     this.setState({
       text: ''
     });
@@ -179,7 +182,7 @@ class EventChat extends Component {
       <div>
         HAHAHAHAHAA PREVIEW
         {imagePreviewUrls.map((eachUrl) => {
-          return <img src={eachUrl} />
+          return <img className="thumb" src={eachUrl} />
         })}
       </div>
     )
@@ -250,9 +253,6 @@ class EventChat extends Component {
         onChange={(event) => this.handleUpload(event)}/>
 
         {this.renderImagePreview()}
-
-
-
       </div>
     );
   }

@@ -27,8 +27,9 @@ const socketEvents = (io) => {
       socket.leave(event.event_id);
     });
 
-    socket.on('newmessage', (data) => {
+    socket.on('newmessage', (data, images) => {
       console.log('posting a new message ', data);
+      console.log('images data', images);
       const { event_id, user_name, text, user_id } = data;
       const newMessage = new Message({
         event_id: event_id,

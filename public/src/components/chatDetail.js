@@ -11,7 +11,7 @@ const ChatDetail = ({ message, dmClick }) => {
           bsStyle="info" 
           header={message.user_name}
         >
-          {message.text}
+          <img className="thumbnail" src={message.imageUrl}/>{message.text}
           <br></br>
           {message.event_id}
         </Panel>
