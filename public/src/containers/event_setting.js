@@ -57,7 +57,7 @@ class Event_Setting extends Component {
         navigator.geolocation.getCurrentPosition((position)=>{
           console.log("getting position via html5", position.coords)
           this.setState({
-            currenEventLocation : [position.coords.latitude, position.coords.longitude]
+            currentEventLocation : [position.coords.latitude, position.coords.longitude]
           }, () => {
             console.log("what is the user location?", this.state.currenEventLocation);
             // cb();
@@ -69,13 +69,8 @@ class Event_Setting extends Component {
   }
 
   onSubmit(values) {
-<<<<<<< 6c5b69f8a3959ddbb0d9d5c02c6a2a82e8225e3a
     
 
-=======
-    console.log("this.state in onSubmit", this.state)
-    console.log('this.props.profile.id EVENT SETTING:', this.props.profile.id);
->>>>>>> Fix chat event conflicts
     axios.post('/api/event/create', {
       eventName: values.eventname,
       password: values.password,

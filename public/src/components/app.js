@@ -1,5 +1,5 @@
-import React, { Component } from 'react';
-import { Redirect, BrowserRouter, Route, Switch } from 'react-router-dom';
+import React, {Component} from 'react';
+import {Redirect, BrowserRouter, Route, Switch} from 'react-router-dom';
 import Callback from '../Auth0/Callback';
 import Auth from '../Auth0/Auth0';
 
@@ -27,113 +27,89 @@ const handleAuthentication = (nextState, replace) => {
 
 function protectPath(comp) {
   return;
-  props =>
-    !auth.isAuthenticated()
-      ? <Redirect to="/" />
-      : <comp auth={auth} {...props} />;
+  props => !auth.isAuthenticated()
+    ? <Redirect to="/"/>
+    : <comp auth={auth} {...props}/>;
 }
 
 function renderNavBar() {
-  return((auth.isAuthenticated()) ? <div><Navigation_Bar /></div> : <div></div>);
+  return ((auth.isAuthenticated())
+    ? <div><Navigation_Bar/></div>
+    : <div className="navbar"></div>);
 }
 
 export default class App extends Component {
   render() {
-
     return (
       <div id="page-top" data-spy="scroll" data-target=".navbar-fixed-top">
-
-
         <BrowserRouter>
-      <div>
-        {renderNavBar()}
-
+          <div>
+            {renderNavBar()}
             <Switch>
               <Route
                 exact
                 path="/"
                 render={props => {
-                  return <Landing_Page {...props} />;
-                }}
-              />
+                return <Landing_Page {...props}/>;
+              }}/>
               <Route
                 exact
                 path="/callback"
                 render={props => {
-                  handleAuthentication(props);
-                  return <Callback {...props} />;
-                }}
-              />
+                handleAuthentication(props);
+                return <Callback {...props}/>;
+              }}/>
               <Route
                 path="/home"
-                render={props =>
-                  !auth.isAuthenticated()
-                    ? <Redirect to="/" />
-                    : <Home auth={auth} {...props} />}
-              />
+                render={props => !auth.isAuthenticated()
+                ? <Redirect to="/"/>
+                : <Home auth={auth} {...props}/>}/>
               <Route
                 path="/friends"
-                render={props =>
-                  !auth.isAuthenticated()
-                    ? <Redirect to="/" />
-                    : <User_Friends auth={auth} {...props} />}
-              />
+                render={props => !auth.isAuthenticated()
+                ? <Redirect to="/"/>
+                : <User_Friends auth={auth} {...props}/>}/>
               <Route
                 path="/dm"
-                render={props =>
-                  !auth.isAuthenticated()
-                    ? <Redirect to="/" />
-                    : <DirectMessageList auth={auth} {...props} />}
-              />
+                render={props => !auth.isAuthenticated()
+                ? <Redirect to="/"/>
+                : <DirectMessageList auth={auth} {...props}/>}/>
               <Route
                 path="/past"
-                render={props =>
-                  !auth.isAuthenticated()
-                    ? <Redirect to="/" />
-                    : <User_Events auth={auth} {...props} />}
-              />
+                render={props => !auth.isAuthenticated()
+                ? <Redirect to="/"/>
+                : <User_Events auth={auth} {...props}/>}/>
               <Route
                 path="/friends"
-                render={props =>
-                  !auth.isAuthenticated()
-                    ? <Redirect to="/" />
-                    : <User_Profile auth={auth} {...props} />}
-              />
+                render={props => !auth.isAuthenticated()
+                ? <Redirect to="/"/>
+                : <User_Profile auth={auth} {...props}/>}/>
               <Route
                 path="/profile"
-                render={props =>
-                  !auth.isAuthenticated()
-                    ? <Redirect to="/" />
-                    : <User_Profile auth={auth} {...props} />}
-              />
+                render={props => !auth.isAuthenticated()
+                ? <Redirect to="/"/>
+                : <User_Profile auth={auth} {...props}/>}/>
               <Route
                 path="/event_setting"
-                render={props =>
-                  !auth.isAuthenticated()
-                    ? <Redirect to="/" />
-                    : <Event_Setting auth={auth} {...props} />}
-              />
+                render={props => !auth.isAuthenticated()
+                ? <Redirect to="/"/>
+                : <Event_Setting auth={auth} {...props}/>}/>
               <Route
                 path="/active_event"
-                render={props =>
-                  !auth.isAuthenticated()
-                    ? <Redirect to="/" />
-                    : <EventChat auth={auth} {...props} />}
-              />
+                render={props => !auth.isAuthenticated()
+                ? <Redirect to="/"/>
+                : <EventChat auth={auth} {...props}/>}/>
               <Route
                 path="/open_events"
-                render={props =>
-                  !auth.isAuthenticated()
-                    ? <Redirect to="/" />
-                    : <OpenEventsList auth={auth} {...props} />}
-              />
+                render={props => !auth.isAuthenticated()
+                ? <Redirect to="/"/>
+                : <OpenEventsList auth={auth} {...props}/>}/>
               <Route path='/upload' component={Upload_Template}/>
-              <Route path='/dm_chat' component={DMChat} />
-              <Route path="/upload" component={Upload_Template} />
+              <Route path='/dm_chat' component={DMChat}/>
+              <Route path="/upload" component={Upload_Template}/>
             </Switch>
           </div>
         </BrowserRouter>
-
       </div>
     );
   }

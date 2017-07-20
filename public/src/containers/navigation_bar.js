@@ -30,11 +30,12 @@ class Navigation_Bar extends Component {
               data-target=".navbar-main-collapse">
               <i className="fa fa-bars"></i>
             </button>
-            <Link to="/home" className="navbar-brand page-scroll">
-              SPEAKEASY</Link>
+            <a className="navbar-brand page-scroll">
+              speakeasy
+            </a>
           </div>
 
-          <div className="collapse navbar-collapse navbar-right navbar-main-collapse">
+          <div class="collapse navbar-collapse navbar-right navbar-main-collapse">
             <ul className="nav navbar-nav">
               <li>
                 <Link to="/home">Home</Link>
@@ -51,7 +52,7 @@ class Navigation_Bar extends Component {
               <li>
                 <Link to="/profile">Profile</Link>
               </li>
-                            <li>
+              <li>
                 <Link to="/open_events">Events</Link>
               </li>
               <li>
@@ -62,7 +63,6 @@ class Navigation_Bar extends Component {
               </li>
             </ul>
           </div>
-
         </div>
       </nav>
     );

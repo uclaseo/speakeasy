@@ -7,7 +7,7 @@ import {bindActionCreators} from 'redux';
 import {fetchProfile} from '../actions/user_actions';
 import SimpleForm from './event_setting';
 import turf from 'turf'
-import { setNearbyEvents } from '../actions/index.js';
+import {setNearbyEvents} from '../actions/index.js';
 import NearbyEventDetail from '../components/nearbyEventDetail';
 import { setActiveEvent } from '../actions/activeEventAction';
 import { clearEventMessages } from '../actions/eventMessagesActions';
@@ -24,10 +24,18 @@ class Home extends Component {
       nearbyEventProfilePicture: ''
     }
 
-    this.registerUser = this.registerUser.bind(this);
-    this.getNearbyEvents = this.getNearbyEvents.bind(this);
-    this.getUserLocation = this.getUserLocation.bind(this);
-    this.handleEventClick = this.handleEventClick.bind(this);
+    this.registerUser = this
+      .registerUser
+      .bind(this);
+    this.getNearbyEvents = this
+      .getNearbyEvents
+      .bind(this);
+    this.getUserLocation = this
+      .getUserLocation
+      .bind(this);
+    this.handleEventClick = this
+      .handleEventClick
+      .bind(this);
   }
 
   componentDidMount() {
@@ -40,7 +48,8 @@ class Home extends Component {
 
   registerUser(profile) {
     // console.log("what's registerUser profile arg", profile)
-    axios.post(`/api/user/signup`, profile)
+    axios
+      .post(`/api/user/signup`, profile)
       .then((response) => {
         console.log('registerUser response', response);
         this
@@ -54,22 +63,25 @@ class Home extends Component {
 
   getUserLocation(cb) {
     if (navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition((position)=>{
-        // console.log("getting position via html5", position.coords)
+      navigator
+        .geolocation
+        .getCurrentPosition((position) => {
+          // console.log("getting position via html5", position.coords)
           this.setState({
-            userLocation : [position.coords.latitude, position.coords.longitude]
-        }, () => {
-          // console.log("what is the user location?", this.state.userLocation);
-          cb();
-        })  
-      });
-    } else { 
-        // console.log("Geolocation is not supported by this browser.");
+            userLocation: [position.coords.latitude, position.coords.longitude]
+          }, () => {
+            // console.log("what is the user location?", this.state.userLocation);
+            cb();
+          })
+        });
+    } else {
+      // console.log("Geolocation is not supported by this browser.");
     }
   }
 
-  getNearbyEvents(){
+  getNearbyEvents() {
     var nearbyEvents = [];
+<<<<<<< 934bb9982cc35d251402ce7ea00f0880c24090bc
     axios.get("/api/event/searchevents")
     .then((response) => {
       // console.log("before we compare, this.state.userLocation is", this.state.userLocation)
@@ -78,20 +90,32 @@ class Home extends Component {
           // console.log("what are the nearbyEvents?", response.data);
           nearbyEvents.push(response.data[i]);
 
+=======
+    axios
+      .get("/api/event/searchevents")
+      .then((response) => {
+        // console.log("before we compare, this.state.userLocation is",
+        // this.state.userLocation)
+        for (var i = 0; i < response.data.length; i++) {
+          if (this.getDistance([
+            this.state.userLocation[0], this.state.userLocation[1]
+          ], [response.data[i].latitude, response.data[i].longitude])) {
+            nearbyEvents.push(response.data[i]);
+          }
+>>>>>>> Broke navbar
         }
-      }
-    })
-    .then(() => {
-      this.props.setNearbyEvents(nearbyEvents);
-    })
-    .then(() => {
-      this.setState({
-        gettingUserLocation: false
       })
-    })
-    .catch((error) =>{
-      console.log("getNearbyEvents get request failed", error)
-    })
+      .then(() => {
+        this
+          .props
+          .setNearbyEvents(nearbyEvents);
+      })
+      .then(() => {
+        this.setState({gettingUserLocation: false})
+      })
+      .catch((error) => {
+        console.log("getNearbyEvents get request failed", error)
+      })
   }
 
   getDistance(fromPoint, toPoint) {
@@ -121,12 +145,15 @@ class Home extends Component {
   }
 
   handleEventClick(event) {
-    this.props.setActiveEvent(event, this.props.profile.id);
+    this
+      .props
+      .setActiveEvent(event, this.props.profile.id);
   }
 
   render() {
     let events = null;
     if (this.props.nearbyEvents.length !== 0) {
+<<<<<<< 934bb9982cc35d251402ce7ea00f0880c24090bc
       events = this.props.nearbyEvents.map((event) => {
         return (
                 <div>
@@ -140,12 +167,25 @@ class Home extends Component {
         )
       })
     } 
+=======
+      events = this
+        .props
+        .nearbyEvents
+        .map((event) => {
+          return (<NearbyEventDetail
+            event={event}
+            key={event.id}
+            handleEventClick={this.handleEventClick}/>)
+        })
+    }
+>>>>>>> Broke navbar
     let noEvents = null;
     if (this.state.gettingUserLocation === false) {
       if (this.props.nearbyEvents.length === 0) {
         noEvents = <div>No events nearby</div>
-      } 
-    } 
+      }
+    }
+
     return (
       <div>
         <header className="intro">
@@ -176,22 +216,20 @@ class Home extends Component {
             <ul></ul>
           </div>
 
-
-        <div className="container-fluid bg-3 text-center">
-          <br />
-          <br />
-          <Link to="/event_setting">
-            <button
-              type="button" className="btn btn-secondary btn-lg myBtns">Create Event
-            </button>
-          </Link>
+          <div className="container-fluid bg-3 text-center">
+            <br/>
+            <br/>
             <ul>
-              { events }
+              {events}
             </ul>
-            { noEvents }
-          {this.state.gettingUserLocation ? <div> Getting Nearby Events, please wait.... </div> : null}
-          
-        </div>
+            {noEvents}
+            {this.state.gettingUserLocation
+              ? <div>
+                  Getting Nearby Events, please wait....
+                </div>
+              : null}
+
+          </div>
         </section>
 
       </div>
@@ -200,29 +238,18 @@ class Home extends Component {
 }
 
 function mapStateToProps(state) {
-  return {
-    nearbyEvents: state.nearbyEvents,
-    profile: state.profile
-  };
+  return {nearbyEvents: state.nearbyEvents, profile: state.profile};
 }
+<<<<<<< 934bb9982cc35d251402ce7ea00f0880c24090bc
 function mapDispatchToProps(dispatch){
   return bindActionCreators({ setNearbyEvents, fetchProfile, setActiveEvent, clearEventMessages }, dispatch)
+=======
+function mapDispatchToProps(dispatch) {
+  return bindActionCreators({
+    setNearbyEvents,
+    fetchProfile,
+    setActiveEvent
+  }, dispatch)
+>>>>>>> Broke navbar
 }
 export default connect(mapStateToProps, mapDispatchToProps)(Home);
-<<<<<<< ec14e556216202de4809067c9abedcbb5cd7205e
-=======
-{/* <div>
-  <h1>Speakeasy</h1>
-  <p>Some info about our application</p>
-
-
-
-  {this.state.nearByEvents.map((event) => {
-    return <div> {event.eventName} </div>
-  })}
-  {this.state.gettingUserLocation ? <div> Getting Nearby Events, please wait.... </div> : null}
-
-
-</div> */
-}
->>>>>>> Consolidate some style
