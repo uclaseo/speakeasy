@@ -1,5 +1,4 @@
 const Table = require('./../models/tableModels');
-const fetchUsersForEvent = require('./controllerHelper');
 const Sequelize = require('sequelize');
 
 const crossPathUpdate = (req, res) => {

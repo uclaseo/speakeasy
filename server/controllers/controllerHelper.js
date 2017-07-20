@@ -17,14 +17,30 @@ const parseDMRooms = (input) => {
   return rooms;
 }
 
-const fetchUsersForEvent = (eventId) => {
-  Table.User_Event.findAll({
-    where: { eventId: eventId },
-    attributes: ['userId']
-  })
-} 
+function parseFriendsList(input) {
+  var friends = [];
+  for(var i = 0; i < input[0][0].possible.length; i++) {
+    var friendA = {};
+    if (input[0][0].possible[i].cross_path.count > 2) {
+      friendA.user_to_name = input[0][0].possible[i].name;
+      friendA.user_to_id = input[0][0].possible[i].id;
+      friendA.cross_path = input[0][0].possible[i].cross_path.count;
+      friends.push(friendA);
+    }
+  }
+  for(var j = 0; j < input[1].length; j++) {
+    if (input[1][j].possible[0].cross_path.count > 2) {
+      var friendB = {};
+      friendB.user_to_name = input[1][j].name;
+      friendB.user_to_id = input[1][j].id;
+      friendB.cross_path = input[1][j].possible[0].cross_path.count;
+      friends.push(friendB)
+    }
+  } 
+  return friends;
+}
 
 module.exports = {
   parseDMRooms: parseDMRooms,
-  fetchUsersForEvent: fetchUsersForEvent
+  parseFriendsList: parseFriendsList
 }

@@ -93,7 +93,10 @@ User_Event.belongsTo(Event)
 
 User.belongsToMany(User, {
   as: 'possible',
-  through: Cross_Path
+  through: 'cross_path'
+})
+Cross_Path.belongsTo(User, {
+  as: 'possible'
 })
 
 module.exports = {
