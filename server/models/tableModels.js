@@ -59,7 +59,8 @@ const Cross_Path = db.define('cross_path', {
     primaryKey: true,
     autoIncrement: true
   },
-  count: Sequelize.INTEGER
+  count: Sequelize.INTEGER,
+  chatting: Sequelize.BOOLEAN
 });
 
 User.hasMany(Event);

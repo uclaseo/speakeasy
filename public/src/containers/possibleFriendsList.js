@@ -6,7 +6,7 @@ import axios from 'axios'
 import { fetchPossibleFriends, clearPossibleFriends } from './../actions/possibleFriendsActions'
 import PossibleFriendDetail from './../components/possibleFriendDetail'
 import { setActiveDMRoom, createDMRoom } from './../actions/dmRoomsActions'
-
+import { clearDirectMessages } from './../actions/directMessagesActions'
 
 class PossibleFriendsList extends Component {
   constructor(props) {
@@ -20,11 +20,13 @@ class PossibleFriendsList extends Component {
   }
 
   componentDidMount() {
+    this.props.clearDirectMessages()
     this.props.clearPossibleFriends()
-    this.props.fetchPossibleFriends(this.props.user_id)
+    this.props.fetchPossibleFriends(this.props.user_id, this.props.dmRooms)
   }
 
   handleFriendClick(friend) {
+    let user_to_id = friend.user_to_id
     axios.post('/api/dmrooms/create', {
         userId: this.props.user_id,
         anotherId: friend.user_to_id
@@ -35,10 +37,17 @@ class PossibleFriendsList extends Component {
           this.props.createDMRoom(friend.user_to_name, dm_id)
           this.setState({ dm: true })
         })
+        
   } 
 
 
   render() {
+    if (this.state.dm === true) {
+      return (
+        <Redirect to='/dm_chat' />
+      )
+    }
+
     let friends = this.props.possibleFriends.map((friend) => {
       return (
         <PossibleFriendDetail 
@@ -62,7 +71,8 @@ class PossibleFriendsList extends Component {
 function mapStateToProps(state) {
   return {
     user_id: state.profile.id,
-    possibleFriends: state.possibleFriends
+    possibleFriends: state.possibleFriends,
+    dmRooms: state.dmRooms
   }
 }
 
@@ -71,7 +81,8 @@ function mapDispatchToProps(dispatch) {
     fetchPossibleFriends: fetchPossibleFriends,
     setActiveDMRoom: setActiveDMRoom,
     clearPossibleFriends: clearPossibleFriends,
-    createDMRoom: createDMRoom
+    createDMRoom: createDMRoom,
+    clearDirectMessages: clearDirectMessages
   }, dispatch)
 }
 
