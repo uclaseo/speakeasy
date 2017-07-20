@@ -20,8 +20,8 @@ class EventChat extends Component {
       text: '',
       closed: false,
       dm: false,
-      file: '',
-      imagePreviewUrl: ''
+      files: [],
+      imagePreviewUrls: []
     };
 
     this.handleInputChange = this.handleInputChange.bind(this)
@@ -152,30 +152,35 @@ class EventChat extends Component {
 
   handleUpload(event) {
     event.preventDefault();
-    const reader = new FileReader();
     const files = event.target.files;
-    const file = event.target.files[0]
     console.log('files uploaded', files);
+    const stateFiles = [];
+    const stateImagePreviewUrls = [];
 
-    reader.onload = () => {
-      this.setState({
-        file: file,
-        imagePreviewUrl: reader.result
-
-      })
+    for (let i = 0, file; file = files[i]; i++) {
+      console.log('hello', i)
+      let reader = new FileReader();
+      reader.onloadend = () => {
+        stateFiles.push(file);
+        stateImagePreviewUrls.push(reader.result);
+        this.setState({
+          files: stateFiles,
+          imagePreviewUrls: stateImagePreviewUrls
+        });
+        console.log(this.state);
+      };
+      reader.readAsDataURL(file);
     }
-    console.log('STATE', this.state);
-
-    reader.readAsDataURL(file)
-  
   }
 
   renderImagePreview() {
-    const imagePreviewUrl = this.state.imagePreviewUrl
+    const imagePreviewUrls = this.state.imagePreviewUrls
     return (
       <div>
         HAHAHAHAHAA PREVIEW
-        <img src={imagePreviewUrl} />
+        {imagePreviewUrls.map((eachUrl) => {
+          return <img src={eachUrl} />
+        })}
       </div>
     )
   }
