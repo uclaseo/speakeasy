@@ -188,30 +188,26 @@ class Home extends Component {
 
     return (
       <div>
+
         <header className="intro">
-          <div className="intro-body">
-            <div className="container text-center">
-              <div className="row">
-                <div className="col-md-8 col-md-offset-2">
-                  <h1 className="brand-heading">SPEAKEASY</h1>
-                  <p className="intro-text">
-                    MORE STUFF ABOUT OUR APP AND STUFF
-                  </p>
-                  <section>
-                    <p>
-                      <Link to="/event_setting" className="btnghost">
-                        <i className="fa"></i>
-                        Host an Event
-                      </Link>
-                    </p>
-                  </section>
-                </div>
-              </div>
-            </div>
+          <div className="intro-body container text-center row col-md-8 col-md-offset-2">
+
+            <h1 className="brand-heading">
+              SPEAKEASY
+            </h1>
+            <p className="intro-text">
+              MORE STUFF ABOUT OUR APP AND STUFF
+            </p>
+
+            <Link to="/event_setting" className="btnghost">
+              <i className="fa"></i>
+              Host an Event
+            </Link>
+
           </div>
         </header>
 
-        <section id="portfolio">
+         <section id="portfolio">
           <div className="gallery">
             <ul></ul>
           </div>
@@ -230,7 +226,7 @@ class Home extends Component {
               : null}
 
           </div>
-        </section>
+        </section> 
 
       </div>
     );
