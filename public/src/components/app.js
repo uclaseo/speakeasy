@@ -7,7 +7,7 @@ import Navigation_Bar from '../containers/navigation_bar';
 import User_Profile from '../containers/user_profile';
 import User_Events from '../containers/user_events';
 import DirectMessageList from '../containers/directMessageList';
-import User_Friends from '../containers/user_friends';
+import PossibleFriendsList from '../containers/possibleFriendsList';
 import Home from '../containers/home';
 import Event_Setting from '../containers/event_setting';
 import EventChat from '../containers/eventChat';
@@ -69,7 +69,7 @@ export default class App extends Component {
               render={props =>
                 !auth.isAuthenticated()
                   ? <Redirect to="/" />
-                  : <User_Friends auth={auth} {...props} />}
+                  : <PossibleFriendsList auth={auth} {...props} />}
             />
             <Route
               path="/dm"

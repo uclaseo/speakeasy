@@ -12,6 +12,7 @@ import nearbyEventReducers from './nearbyEventReducers';
 import dmRoomsReducers from './dmRoomsReducers';
 import activeDMReducers from './activeDMReducers';
 import dmMessageReducers from './dmMessageReducers';
+import possibleFriendsReducer from './possibleFriendsReducer';
 
 
 const rootReducer = combineReducers({
@@ -26,7 +27,8 @@ const rootReducer = combineReducers({
   nearbyEvents : nearbyEventReducers,
   dmRooms: dmRoomsReducers,
   activeDMRoom: activeDMReducers,
-  dm_messages: dmMessageReducers
+  dm_messages: dmMessageReducers,
+  possibleFriends: possibleFriendsReducer
 })
 
 export default rootReducer;

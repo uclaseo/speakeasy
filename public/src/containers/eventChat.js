@@ -81,10 +81,13 @@ class EventChat extends Component {
   handleCloseClick(event) {
     event.preventDefault()
     socket.emit('closeevent', { event_id: this.props.event.id });
-    axios.put('/api/event/close', { event_id: this.props.event.id })
+    axios.get('/api/crosspath/' + this.props.event.id) 
       .then(() => {
-        this.setState({
-          closed: true
+        axios.put('/api/event/close', { event_id: this.props.event.id })
+          .then(() => {
+            this.setState({
+              closed: true
+            })
         })
       })
   }
@@ -98,8 +101,8 @@ class EventChat extends Component {
         .then((response) => {
           let dm_id = response.data.room.id;
           console.log('dm click response: ', dm_id)
-          this.props.createDMRoom(message.user_name, dm_id);
-          this.setState({ dm: true });
+          this.props.createDMRoom(message.user_name, dm_id)
+          this.setState({ dm: true })
         })
     } else {
       return;
@@ -144,7 +147,7 @@ class EventChat extends Component {
 
   render() {
     let closeEvent;
-    if (this.props.user_id !== this.props.event.userId) {
+    if (this.props.user_id === this.props.event.userId) {
       closeEvent =  <button type="button"
                             onClick={this.handleCloseClick}
                     >Close Event</button>
@@ -212,7 +215,6 @@ function mapStateToProps(state) {
     user_name: state.profile.name,
     user_id: state.profile.id,
     messages: state.event_messages,
-    in_event: state.in_event
   };
 }
 

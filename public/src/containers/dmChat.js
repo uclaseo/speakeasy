@@ -16,24 +16,21 @@ class DMChat extends Component {
 
     this.state = {
       text: ''
-    };
+    }
 
     this.handleInputChange = this.handleInputChange.bind(this)
     this.handleSendClick = this.handleSendClick.bind(this)
     this.handleKeyPress = this.handleKeyPress.bind(this)
-    // this.handleCloseClick = this.handleCloseClick.bind(this)
     this._handleLogIn = this._handleLogIn.bind(this)
     this._handleLogOut = this._handleLogOut.bind(this)
     this._handleRefreshMessages = this._handleRefreshMessages.bind(this)
     this._handleRecentMessages = this._handleRecentMessages.bind(this) 
-    // this._handleClosedEvent = this._handleClosedEvent.bind(this)  
   }
 
   componentDidMount() {
     this._handleLogIn()
     this._handleRecentMessages()
     this._handleRefreshMessages()
-    // this._handleClosedEvent()
   }
 
   componentWillUnmount() {
@@ -73,17 +70,6 @@ class DMChat extends Component {
       })
     }
   }
-
-  // handleCloseClick(event) {
-  //   event.preventDefault()
-  //   socket.emit('closeevent', { event_id: this.props.event.id });
-  //   axios.put('/api/event/close', { event_id: this.props.event.id })
-  //     .then(() => {
-  //       this.setState({
-  //         closed: true
-  //       })
-  //     })
-  // }
   
   _handleLogIn() {
     socket.connect();
@@ -113,30 +99,7 @@ class DMChat extends Component {
     })
   }
 
-  // _handleClosedEvent() {
-  //   socket.on('eventclosed', () => {
-  //     this.setState({
-  //       closed: true
-  //     })
-  //   })
-  // }
-
   render() {
-    // let closeEvent;
-    
-    // if (this.props.user_id === this.props.event.userId) {
-    //   closeEvent =  <button type="button"
-    //                         onClick={this.handleCloseClick}
-    //                 >Close Event</button>
-    // } else {
-    //   closeEvent = '';
-    // }
-
-    // if (this.state.closed === true) {
-    //   return (
-    //     <Redirect to='/open_events' />
-    //   )
-    // }
 
     if (this.props.dmMessages.length === 0) {
       return  <div>
