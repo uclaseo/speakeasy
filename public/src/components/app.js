@@ -76,7 +76,7 @@ export default class App extends Component {
                 path="/friends"
                 render={props => !auth.isAuthenticated()
                   ? <Redirect to="/" />
-                  : <User_Friends auth={auth} {...props} />} />
+                  : <PossibleFriendsList auth={auth} {...props} />} />
               <Route
                 path="/dm"
                 render={props => !auth.isAuthenticated()
@@ -87,11 +87,7 @@ export default class App extends Component {
                 render={props => !auth.isAuthenticated()
                   ? <Redirect to="/" />
                   : <User_Events auth={auth} {...props} />} />
-              <Route
-                path="/friends"
-                render={props => !auth.isAuthenticated()
-                  ? <Redirect to="/" />
-                  : <User_Profile auth={auth} {...props} />} />
+
               <Route
                 path="/profile"
                 render={props => !auth.isAuthenticated()
