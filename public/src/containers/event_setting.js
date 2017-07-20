@@ -8,6 +8,7 @@ import Auth from '../Auth0/Auth0';
 import { fetchProfile } from '../actions/authAction';
 import { setActiveEventId, setCurrentEventLocation } from '../actions/index';
 import axios from 'axios';
+import Dropzone from 'react-dropzone';
 
 import { geolocated } from 'react-geolocated';
 import createBrowserHistory from 'history/createBrowserHistory';
@@ -21,9 +22,12 @@ class Event_Setting extends Component {
     this.state = {
       redirect: false,
       currenEventLocation: [],
+      files: []
       
     }
     this.getEventLocation = this.getEventLocation.bind(this)
+    this.renderPhoto = this.renderPhoto.bind(this)
+    this.onDrop = this.onDrop.bind(this);
   }
 
 
@@ -64,7 +68,7 @@ class Event_Setting extends Component {
   }
 
   onSubmit(values) {
-    console.log("this.state in onSubmit", this.state)
+    console.log("event photo in onSubmit", this.state.files[0])
 
     axios.post('/api/event/create', {
       eventName: values.eventname,
@@ -72,15 +76,94 @@ class Event_Setting extends Component {
       latitude: this.state.currenEventLocation[0],
       longitude: this.state.currenEventLocation[1],
       userId: this.props.profile.id,
-      isLive: values.isLive
+      isLive: true,
+      eventPhoto: this.state.files[0]
     }).then((response) => {
       console.log("what's event id?", response.data.id)
       this.props.setActiveEvent(response.data)
       this.setState({ redirect: true })
-    }).catch((error) => {
+    })
+    .catch((error) => {
       console.log(error)
     })
   }
+
+  onDrop(acceptedFiles, rejectedFiles) {
+    let array = this.state.files;
+    acceptedFiles.map(file => {
+      array.push(file);
+    })
+    this.setState({
+      files: array
+    })
+
+    //don't do upload yet, do it after you get the eventId
+    this.upload();
+  }
+
+
+  renderPhoto() {
+    return (
+      <section id="event-profile-pic">
+        <div className="dropzone text-center center-block">
+          <Dropzone onDrop={this.onDrop} accept="image/jpeg, image/png" className="center-block">
+            {console.log("in Dropzone")}
+             <img
+              src={this.props.eventPhoto || 'http://www.citi.io/wp-content/uploads/2015/08/1168-09-neworleans.jpg'}
+              id="event-profile-pic"
+              className="img-rounded img-responsive center-block"
+              width="304"
+              height="236"
+            /> 
+          </Dropzone>
+          <p className="center-block">click to change your event profile pic</p>
+        </div>
+      </section>
+    )
+  }
+
+
+
+  upload() {
+    const id = this.props.profile.id;
+    const images = {};
+
+    this.state.files.map((file, index) => {
+      images[index] = Math.floor(Math.random() * 10000) + file.name
+    });
+    
+    axios.post(`/api/user/profile/${id}/geturl`, images)
+      .then((response) => {
+        let counter = 0;
+        response.data.map((eachFile) => {
+          axios.put(eachFile.url, this.state.files[counter])
+            .then((awsResponse) => {
+              counter++;
+              this.registerImageUrl(eachFile);
+            })
+          counter++;
+        })
+      })
+      .catch((error) => {
+        console.log('error in upload', error);
+      })
+    }
+
+
+    registerImageUrl(eachFile) {
+      const imageData = {
+        name: eachFile.fileName,
+        imageLink: `https://s3-us-west-1.amazonaws.com/hrlaspeakeasy/${eachFile.fileName}`,
+      };
+      
+      this.props.profile.photo = imageData.imageLink;
+      this.props.editUserProfile(profile, profile.id);
+      this.setState({
+        files: []
+      });
+    }
+
+
   render() {
     const { handleSubmit } = this.props;
 
@@ -90,6 +173,8 @@ class Event_Setting extends Component {
 
     return (
       <div id="user-profile">
+        {this.renderPhoto()}
+
         <form onSubmit={handleSubmit(this.onSubmit.bind(this))}>
           <Field
             label="EventName"
@@ -104,8 +189,8 @@ class Event_Setting extends Component {
             component={this.renderField}
           />
           <Field
-            label="IsLive"
-            name="isLive"
+            label="description"
+            name="description"
             type="text"
             component={this.renderField}
           />
@@ -120,6 +205,8 @@ class Event_Setting extends Component {
     );
   }
 }
+
+
 function validate(values) {
   const error = {};
   if (!values.eventname) {
@@ -134,18 +221,18 @@ function validate(values) {
   if (!values.Longitude) {
     error.Longitude = 'Enter your Longitude';
   }
-  if (!values.isLive) {
-    error.isLive = 'Enter your isLive';
-  }
+  
   return error;
 }
 function mapDispatchToProps(dispatch) {
   return bindActionCreators({ setActiveEvent, setCurrentEventLocation }, dispatch)
 }
+
 function mapStateToProps(state) {
   return {
     currentLocation: state.active_event_location,
-    profile: state.profile
+    profile: state.profile,
+    eventPhoto: state.eventPhoto,
   }
 }
 export default reduxForm({
