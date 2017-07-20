@@ -1,3 +1,5 @@
+const Table = require('./../models/tableModels');
+
 const parseDMRooms = (input) => {
   var rooms = [];
   for(var i = 0; i < input[0][0].another.length; i++) {
@@ -15,5 +17,36 @@ const parseDMRooms = (input) => {
   return rooms;
 }
 
+function parseFriendsList(input) {
+  var friends = [];
+  for(var i = 0; i < input[0][0].possible.length; i++) {
+    var friendA = {};
+    if (input[0][0].possible[i].cross_path.count > 2) {
+      if (input[0][0].possible[i].cross_path.chatting === false) {
+        friendA.user_to_name = input[0][0].possible[i].name;
+        friendA.user_to_id = input[0][0].possible[i].id;
+        friendA.cross_path = input[0][0].possible[i].cross_path.count;
+        friendA.id = input[0][0].possible[i].cross_path.id;
+        friends.push(friendA);
+      }
+    }
+  }
+  for(var j = 0; j < input[1].length; j++) {
+    if (input[1][j].possible[0].cross_path.count > 2) {
+      if (input[1][j].possible[0].cross_path.chatting === false) {
+        var friendB = {};
+        friendB.user_to_name = input[1][j].name;
+        friendB.user_to_id = input[1][j].id;
+        friendB.cross_path = input[1][j].possible[0].cross_path.count;
+        friendB.id = input[1][j].possible[0].cross_path.id;
+        friends.push(friendB)
+      }
+    }
+  } 
+  return friends;
+}
 
-module.exports = parseDMRooms;
+module.exports = {
+  parseDMRooms: parseDMRooms,
+  parseFriendsList: parseFriendsList
+}

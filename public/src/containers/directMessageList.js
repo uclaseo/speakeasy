@@ -4,11 +4,15 @@ import { bindActionCreators } from 'redux'
 import DMRoomDetail from './../components/dmRoomDetail'
 import { fetchDMRooms, setActiveDMRoom } from './../actions/dmRoomsActions'
 import { clearDirectMessages } from './../actions/directMessagesActions'
-
+import { Redirect } from 'react-router-dom'
 
 class DirectMessageList extends Component {
   constructor(props) {
     super(props)
+
+    this.state = {
+      dm: false
+    }
 
     this.handleRoomClick = this.handleRoomClick.bind(this)
   }
@@ -20,9 +24,16 @@ class DirectMessageList extends Component {
 
   handleRoomClick(room) {
     this.props.setActiveDMRoom(room)
+    this.setState({ dm: true })
   }
 
   render() {
+    if (this.state.dm === true) {
+      return (
+        <Redirect to="/dm_chat" />
+      )
+    }
+
     let rooms = this.props.dmRooms.map((room) => {
       return (
         <DMRoomDetail room={room} 
