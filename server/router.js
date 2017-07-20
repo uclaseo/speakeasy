@@ -6,6 +6,7 @@ const eventController = require('./controllers/eventController');
 const imageController = require('./controllers/imageController');
 const dmController = require('./controllers/dmController');
 const crossPathController = require('./controllers/crossPathController');
+const friendsController = require('./controllers/friendsController');
 
 const config = require('../configJwt');
 const jwt = require('express-jwt');
@@ -39,6 +40,8 @@ router.get('/event/searchevents', eventController.searchEvents)
 router.put('/event/close', eventController.closeEvent);
 
 router.get('/crosspath/:eventId', crossPathController.crossPathUpdate);
+
+router.get('/friendsuggestion/:userId', friendsController.fetchPossibleFriends);
 
 
 //photo uploading

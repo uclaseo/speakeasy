@@ -215,7 +215,6 @@ function mapStateToProps(state) {
     user_name: state.profile.name,
     user_id: state.profile.id,
     messages: state.event_messages,
-    in_event: state.in_event
   };
 }
 

@@ -33,7 +33,7 @@ const postCrossPath = (arr) => {
           possibleId: pair[1]
         }, {
           userId: pair[1],
-          possibleId: pair[1]
+          possibleId: pair[0]
         }]
       }
     })
