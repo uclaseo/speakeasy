@@ -19,7 +19,9 @@ class EventChat extends Component {
     this.state = {
       text: '',
       closed: false,
-      dm: false
+      dm: false,
+      file: '',
+      imagePreviewUrl: ''
     };
 
     this.handleInputChange = this.handleInputChange.bind(this)
@@ -32,6 +34,9 @@ class EventChat extends Component {
     this._handleRefreshMessages = this._handleRefreshMessages.bind(this)
     this._handleRecentMessages = this._handleRecentMessages.bind(this) 
     this._handleClosedEvent = this._handleClosedEvent.bind(this)  
+
+    this.handleUpload = this.handleUpload.bind(this);
+    this.renderImagePreview = this.renderImagePreview.bind(this);
   }
 
   componentDidMount() {
@@ -145,6 +150,36 @@ class EventChat extends Component {
     })
   }
 
+  handleUpload(event) {
+    event.preventDefault();
+    const reader = new FileReader();
+    const files = event.target.files;
+    const file = event.target.files[0]
+    console.log('files uploaded', files);
+
+    reader.onload = () => {
+      this.setState({
+        file: file,
+        imagePreviewUrl: reader.result
+
+      })
+    }
+    console.log('STATE', this.state);
+
+    reader.readAsDataURL(file)
+  
+  }
+
+  renderImagePreview() {
+    const imagePreviewUrl = this.state.imagePreviewUrl
+    return (
+      <div>
+        HAHAHAHAHAA PREVIEW
+        <img src={imagePreviewUrl} />
+      </div>
+    )
+  }
+
   render() {
     let closeEvent;
     if (this.props.user_id === this.props.event.userId) {
@@ -204,6 +239,15 @@ class EventChat extends Component {
         <button type="button" onClick={this.handleSendClick}>
           Send
         </button>
+
+
+        <input type="file" id="fileinput" multiple="multiple" accept="image/*"
+        onChange={(event) => this.handleUpload(event)}/>
+
+        {this.renderImagePreview()}
+
+
+
       </div>
     );
   }
