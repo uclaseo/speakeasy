@@ -5,6 +5,7 @@ const userController = require('./controllers/userController');
 const eventController = require('./controllers/eventController');
 const imageController = require('./controllers/imageController');
 const dmController = require('./controllers/dmController');
+const crossPathController = require('./controllers/crossPathController');
 
 const config = require('../configJwt');
 const jwt = require('express-jwt');
@@ -36,6 +37,8 @@ router.post('/event/joinevent', eventController.joinEvent);
 router.get('/event/fetchuserevents/:userId', eventController.fetchUserEvents);
 router.get('/event/searchevents', eventController.searchEvents)
 router.put('/event/close', eventController.closeEvent);
+
+router.get('/crosspath/:eventId', crossPathController.crossPathUpdate);
 
 
 //photo uploading

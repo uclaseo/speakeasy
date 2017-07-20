@@ -22,6 +22,7 @@ const init = () => {
       .then(() => Table.DM_Message.sync(syncObj))
       .then(() => Table.Image.sync(syncObj))
       .then(() => Table.User_Event.sync(syncObj))
+      .then(() => Table.Cross_Path.sync(syncObj))
       // .then(() => Field.bulkCreate(userDummy))
       .then(() => console.log('successfully synced with database'))
       .catch(err => console.error('error syncing with database ', err))

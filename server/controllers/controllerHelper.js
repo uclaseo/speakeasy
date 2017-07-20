@@ -1,3 +1,5 @@
+const Table = require('./../models/tableModels');
+
 const parseDMRooms = (input) => {
   var rooms = [];
   for(var i = 0; i < input[0][0].another.length; i++) {
@@ -15,5 +17,14 @@ const parseDMRooms = (input) => {
   return rooms;
 }
 
+const fetchUsersForEvent = (eventId) => {
+  Table.User_Event.findAll({
+    where: { eventId: eventId },
+    attributes: ['userId']
+  })
+} 
 
-module.exports = parseDMRooms;
+module.exports = {
+  parseDMRooms: parseDMRooms,
+  fetchUsersForEvent: fetchUsersForEvent
+}

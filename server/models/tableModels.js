@@ -53,6 +53,15 @@ const User_Event = db.define('user_event', {
   }
 });
 
+const Cross_Path = db.define('cross_path', {
+  id: {
+    type: Sequelize.INTEGER,
+    primaryKey: true,
+    autoIncrement: true
+  },
+  count: Sequelize.INTEGER
+});
+
 User.hasMany(Event);
 Event.belongsTo(User);
 
@@ -81,17 +90,11 @@ User.hasMany(User_Event)
 User_Event.belongsTo(User)
 Event.hasMany(User_Event)
 User_Event.belongsTo(Event)
-// User.belongsToMany(Event, {
-//   through: User_Event,
-// });
-// Event.belongsToMany(User, {
-//   through: User_Event,
-// });
 
-
-// DM_Message.belongsTo(DM_Room);
-// DM_Room.hasMany(DM_Message);
-
+User.belongsToMany(User, {
+  as: 'possible',
+  through: Cross_Path
+})
 
 module.exports = {
   User: User,
@@ -100,5 +103,6 @@ module.exports = {
   DM_Room: DM_Room,
   DM_Message: DM_Message,
   Image: Image,
-  User_Event: User_Event
+  User_Event: User_Event,
+  Cross_Path: Cross_Path
 }
