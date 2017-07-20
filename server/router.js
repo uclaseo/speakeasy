@@ -42,6 +42,7 @@ router.put('/event/close', eventController.closeEvent);
 router.get('/crosspath/:eventId', crossPathController.crossPathUpdate);
 
 router.get('/friendsuggestion/:userId', friendsController.fetchPossibleFriends);
+router.put('/friend/chat', friendsController.updateChatting);
 
 
 //photo uploading

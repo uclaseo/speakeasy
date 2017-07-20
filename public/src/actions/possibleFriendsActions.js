@@ -9,7 +9,7 @@ export function fetchPossibleFriends(userId, dmRooms) {
   
   return { 
     type: FETCH_POSSIBLE_FRIENDS, 
-    payload: {friends: request, dmRooms: dmRooms}
+    payload: request
   }
 }
 

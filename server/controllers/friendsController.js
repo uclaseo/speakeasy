@@ -33,8 +33,19 @@ const fetchPossibleFriends = (req, res) => {
     })
 }
 
-const addChatting = (req, res) => {
-
+const updateChatting = (req, res) => {
+  Table.Cross_Path.update({ chatting: true }, {
+    where: { id: req.body.cpId }
+  })
+    .then((response) => {
+      res.send('now chatting = true');
+    })
+    .catch((err) => {
+      console.error('error updating friend chat ', err);
+    })
 }
 
-module.exports = { fetchPossibleFriends };
+module.exports = { 
+  fetchPossibleFriends: fetchPossibleFriends,
+  updateChatting: updateChatting
+};

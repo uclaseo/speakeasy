@@ -35,6 +35,11 @@ class PossibleFriendsList extends Component {
           let dm_id = response.data.room.id;
           console.log('friend click response: ', dm_id)
           this.props.createDMRoom(friend.user_to_name, dm_id)
+        })
+        .then(() => {
+          axios.put('/api/friend/chat', { cpId: friend.id })
+        })
+        .then(() => {
           this.setState({ dm: true })
         })
         
