@@ -148,57 +148,6 @@ a:focus {
     display: table;
     width: 100%;
     height: auto;
-    /* padding: 100px 0 100px 0; */
-    text-align: center;
-    color: #fff;
-    background-image: radial-gradient(circle at 50% 50%, rgba(0, 0, 0, 0.46), rgba(0, 0, 0, 0.88)), url('http://unsplash.it/1600/1400?random=9');
-    -webkit-background-size: cover;
-    -moz-background-size: cover;
-    background-size: cover;
-    -o-background-size: cover;
-}
-
-.intro .intro-body {
-    display: table-cell;
-    vertical-align: middle;
-    padding: 0 0 50px 0;
-}
-
-.intro .intro-body .brand-heading {
-    font-size: 40px;
-}
-
-.intro .intro-body .intro-text {
-    font-size: 18px;
-}
-
-@media(min-width:768px) {
-    .intro {
-        height: 100%;
-        padding: 0;
-    }
-    .intro .intro-body .brand-heading {
-        font-size: 60px;
-        margin: 10px 0 10px 0;
-        border-top: 2px solid #fff;
-        border-bottom: 2px solid #fff;
-        display: inline-block;
-        padding: 10px 0;
-    }
-    .intro .intro-body .intro-text {
-        font-size: 20px;
-        font-weight: 300;
-        letter-spacing: 3px;
-    }
-}
-
-
-/* to here */
-
-.intro {
-    display: table;
-    width: 100%;
-    height: auto;
     padding: 100px 0 100px 0;
     text-align: center;
     color: #fff;
@@ -556,8 +505,8 @@ textarea.error {
     transition: border linear 0.2s, box-shadow linear 0.2s;
 }
 
-#contactform input,
-#contactform textarea {
+#profileform input,
+#profileform textarea {
     border: 0px;
     border-bottom: 2px solid #333;
     width: 100%;
@@ -568,23 +517,23 @@ textarea.error {
     margin-bottom: 20px;
 }
 
-#contactform input#submit {
+#profileform input#submit {
     width: auto;
     border: 2px solid;
     padding: 10px 20px;
     display: inline-block;
 }
 
-#contactform input#submit:hover {
+#profileform input#submit:hover {
     background-color: #333;
     color: #fff;
     border: 2px solid #333;
 }
 
-#contactform input:focus,
-#contactform input:active,
-#contactform textarea:focus,
-#contactform textarea:active {
+#profileform input:focus,
+#profileform input:active,
+#profileform textarea:focus,
+#profileform textarea:active {
     border-top: 0px;
     border-bottom: 2px solid lightseagreen;
     outline: 0;
@@ -622,3 +571,52 @@ textarea.error {
     color: #fff;
 }
 
+.space {
+    display: table;
+    width: 100%;
+    height: auto;
+    padding: 100px 0 100px 0;
+    text-align: center;
+    color: #fff;
+     background-image: radial-gradient(circle at 50% 50%, rgba(0, 0, 0, 0.46), rgba(0, 0, 0, 0.88)), url('http://unsplash.it/1600/1400?random=9'); 
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    background-size: cover;
+    -o-background-size: cover;
+}
+/* 
+.space .space-body {
+    display: table-cell;
+    vertical-align: middle;
+    padding: 0 0 50px 0;
+}
+
+.space .space-body .brand-heading {
+    font-size: 40px;
+}
+
+.space .space-body .intro-text {
+    font-size: 18px;
+}
+
+@media(min-width:768px) {
+    .space {
+        height: 100%;
+        padding: 0;
+    }
+    .space .space-body .brand-heading {
+        font-size: 60px;
+        margin: 10px 0 10px 0;
+        border-top: 2px solid #fff;
+        border-bottom: 2px solid #fff;
+        display: inline-block;
+        padding: 10px 0;
+    }
+    .space .space-body .intro-text {
+        font-size: 20px;
+        font-weight: 300;
+        letter-spacing: 3px;
+    }
+}
+
+ */

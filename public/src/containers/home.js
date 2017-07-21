@@ -221,6 +221,7 @@ class Home extends Component {
         <section>
           <div className="container content-section text-center">
             <div className="row">
+
               <div
                 className="container text-center row col-md-8 col-md-offset-2">
                 <Link to="/event_setting" className="btnghost">
@@ -228,7 +229,6 @@ class Home extends Component {
                   Host an Event
                 </Link>
               </div>
-
 
             </div>
           </div>
@@ -242,6 +242,7 @@ class Home extends Component {
             </ul>
           </div>
         </section>
+        
       </div>
 
     );

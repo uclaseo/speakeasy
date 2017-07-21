@@ -15,6 +15,7 @@ class User_Profile extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      profile: this.props.profile,
       submitted: false,
       files: []
     };
@@ -23,6 +24,7 @@ class User_Profile extends Component {
   }
 
   componentDidMount() {
+    console.log('REDUX :', this.props);
     this.props.fetchProfile(this.props.profile);
   }
 
@@ -51,9 +53,9 @@ class User_Profile extends Component {
   renderPhoto() {
     {console.log("this.props.profile.photo",this.props.profile.photo)}
     return (
-      <section>
-        <div className="dropzone text-center">
-          <Dropzone onDrop={this.onDrop} accept="image/jpeg, image/png">
+      <section id="user-profile-pic">
+        <div className="dropzone text-center center-block">
+          <Dropzone onDrop={this.onDrop} accept="image/jpeg, image/png" className="center-block">
             <img
               src={this.props.profile.photo}
               id="user-profile-pic"
@@ -62,7 +64,6 @@ class User_Profile extends Component {
               height="236"
             />
           </Dropzone>
-          <p className="center-block">click to change your profile pic</p>
         </div>
       </section>
     )
@@ -91,7 +92,7 @@ class User_Profile extends Component {
     this.state.files.map((file, index) => {
       images[index] = Math.floor(Math.random() * 10000) + file.name
     });
-
+    
     axios.post(`/api/user/profile/${id}/geturl`, images)
       .then((response) => {
         let counter = 0;
@@ -115,11 +116,9 @@ class User_Profile extends Component {
       imageLink: `https://s3-us-west-1.amazonaws.com/hrlaspeakeasy/${eachFile.fileName}`,
     };
 
-    console.log('imageData.imageLink::', imageData.imageLink);
-
     let profile = this.props.profile;
     profile.photo = imageData.imageLink;
-    this.props.editUserProfile(profile);
+    this.props.editUserProfile(profile, profile.id);
     this.setState({
       files: []
     });
@@ -129,7 +128,7 @@ class User_Profile extends Component {
     let profile = this.props.profile;
     profile.name = values.name;
     profile.handle = values.handle;
-    this.props.editUserProfile(profile);
+    this.props.editUserProfile(profile, profile.id);
     this.setState({ submitted: true });
   }
 
@@ -148,12 +147,56 @@ class User_Profile extends Component {
 
     return (
       <div>
-        
-      </div>
-    )
-  }
 
-};
+        <header className="space">
+          <div className="space-body">
+            <div className="container">
+              <div className="row">
+                <div className="col-md-8 col-md-offset-2">
+                  {this.renderPhoto()}
+                  <h1 className="brand-heading">your profile</h1>
+                </div>
+              </div>
+            </div>
+          </div>
+        </header>
+
+        
+        <section id="profile">
+          <div className="container content-section">
+            <div className="row">
+              <div className="col-lg-8 col-lg-offset-2">
+                <form method="post" id="profileform">
+                  <div className="form">
+                    <input type="text" name="name" placeholder="Your Name *"/>
+                    <input type="text" name="email" placeholder="Your chat handle *"/>
+                    <textarea name="comment" rows="7" placeholder="A little about yourself *"></textarea>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+        </section>
+
+
+        <section>
+          <div className="container content-section text-center">
+            <div className="row">
+              <div
+                className="container text-center row col-md-8 col-md-offset-2">
+                <a className="btnghost">
+                  <i className="fa"></i>
+                  Submit
+                </a>
+              </div>
+            </div>
+          </div>
+        </section>
+
+      </div>
+    );
+  }
+}
 
 function validate(values) {
   const error = {};
@@ -178,5 +221,3 @@ export default reduxForm({
   validate: validate,
   form: 'ProfileForm'
 })(connect(mapStateToProps, { editUserProfile, fetchProfile })(User_Profile));
-
-
