@@ -9,6 +9,7 @@ import { recentEventMessages, newEventMessage } from '../actions/eventMessagesAc
 import { createDMRoom } from '../actions/dmRoomsActions'
 import { Redirect } from 'react-router-dom'
 import axios from 'axios'
+import Webcam from 'react-webcam';
 
 const socket = io();
 
@@ -21,7 +22,8 @@ class EventChat extends Component {
       closed: false,
       dm: false,
       files: [],
-      imagePreviewUrls: []
+      imagePreviewUrls: [],
+      showWebcam: false
     };
 
     this.handleInputChange = this.handleInputChange.bind(this)
@@ -38,6 +40,7 @@ class EventChat extends Component {
     this.handleUpload = this.handleUpload.bind(this);
     this.renderImagePreview = this.renderImagePreview.bind(this);
     this.registerImageUrl = this.registerImageUrl.bind(this);
+    this.handleShowWebcam = this.handleShowWebcam.bind(this);
   }
 
   componentDidMount() {
@@ -261,7 +264,6 @@ class EventChat extends Component {
     const imagePreviewUrls = this.state.imagePreviewUrls
     return (
       <div>
-        HAHAHAHAHAA PREVIEW
         {imagePreviewUrls.map((eachUrl) => {
           return <img key={Math.random()} className="thumb" src={eachUrl} />
         })}
@@ -269,14 +271,55 @@ class EventChat extends Component {
     )
   }
 
+  setRef = (webcam) => {
+    this.webcam = webcam;
+  }
+
+  handleShowWebcam() {
+    const showWebcam = !this.state.showWebcam;
+    this.setState({showWebcam})
+    console.log(this.state.showWebcam);
+
+      return (
+        <div>
+        {console.log('hi')}
+          <h1>WTF dasfadsfasfadsfasfasf</h1>
+          <Webcam
+            audio={false}
+            height={200}
+            ref={this.setRef}
+            screenshotFormat="image/jpeg"
+            width={200}
+          /> 
+        </div>
+      )
+
+  
+  }
+
   render() {
     let closeEvent;
+    let webcam;
+
     if (this.props.user_id === this.props.event.userId) {
       closeEvent = <button type="button"
         onClick={this.handleCloseClick}
       >Close Event</button>
     } else {
       closeEvent = null;
+    }
+
+    if (this.state.showWebcam) {
+      webcam =
+       <Webcam
+        audio={false}
+        height={200}
+        ref={this.setRef}
+        screenshotFormat="image/jpeg"
+        width={200}
+      />
+    } else {
+      webcam = null;
     }
 
     if (this.state.closed === true) {
@@ -334,6 +377,9 @@ class EventChat extends Component {
           onChange={(event) => this.handleUpload(event)} />
 
         {this.renderImagePreview()}
+        <button onClick={this.handleShowWebcam}>take selfie</button>
+
+        {webcam}
       </div>
     );
   }
@@ -344,7 +390,7 @@ function mapStateToProps(state) {
     event: state.active_event,
     user_name: state.profile.name,
     user_id: state.profile.id,
-    messages: state.event_messages,
+    messages: state.event_messages
   };
 }
 
