@@ -51,12 +51,13 @@ class User_Profile extends Component {
   }
 
   renderPhoto() {
+    {console.log("this.props.profile.photo",this.props.profile.photo)}
     return (
       <section id="user-profile-pic">
         <div className="dropzone text-center center-block">
           <Dropzone onDrop={this.onDrop} accept="image/jpeg, image/png" className="center-block">
             <img
-              src={this.props.profile.photo || 'https://s3-us-west-1.amazonaws.com/inseokspeakeasy/1722Speakeasy1.png'}
+              src={this.props.profile.photo || 'https://s3-us-west-1.amazonaws.com/hrlaspeakeasy/1722Speakeasy1.png'}
               id="user-profile-pic"
               className="img-rounded img-responsive center-block"
               width="304"
@@ -113,7 +114,7 @@ class User_Profile extends Component {
   registerImageUrl(eachFile) {
     const imageData = {
       name: eachFile.fileName,
-      imageLink: `https://s3-us-west-1.amazonaws.com/inseokspeakeasy/${eachFile.fileName}`,
+      imageLink: `https://s3-us-west-1.amazonaws.com/hrlaspeakeasy/${eachFile.fileName}`,
     };
 
     let profile = this.props.profile;

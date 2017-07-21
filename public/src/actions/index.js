@@ -30,3 +30,9 @@ export function setNearbyEvents (nearbyEvents){
   }
 }
 
+// export function addTempEventProfilePhoto (imageData){
+//   return {
+//     type: ADD_EVENT_PHOTO,
+//     payload: imageData
+//   }
+// }
