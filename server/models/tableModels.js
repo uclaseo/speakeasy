@@ -17,7 +17,8 @@ const Event = db.define('event', {
   latitude: Sequelize.FLOAT,  // Sequelize has GEOMETRY type, I'll look into it
   longitude: Sequelize.FLOAT,  // Sequelize has GEOMETRY type, I'll look into it
   isLive: Sequelize.BOOLEAN,
-  eventPhoto: Sequelize.TEXT
+  eventPhoto: Sequelize.TEXT,
+  description: Sequence.STRING
 });
 
 

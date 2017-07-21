@@ -78,7 +78,8 @@ class Event_Setting extends Component {
       longitude: this.state.currenEventLocation[1],
       userId: this.props.profile.id,
       isLive: true,
-      eventPhoto: this.state.tempEventProfilePicture
+      eventPhoto: this.state.tempEventProfilePicture,
+      description: values.description
     }).then((response) => {
       console.log("what's event id?", response.data.id)
       this.props.setActiveEvent(response.data)
