@@ -14,7 +14,7 @@ const userDummy = require('./dummy');
 
 //-------------CHANGE THIS TO *TRUE* ONLY WHEN YOU WANT TO REDO YOUR DB---------//
 //                                                                             //
-const firstTime = true;                                                      //
+const firstTime = false;                                                      //
 //                                                                           //
 //--------------------------------------------------------------------------//
 

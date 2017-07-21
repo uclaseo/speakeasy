@@ -12,7 +12,8 @@ const createEvent = (req, res) => {
       longitude: req.body.longitude,
       userId: req.body.userId,
       isLive: req.body.isLive,
-      eventPhoto: req.body.eventPhoto
+      eventPhoto: req.body.eventPhoto,
+      description: req.body.description
     }
   })
   .spread((response, isCreated) => {
