@@ -381,7 +381,7 @@ p.lead {
 }
 
 .btnghost {
-    margin: 100px 0 100px 0;
+    margin: 100px 10px 100px 10px;
     border: 2px solid #DCDCDC;
     background-color: transparent;
     padding: 15px 20px;
@@ -512,7 +512,7 @@ textarea.error {
     width: 100%;
     background-color: transparent;
     padding: 20px 0px;
-    text-transform: uppercase;
+    /* text-transform: uppercase; */
     letter-spacing: 2px;
     margin-bottom: 20px;
 }

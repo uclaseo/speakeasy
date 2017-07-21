@@ -4,6 +4,10 @@ export default function(state = {}, action) {
   switch (action.type) {
     case GET_PROFILE:
       return Object.assign({}, action.payload.data);
+  switch (action.type) {
+    case EDIT_PROFILE:
+      return Object.assign({}, action.payload.data);
+  }
     default:
       return state;
   }

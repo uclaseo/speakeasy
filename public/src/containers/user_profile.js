@@ -15,7 +15,6 @@ class User_Profile extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      profile: this.props.profile,
       submitted: false,
       files: []
     };
@@ -25,7 +24,6 @@ class User_Profile extends Component {
 
   componentDidMount() {
     console.log('REDUX :', this.props);
-    this.props.fetchProfile(this.props.profile);
   }
 
   renderField(field) {
@@ -51,7 +49,6 @@ class User_Profile extends Component {
   }
 
   renderPhoto() {
-    {console.log("this.props.profile.photo",this.props.profile.photo)}
     return (
       <section id="user-profile-pic">
         <div className="dropzone text-center center-block">
@@ -92,7 +89,7 @@ class User_Profile extends Component {
     this.state.files.map((file, index) => {
       images[index] = Math.floor(Math.random() * 10000) + file.name
     });
-    
+
     axios.post(`/api/user/profile/${id}/geturl`, images)
       .then((response) => {
         let counter = 0;
@@ -125,10 +122,11 @@ class User_Profile extends Component {
   }
 
   onSubmit(values) {
+    console.log('!! values !!', values);
     let profile = this.props.profile;
-    profile.name = values.name;
-    profile.handle = values.handle;
-    this.props.editUserProfile(profile, profile.id);
+    profile.name = values.name || profile.name;
+    profile.handle = values.handle || profile.handle;
+    this.props.editUserProfile(profile);
     this.setState({ submitted: true });
   }
 
@@ -154,42 +152,41 @@ class User_Profile extends Component {
               <div className="row">
                 <div className="col-md-8 col-md-offset-2">
                   {this.renderPhoto()}
-                  <h1 className="brand-heading">your profile</h1>
+                  <label>Your profile photo</label>
                 </div>
               </div>
             </div>
           </div>
         </header>
 
-        
         <section id="profile">
-          <div className="container content-section">
-            <div className="row">
-              <div className="col-lg-8 col-lg-offset-2">
-                <form method="post" id="profileform">
-                  <div className="form">
-                    <input type="text" name="name" placeholder="Your Name *"/>
-                    <input type="text" name="email" placeholder="Your chat handle *"/>
-                    <textarea name="comment" rows="7" placeholder="A little about yourself *"></textarea>
-                  </div>
-                </form>
+          <div className="container content-section row col-lg-8 col-lg-offset-2">
+            <form onSubmit={handleSubmit(this.onSubmit.bind(this))} id="profileform">
+              <div className="form">
+                <Field
+                  label="Your name"
+                  name="name"
+                  type="text"
+                  placeholder={this.showPlaceHolder('name')}
+                  component={this.renderField}
+                />
+                <Field
+                  label="Create a chat handle"
+                  name="handle"
+                  type="text"
+                  placeholder={this.showPlaceHolder('handle')}
+                  component={this.renderField}
+                />
               </div>
-            </div>
-          </div>
-        </section>
 
-
-        <section>
-          <div className="container content-section text-center">
-            <div className="row">
-              <div
-                className="container text-center row col-md-8 col-md-offset-2">
-                <a className="btnghost">
-                  <i className="fa"></i>
-                  Submit
-                </a>
+              <div className="container text-center row col-md-8 col-md-offset-2">
+                <button type="submit" className="btnghost">Submit</button>
+                <Link to="/home">
+                  <button type="button" className="btnghost">Cancel</button>
+                </Link>
+                {this.renderSuccess()}
               </div>
-            </div>
+            </form>
           </div>
         </section>
 
@@ -200,14 +197,6 @@ class User_Profile extends Component {
 
 function validate(values) {
   const error = {};
-  if (!values.name) {
-    error.name = 'Enter your name';
-  }
-
-  if (!values.handle) {
-    error.handle = 'Enter a chat handle name';
-  }
-
   return error;
 }
 

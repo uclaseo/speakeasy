@@ -53,14 +53,12 @@ class Home extends Component {
   getUserLocation(cb) {
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(position => {
-        console.log('position:', position);
         this.setState({
           userLocation: [position.coords.latitude, position.coords.longitude]
         }, () => {
           cb();
         })
       });
-      console.log('this.state.userLocation::::::', this.state.userLocation)
     } else {
       console.log("Geolocation is not supported by this browser.");
     }
@@ -179,9 +177,7 @@ class Home extends Component {
     }
   }
 
-
   render() {
-    console.log(this.state);
     return (
       <div>
 
@@ -215,7 +211,7 @@ class Home extends Component {
         <section id="portfolio">
           <div className="gallery">
             <ul>
-              {this.renderEvents()}
+              HELLO
             </ul>
           </div>
         </section>
