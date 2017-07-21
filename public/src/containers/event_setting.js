@@ -31,6 +31,10 @@ class Event_Setting extends Component {
     this.onDrop = this.onDrop.bind(this);
   }
 
+  componentDidMount() {
+    this.getEventLocation();
+  }
+
 
   renderField(field) {
     const { meta: { touched, error } } = field;
@@ -51,6 +55,7 @@ class Event_Setting extends Component {
   getEventLocation() {
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition((position) => {
+        console.log('geolocation.coords:', position.latitude, position.longitude);
         this.setState({
           currentEventLocation: [position.coords.latitude, position.coords.longitude]
         })
@@ -63,7 +68,6 @@ class Event_Setting extends Component {
 
   onSubmit(values) {
     console.log("this.state in onSubmit", this.state)
-    console.log('this.props.profile.id EVENT SETTING:', this.props.profile.id);
     console.log('this.state.currentEventLocation onSubmit::', this.state.currentEventLocation);
     axios.post('/api/event/create', {
       eventName: values.eventname,
@@ -71,7 +75,7 @@ class Event_Setting extends Component {
       latitude: this.state.currentEventLocation[0],
       longitude: this.state.currentEventLocation[1],
       userId: this.props.profile.id,
-      isLive: values.isLive
+      isLive: true
     }).then((response) => {
       console.log("what's event id?", response.data.id) //here
       this.props.setActiveEvent(response.data)

@@ -19,6 +19,7 @@ class Home extends Component {
     super(props)
 
     this.state = {
+      userLocation: [],
       gettingUserLocation: true,
       noNearbyEvents: false,
       nearbyEventProfilePicture: ''
@@ -36,6 +37,8 @@ class Home extends Component {
       this.registerUser(profile);
     });
     this.getUserLocation(this.getNearbyEvents);
+    console.log('REDUX NEARBY EVENTS:::', this.props.nearbyEvents);
+    console.log('STATE USER LOC:::', this.state.userLocation);
   }
 
   registerUser(profile) {
@@ -117,6 +120,26 @@ class Home extends Component {
     this
       .props
       .setActiveEvent(event, this.props.profile.id);
+  }
+
+  renderEvents() {
+    let events = null;
+    if (this.props.nearbyEvents.length !== 0) {
+      console.log('this.props.nearbyEvents:::', this.props.nearbyEvents);
+      events = this.props.nearbyEvents.map((event) => {
+        return (
+          <div>
+            <NearbyEventDetail
+              event={event}
+              key={event.id}
+              handleEventClick={this.handleEventClick}
+            />
+            <img src={event.eventPhoto} />
+          </div>
+        )
+      })
+    }
+    return events;
   }
 
 
@@ -211,7 +234,7 @@ class Home extends Component {
         <section id="portfolio">
           <div className="gallery">
             <ul>
-              HELLO
+              {this.renderEvents()}
             </ul>
           </div>
         </section>
