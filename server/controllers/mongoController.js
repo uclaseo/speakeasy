@@ -7,7 +7,7 @@ module.exports = {
   fetchMessagesForEvent: (req, res) => {
     Message
       .find({ event_id: req.params.eventId })
-      .select('createdAt text user_name user_id')
+      .select('createdAt text user_name user_id images')
       .sort('-createdAt')
       .exec((err, messages) => {
         if (err) console.error('error fetching messages ', err)

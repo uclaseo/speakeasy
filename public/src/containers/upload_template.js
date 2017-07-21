@@ -36,7 +36,7 @@ class Upload_Template extends Component {
     const images = {};
     
     this.state.files.map((file, index) => {
-      images[index] = Math.floor(Math.random() * 10000) + file.name
+      images[index] = Math.floor(Math.random() * 100000) + file.name
     });
     console.log('images INSEOK:', images);
 
@@ -49,7 +49,6 @@ class Upload_Template extends Component {
           counter++;
           this.registerImageUrl(eachFile);
         })
-        counter++;
       })
     })
     .catch((error) => {
@@ -60,7 +59,7 @@ class Upload_Template extends Component {
   registerImageUrl(eachFile) {
     const imageData = {
       name: eachFile.fileName,
-      imageLink: `https://s3-us-west-1.amazonaws.com/inseokspeakeasy/${eachFile.fileName}`,
+      imageLink: `https://s3-us-west-1.amazonaws.com/hrlaspeakeasy/${eachFile.fileName}`,
       userId: this.props.profile.id,
       eventId: 1
     };

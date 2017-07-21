@@ -58,5 +58,4 @@ router.post('/screenshot', imageController.screenshot);
 
 
 
-
 module.exports = router;

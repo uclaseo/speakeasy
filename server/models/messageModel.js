@@ -17,6 +17,10 @@ const messageSchema = new Schema({
   text: {
     type: String,
     required: true
+  },
+  images: {
+    type: Schema.Types.Mixed,
+    required: false
   }
 }, {
   timestamps: true

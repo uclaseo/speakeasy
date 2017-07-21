@@ -13,7 +13,7 @@ const socketEvents = (io) => {
       var room = io.sockets.adapter.rooms[socket.room];
       console.log('room number is ', room.length);
       Message.find({ event_id: event.event_id })
-        .select('createdAt text user_name event_id user_id _id')
+        .select('createdAt images text user_name event_id user_id _id')
         .sort('-createdAt')
         .limit(7)
         .exec((err, messages) => {
@@ -27,14 +27,16 @@ const socketEvents = (io) => {
       socket.leave(event.event_id);
     });
 
-    socket.on('newmessage', (data) => {
+    socket.on('newmessage', (data, images) => {
       console.log('posting a new message ', data);
+      console.log('images data', images);
       const { event_id, user_name, text, user_id } = data;
       const newMessage = new Message({
         event_id: event_id,
         user_name: user_name,
         user_id: user_id,
-        text: text
+        text: text,
+        images: images
       });
       newMessage.save((err, message) => {
         if (err) console.error('error posting message ', err);

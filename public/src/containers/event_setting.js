@@ -23,7 +23,7 @@ class Event_Setting extends Component {
       redirect: false,
       currenEventLocation: [],
       eventPicture: [],
-      tempEventProfilePicture: {}
+      tempEventProfilePicture: ''
       
     }
     this.getEventLocation = this.getEventLocation.bind(this)
