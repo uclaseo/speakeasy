@@ -15,6 +15,7 @@ const ChatDetail = ({ message, dmClick }) => {
           {_.map(message.images, (image)=>{
             return <img className="thumbnail" src={image}/>
           })}
+        {message.text}
 
           <br></br>
           {message.event_id}
