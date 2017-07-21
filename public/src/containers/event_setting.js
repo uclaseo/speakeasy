@@ -48,38 +48,30 @@ class Event_Setting extends Component {
     );
   }
 
-  componentDidMount(){
-    this.getEventLocation();
-  }
-
-  getEventLocation(){
+  getEventLocation() {
     if (navigator.geolocation) {
-        navigator.geolocation.getCurrentPosition((position)=>{
-          console.log("getting position via html5", position.coords)
-          this.setState({
-            currentEventLocation : [position.coords.latitude, position.coords.longitude]
-          }, () => {
-            console.log("what is the user location?", this.state.currenEventLocation);
-            // cb();
-          })  
-        });
-    } else { 
-        console.log("Geolocation is not supported by this browser.");
+      navigator.geolocation.getCurrentPosition((position) => {
+        this.setState({
+          currentEventLocation: [position.coords.latitude, position.coords.longitude]
+        })
+      });
+    } else {
+      console.log("Geolocation is not supported by this browser.");
     }
-  }
+  }  
+  
 
   onSubmit(values) {
-    
-
+    console.log("this.state in onSubmit", this.state)
+    console.log('this.props.profile.id EVENT SETTING:', this.props.profile.id);
+    console.log('this.state.currentEventLocation onSubmit::', this.state.currentEventLocation);
     axios.post('/api/event/create', {
       eventName: values.eventname,
       password: values.password,
-      latitude: this.state.currenEventLocation[0],
-      longitude: this.state.currenEventLocation[1],
+      latitude: this.state.currentEventLocation[0],
+      longitude: this.state.currentEventLocation[1],
       userId: this.props.profile.id,
-      isLive: true,
-      eventPhoto: this.state.tempEventProfilePicture,
-      description: values.description
+      isLive: values.isLive
     }).then((response) => {
       console.log("what's event id?", response.data.id) //here
       this.props.setActiveEvent(response.data)

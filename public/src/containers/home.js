@@ -47,11 +47,11 @@ class Home extends Component {
   }
 
   registerUser(profile) {
-    console.log("what's registerUser profile arg", profile)
+    // console.log("what's registerUser profile arg", profile)
     axios
       .post(`/api/user/signup`, profile)
       .then((response) => {
-        console.log('registerUser response', response);
+        // console.log('registerUser response', response);
         this
           .props
           .fetchProfile(response.data);
@@ -63,19 +63,15 @@ class Home extends Component {
 
   getUserLocation(cb) {
     if (navigator.geolocation) {
-      navigator
-        .geolocation
-        .getCurrentPosition((position) => {
-          // console.log("getting position via html5", position.coords)
-          this.setState({
-            userLocation: [position.coords.latitude, position.coords.longitude]
-          }, () => {
-            // console.log("what is the user location?", this.state.userLocation);
-            cb();
-          })
-        });
+      navigator.geolocation.getCurrentPosition((position) => {
+        this.setState({
+          userLocation: [position.coords.latitude, position.coords.longitude]
+        }, () => {
+          cb();
+        })
+      });
     } else {
-      // console.log("Geolocation is not supported by this browser.");
+      console.log("Geolocation is not supported by this browser.");
     }
   }
 
@@ -97,7 +93,9 @@ class Home extends Component {
           .setNearbyEvents(nearbyEvents);
       })
       .then(() => {
-        this.setState({ gettingUserLocation: false })
+        this.setState({
+          gettingUserLocation: false
+        })
       })
       .catch((error) => {
         console.log("getNearbyEvents get request failed", error)
@@ -136,8 +134,10 @@ class Home extends Component {
       .setActiveEvent(event, this.props.profile.id);
   }
 
+  
   renderEvents() {
     let events = null;
+    console.log("this.props.nearbyEvents::", this.props.nearbyEvents);
     if (this.props.nearbyEvents.length !== 0) {
       events = this.props.nearbyEvents.map((event) => {
         return (
@@ -167,35 +167,36 @@ class Home extends Component {
   }
 
       events = this.props.nearbyEvents.map((event, idx) => {
-        return
-        <NearbyEventDetail
-          idx={idx}
-          event={event}
-          key={event.id}
-          handleEventClick={this.handleEventClick}
-        />
+        return (
+          <NearbyEventDetail
+            idx={idx}
+            event={event}
+            key={event.id}
+            handleEventClick={this.handleEventClick}
+          />
+        )
       });
 
-      return (
-        <div>
-          <div className="col-lg-8 col-lg-offset-2 container content-section text-center">
-            <p>
-              Or join a nearby event!
-                </p>
+      if (events.length) {
+        return (
+          <div>
+            <div className="col-lg-8 col-lg-offset-2 container content-section text-center">
+              <p>Or join a nearby event!</p>
+            </div>
+            {events}
           </div>
-          events
-      </div>
-      );
-    } else {
-      return (
-        <div>
-          <div className="col-lg-8 col-lg-offset-2 container content-section text-center">
-            <h2>
-              No events nearby
+        );
+      } else {
+        return (
+          <div>
+            <div className="col-lg-8 col-lg-offset-2 container content-section text-center">
+              <h2>
+                No events nearby
             </h2>
+            </div>
           </div>
-        </div>
-      )
+        )
+      }
     }
   }
 
