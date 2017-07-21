@@ -59,9 +59,10 @@ class EventChat extends Component {
 
   handleSendClick(event) {
     event.preventDefault();
-    if (this.state.files.length !== 0 && this.state.imagePreviewUrls.length !== 0) {
+    if (this.state.files.length !== 0) {
       const images = {};
       const imageLink = {};
+      const text = this.state.text;
       this.state.files.map((file, index) => {
         images[index] = Math.floor(Math.random() * 100000) + file.name,
         imageLink[index] = `https://s3-us-west-1.amazonaws.com/hrlaspeakeasy/${images[index]}`
@@ -69,28 +70,26 @@ class EventChat extends Component {
       console.log('images', images);
       axios.post('/api/event/image/upload/geturl', images)
       .then((response) => {
-        console.log('this is response', response);
-        let counter = 0;
-        response.data.map((eachFile) => {
-          axios.put(eachFile.url, this.state.files[counter])
-          .then((awsResponse) => {
-            this.registerImageUrl(eachFile)
-            console.log('awsResponse', awsResponse);
+        console.log('1');
+        response.data.map((eachFile, index) => {
+          this.registerImageUrl(eachFile)
+          axios.put(eachFile.url, this.state.files[index])
+          .then(() => {
+            socket.emit('newmessage', {
+              event_id: this.props.event.id,
+              user_name: this.props.user_name,
+              user_id: this.props.user_id,
+              text: text
+            }, imageLink)
           })
-          counter++;
-        });
-        console.log('image linkkkkks', imageLink);
-        socket.emit('newmessage', {
-          event_id: this.props.event.id,
-          user_name: this.props.user_name,
-          user_id: this.props.user_id,
-          text: this.state.text
-        }, imageLink);
-        // this.setState({
-        //   text: '',
-        //   files: [],
-        //   imagePreviewUrls: []
-        // });
+        })
+      })
+      .then(() => {
+        this.setState({
+          text: '',
+          files: [],
+          imagePreviewUrls: []
+        })
       })
     } else {
       socket.emit('newmessage', {
@@ -122,15 +121,49 @@ class EventChat extends Component {
 
   handleKeyPress(event) {
     if (event.key === 'Enter') {
-      socket.emit('newmessage', {
-        event_id: this.props.event.id,
-        user_name: this.props.user_name,
-        user_id: this.props.user_id,
-        text: this.state.text
-      });
-      this.setState({
-        text: ''
-      });
+      if (this.state.files.length !== 0) {
+        const images = {};
+        const imageLink = {};
+        const text = this.state.text;
+        this.state.files.map((file, index) => {
+          images[index] = Math.floor(Math.random() * 100000) + file.name,
+          imageLink[index] = `https://s3-us-west-1.amazonaws.com/hrlaspeakeasy/${images[index]}`
+        });
+        console.log('images', images);
+        axios.post('/api/event/image/upload/geturl', images)
+        .then((response) => {
+          console.log('1');
+          response.data.map((eachFile, index) => {
+            this.registerImageUrl(eachFile)
+            axios.put(eachFile.url, this.state.files[index])
+            .then(() => {
+              socket.emit('newmessage', {
+                event_id: this.props.event.id,
+                user_name: this.props.user_name,
+                user_id: this.props.user_id,
+                text: text
+              }, imageLink)
+            })
+          })
+        })
+        .then(() => {
+          this.setState({
+            text: '',
+            files: [],
+            imagePreviewUrls: []
+          })
+        })
+      } else {
+        socket.emit('newmessage', {
+          event_id: this.props.event.id,
+          user_name: this.props.user_name,
+          user_id: this.props.user_id,
+          text: this.state.text
+        });
+        this.setState({
+          text: ''
+        });
+      };
     }
   }
 

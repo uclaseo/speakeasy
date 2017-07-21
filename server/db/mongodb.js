@@ -7,7 +7,7 @@ const mongoConfig = () => {
     .once('open', () => {
       console.log('mongoose is running')
       // drop database
-      mongoose.connection.db.dropDatabase(function(err){}) 
+      // mongoose.connection.db.dropDatabase(function(err){}) 
     })
     .on('error', err => console.error('error running mongoose ', err))
 };

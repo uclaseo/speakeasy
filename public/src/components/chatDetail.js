@@ -1,18 +1,21 @@
 import React from 'react'
 import { Panel } from 'react-bootstrap'
 import { Link } from 'react-router-dom'
+import _ from 'lodash'
 
 const ChatDetail = ({ message, dmClick }) => {
 
-  if (message.images){
+  if (message.images) {
     return (
             <div onClick={() => {dmClick(message)}}>
         <Panel 
           bsStyle="info" 
           header={message.user_name}
         >
-        
-          <img className="thumbnail" src={message.images[0]}/>{message.text}
+          {_.map(message.images, (image)=>{
+            return <img className="thumbnail" src={image}/>
+          })}
+
           <br></br>
           {message.event_id}
         </Panel>
@@ -22,7 +25,6 @@ const ChatDetail = ({ message, dmClick }) => {
   }
   return (
     // <Link to="/dm_chat">
-
       <div onClick={() => {dmClick(message)}}>
         <Panel 
           bsStyle="info" 
