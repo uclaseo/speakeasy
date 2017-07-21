@@ -9,6 +9,7 @@ import { recentEventMessages, newEventMessage } from '../actions/eventMessagesAc
 import { createDMRoom } from '../actions/dmRoomsActions'
 import { Redirect } from 'react-router-dom'
 import axios from 'axios'
+import Webcam from 'react-webcam';
 
 const socket = io();
 
@@ -21,7 +22,9 @@ class EventChat extends Component {
       closed: false,
       dm: false,
       files: [],
-      imagePreviewUrls: []
+      imagePreviewUrls: [],
+      showWebcam: false,
+      screenshot: null
     };
 
     this.handleInputChange = this.handleInputChange.bind(this)
@@ -38,6 +41,10 @@ class EventChat extends Component {
     this.handleUpload = this.handleUpload.bind(this);
     this.renderImagePreview = this.renderImagePreview.bind(this);
     this.registerImageUrl = this.registerImageUrl.bind(this);
+    this.handleShowWebcam = this.handleShowWebcam.bind(this);
+    this.takeScreenshot = this.takeScreenshot.bind(this);
+    this.uploadScreenshot = this.uploadScreenshot.bind(this);
+    this.registerScreenshotUrl = this.registerScreenshotUrl.bind(this);
   }
 
   componentDidMount() {
@@ -91,6 +98,37 @@ class EventChat extends Component {
           imagePreviewUrls: []
         })
       })
+    } else if (this.state.screenshot) {
+      const text = this.state.text;
+      console.log('ha');
+      const imageData = {
+        image: this.state.screenshot,
+        fileName: Math.floor(Math.random() * 10000000).toString() + '.jpg'
+      };
+      axios.post('/api/screenshot', imageData)
+      .then((response) => {
+        console.log('RESPONSE FROM SCREENSHOT', response);
+        const imageLink = {
+          0: response.data
+        }
+        this.registerImageUrl(imageData)
+        socket.emit('newmessage', {
+          event_id: this.props.event.id,
+          user_name: this.props.user_name,
+          user_id: this.props.user_id,
+          text: text          
+        }, imageLink)
+      })
+      .then(() => {
+        this.setState({
+          text: '',
+          files: [],
+          imagePreviewUrls: [],
+          showWebcam: false,
+          screenshot: null
+        })
+      })
+
     } else {
       socket.emit('newmessage', {
         event_id: this.props.event.id,
@@ -103,7 +141,16 @@ class EventChat extends Component {
       });
     };
   }
+  registerScreenshotUrl(file) {
+    const imageData = {
+      name: file.fileName,
+      imageLink: `"https://hrlaspeakeasy.s3-us-west-1.amazonaws.com/${file.fileName}`,
+      userId: this.props.user_id,
+      eventId: this.props.event.id
+    };
+    axios.post('/api/event/image/upload', imageData)
 
+  }
   registerImageUrl(eachFile) {
     const imageData = {
       name: eachFile.fileName,
@@ -153,6 +200,37 @@ class EventChat extends Component {
             imagePreviewUrls: []
           })
         })
+      } else if (this.state.screenshot) {
+        const text = this.state.text;
+        console.log('ha');
+        const imageData = {
+          image: this.state.screenshot,
+          fileName: Math.floor(Math.random() * 10000000).toString() + '.jpg'
+        };
+        axios.post('/api/screenshot', imageData)
+        .then((response) => {
+          console.log('RESPONSE FROM SCREENSHOT', response);
+          const imageLink = {
+            0: response.data
+          }
+          this.registerImageUrl(imageData)
+          socket.emit('newmessage', {
+            event_id: this.props.event.id,
+            user_name: this.props.user_name,
+            user_id: this.props.user_id,
+            text: text          
+          }, imageLink)
+        })
+        .then(() => {
+          this.setState({
+            text: '',
+            files: [],
+            imagePreviewUrls: [],
+            showWebcam: false,
+            screenshot: null
+          })
+        })
+
       } else {
         socket.emit('newmessage', {
           event_id: this.props.event.id,
@@ -261,7 +339,6 @@ class EventChat extends Component {
     const imagePreviewUrls = this.state.imagePreviewUrls
     return (
       <div>
-        HAHAHAHAHAA PREVIEW
         {imagePreviewUrls.map((eachUrl) => {
           return <img key={Math.random()} className="thumb" src={eachUrl} />
         })}
@@ -269,14 +346,72 @@ class EventChat extends Component {
     )
   }
 
+  setRef = (webcam) => {
+    this.webcam = webcam;
+  }
+
+  handleShowWebcam() {
+    const showWebcam = !this.state.showWebcam;
+    this.setState({showWebcam})
+      
+      this.setState({
+        screenshot: null
+      })
+    
+  }
+
+  takeScreenshot() {
+    const imageSrc = this.webcam.getScreenshot();
+    this.setState({
+      screenshot: imageSrc
+    })
+    console.log(imageSrc);
+  };
+  
+  uploadScreenshot() {
+    const image = {
+      image: this.state.screenshot,
+      fileName: Math.floor(Math.random() * 1000000)
+    };
+
+    axios.post('/api/screenshot', image)
+    .then((response) => {
+      console.log('this is image link', response);
+      // this.setState({
+      //   uploadedScreenshot: response.data
+      // })
+    })
+    .catch((error) => {
+      console.log('error uploading screenshot', error);
+    })
+
+
+  }
   render() {
     let closeEvent;
+    let webcam;
+    let takeScreenshot;
     if (this.props.user_id === this.props.event.userId) {
       closeEvent = <button type="button"
         onClick={this.handleCloseClick}
       >Close Event</button>
     } else {
       closeEvent = null;
+    }
+
+    if (this.state.showWebcam) {
+      webcam =
+       <Webcam
+        audio={false}
+        height={200}
+        ref={this.setRef}
+        screenshotFormat="image/jpeg"
+        width={200}
+      />
+      takeScreenshot = 
+        <button onClick={this.takeScreenshot}>take photo!</button>
+    } else {
+      webcam = null;
     }
 
     if (this.state.closed === true) {
@@ -334,6 +469,11 @@ class EventChat extends Component {
           onChange={(event) => this.handleUpload(event)} />
 
         {this.renderImagePreview()}
+        <button onClick={this.handleShowWebcam}>take selfie</button>
+        {webcam}
+        {takeScreenshot}
+        {this.state.screenshot ? <img src={this.state.screenshot} /> : null}
+
       </div>
     );
   }
@@ -344,7 +484,7 @@ function mapStateToProps(state) {
     event: state.active_event,
     user_name: state.profile.name,
     user_id: state.profile.id,
-    messages: state.event_messages,
+    messages: state.event_messages
   };
 }
 
