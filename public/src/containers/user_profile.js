@@ -91,7 +91,7 @@ class User_Profile extends Component {
     this.state.files.map((file, index) => {
       images[index] = Math.floor(Math.random() * 10000) + file.name
     });
-    
+
     axios.post(`/api/user/profile/${id}/geturl`, images)
       .then((response) => {
         let counter = 0;
@@ -119,7 +119,7 @@ class User_Profile extends Component {
 
     let profile = this.props.profile;
     profile.photo = imageData.imageLink;
-    this.props.editUserProfile(profile, profile.id);
+    this.props.editUserProfile(profile);
     this.setState({
       files: []
     });
@@ -129,7 +129,7 @@ class User_Profile extends Component {
     let profile = this.props.profile;
     profile.name = values.name;
     profile.handle = values.handle;
-    this.props.editUserProfile(profile, profile.id);
+    this.props.editUserProfile(profile);
     this.setState({ submitted: true });
   }
 
@@ -148,43 +148,14 @@ class User_Profile extends Component {
 
     return (
       <div>
-        {this.renderPhoto()}
-
-        < form onSubmit={handleSubmit(this.onSubmit.bind(this))} >
-          <div>
-            <Field
-              label="Your name"
-              name="name"
-              type="text"
-              placeholder={this.showPlaceHolder('name')}
-              component={this.renderField}
-            />
-          </div>
-          <Field
-            label="Create a chat handle"
-            name="handle"
-            type="text"
-            placeholder={this.showPlaceHolder('handle')}
-            component={this.renderField}
-          />
-
-          <button type="submit" className="">
-            Submit
-          </button>
-
-          <Link to="/home">
-            <button type="button" className="">
-              Cancel
-            </button>
-          </Link>
-        </form >
-        <div>
-          {this.renderSuccess()}
-        </div>
-      </div >
-    );
+        hey!!!
+      </div>
+    )
   }
+
 }
+
+};
 
 function validate(values) {
   const error = {};
@@ -209,3 +180,5 @@ export default reduxForm({
   validate: validate,
   form: 'ProfileForm'
 })(connect(mapStateToProps, { editUserProfile, fetchProfile })(User_Profile));
+
+
