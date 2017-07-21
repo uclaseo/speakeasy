@@ -21,7 +21,7 @@ class Event_Setting extends Component {
 
     this.state = {
       redirect: false,
-      currenEventLocation: [],
+      currentEventLocation: [],
       eventPicture: [],
       tempEventProfilePicture: ''
       

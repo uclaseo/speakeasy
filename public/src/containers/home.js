@@ -19,23 +19,15 @@ class Home extends Component {
     super(props)
 
     this.state = {
-      gettingUserLocation : true,
+      gettingUserLocation: true,
       noNearbyEvents: false,
       nearbyEventProfilePicture: ''
     }
 
-    this.registerUser = this
-      .registerUser
-      .bind(this);
-    this.getNearbyEvents = this
-      .getNearbyEvents
-      .bind(this);
-    this.getUserLocation = this
-      .getUserLocation
-      .bind(this);
-    this.handleEventClick = this
-      .handleEventClick
-      .bind(this);
+    this.registerUser = this.registerUser.bind(this);
+    this.getNearbyEvents = this.getNearbyEvents.bind(this);
+    this.getUserLocation = this.getUserLocation.bind(this);
+    this.handleEventClick = this.handleEventClick.bind(this);
   }
 
   componentDidMount() {
@@ -48,12 +40,9 @@ class Home extends Component {
 
   registerUser(profile) {
     // console.log("what's registerUser profile arg", profile)
-    axios
-      .post(`/api/user/signup`, profile)
+    axios.post(`/api/user/signup`, profile)
       .then((response) => {
-        // console.log('registerUser response', response);
-        this
-          .props
+        this.props
           .fetchProfile(response.data);
       })
       .catch((error) => {
@@ -63,13 +52,15 @@ class Home extends Component {
 
   getUserLocation(cb) {
     if (navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition((position) => {
+      navigator.geolocation.getCurrentPosition(position => {
+        console.log('position:', position);
         this.setState({
           userLocation: [position.coords.latitude, position.coords.longitude]
         }, () => {
           cb();
         })
       });
+      console.log('this.state.userLocation::::::', this.state.userLocation)
     } else {
       console.log("Geolocation is not supported by this browser.");
     }
@@ -78,19 +69,15 @@ class Home extends Component {
   getNearbyEvents() {
     var nearbyEvents = [];
     axios.get("/api/event/searchevents")
-    .then((response) => {
-      // console.log("before we compare, this.state.userLocation is", this.state.userLocation)
-      for (var i = 0; i < response.data.length; i ++) {
-        if (this.getDistance([this.state.userLocation[0], this.state.userLocation[1]], [response.data[i].latitude, response.data[i].longitude])){
-          // console.log("what are the nearbyEvents?", response.data);
-          nearbyEvents.push(response.data[i]);
-
+      .then(response => {
+        for (var i = 0; i < response.data.length; i++) {
+          if (this.getDistance([this.state.userLocation[0], this.state.userLocation[1]], [response.data[i].latitude, response.data[i].longitude])) {
+            nearbyEvents.push(response.data[i]);
+          }
         }
       })
       .then(() => {
-        this
-          .props
-          .setNearbyEvents(nearbyEvents);
+        this.props.setNearbyEvents(nearbyEvents);
       })
       .then(() => {
         this.setState({
@@ -134,10 +121,9 @@ class Home extends Component {
       .setActiveEvent(event, this.props.profile.id);
   }
 
-  
+
   renderEvents() {
     let events = null;
-    console.log("this.props.nearbyEvents::", this.props.nearbyEvents);
     if (this.props.nearbyEvents.length !== 0) {
       events = this.props.nearbyEvents.map((event) => {
         return (
@@ -155,27 +141,20 @@ class Home extends Component {
       events = this.props.nearbyEvents
         .map((event, idx) => {
           return (
+          <div>
+
             <NearbyEventDetail
-              idx={idx}
               event={event}
               key={event.id}
               handleEventClick={this.handleEventClick}
-            />)
-        })
-    }
-    return events;
-  }
-
-      events = this.props.nearbyEvents.map((event, idx) => {
-        return (
-          <NearbyEventDetail
-            idx={idx}
-            event={event}
-            key={event.id}
-            handleEventClick={this.handleEventClick}
-          />
+            />
+            <img
+              src={event.eventPhoto}
+            />
+          </div>
         )
-      });
+      })
+      console.log('events::', events);
 
       if (events.length) {
         return (
@@ -202,7 +181,7 @@ class Home extends Component {
 
 
   render() {
-
+    console.log(this.state);
     return (
       <div>
 
@@ -221,7 +200,6 @@ class Home extends Component {
         <section>
           <div className="container content-section text-center">
             <div className="row">
-
               <div
                 className="container text-center row col-md-8 col-md-offset-2">
                 <Link to="/event_setting" className="btnghost">
@@ -229,7 +207,6 @@ class Home extends Component {
                   Host an Event
                 </Link>
               </div>
-
             </div>
           </div>
         </section>
@@ -242,18 +219,18 @@ class Home extends Component {
             </ul>
           </div>
         </section>
-        
+
       </div>
 
     );
   }
-} 
+}
 
 
 function mapStateToProps(state) {
   return { nearbyEvents: state.nearbyEvents, profile: state.profile };
 }
-function mapDispatchToProps(dispatch){
+function mapDispatchToProps(dispatch) {
   return bindActionCreators({ setNearbyEvents, fetchProfile, setActiveEvent, clearEventMessages }, dispatch)
 }
 
