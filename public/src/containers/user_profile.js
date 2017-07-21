@@ -148,12 +148,10 @@ class User_Profile extends Component {
 
     return (
       <div>
-        hey!!!
+        
       </div>
     )
   }
-
-}
 
 };
 

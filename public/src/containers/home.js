@@ -246,7 +246,10 @@ class Home extends Component {
 
     );
   }
-} function mapStateToProps(state) {
+} 
+
+
+function mapStateToProps(state) {
   return { nearbyEvents: state.nearbyEvents, profile: state.profile };
 }
 function mapDispatchToProps(dispatch){
