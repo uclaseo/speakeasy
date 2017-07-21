@@ -39,7 +39,7 @@ router.get('/event/fetchuserevents/:userId', eventController.fetchUserEvents);
 router.get('/event/searchevents', eventController.searchEvents)
 router.put('/event/close', eventController.closeEvent);
 
-router.get('/crosspath/:eventId', crossPathController.crossPathUpdate);
+router.put('/crosspath', crossPathController.crossPathUpdate);
 
 router.get('/friendsuggestion/:userId', friendsController.fetchPossibleFriends);
 router.put('/friend/chat', friendsController.updateChatting);

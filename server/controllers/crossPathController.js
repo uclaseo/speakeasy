@@ -4,7 +4,7 @@ const Sequelize = require('sequelize');
 const crossPathUpdate = (req, res) => {
   let users = [];
   Table.User_Event.findAll({
-    where: { eventId: req.params.eventId },
+    where: { eventId: req.body.eventId },
     attributes: ['userId']
   })
     .then((userList) => {
@@ -14,6 +14,9 @@ const crossPathUpdate = (req, res) => {
       console.log(users);
       res.send({ message: 'you did something crazy'})
       postCrossPath(users);
+    })
+    .catch((err) => {
+      console.error('error in crossPathUpdate ', err);
     })
 } 
 
@@ -41,7 +44,8 @@ const postCrossPath = (arr) => {
           Table.Cross_Path.create({
             userId: pair[0],
             possibleId: pair[1],
-            count: 1
+            count: 1,
+            chatting: false
           })
         } else {
           Table.Cross_Path.update({

@@ -81,7 +81,7 @@ class EventChat extends Component {
   handleCloseClick(event) {
     event.preventDefault()
     socket.emit('closeevent', { event_id: this.props.event.id });
-    axios.get('/api/crosspath/' + this.props.event.id) 
+    axios.put('/api/crosspath/', { eventId: this.props.event.id }) 
       .then(() => {
         axios.put('/api/event/close', { event_id: this.props.event.id })
           .then(() => {

@@ -10,6 +10,7 @@ import turf from 'turf'
 import { setNearbyEvents } from '../actions/index.js';
 import NearbyEventDetail from '../components/nearbyEventDetail';
 import { setActiveEvent } from '../actions/activeEventAction';
+import { clearEventMessages } from '../actions/eventMessagesActions';
 
 const auth = new Auth();
 class Home extends Component {
@@ -28,6 +29,7 @@ class Home extends Component {
   }
 
   componentDidMount() {
+    this.props.clearEventMessages()
     auth.getProfile((error, profile) => {
       this.registerUser(profile);
     });
@@ -169,6 +171,6 @@ function mapStateToProps(state) {
   };
 }
 function mapDispatchToProps(dispatch){
-  return bindActionCreators({ setNearbyEvents, fetchProfile, setActiveEvent }, dispatch)
+  return bindActionCreators({ setNearbyEvents, fetchProfile, setActiveEvent, clearEventMessages }, dispatch)
 }
 export default connect(mapStateToProps, mapDispatchToProps)(Home);
