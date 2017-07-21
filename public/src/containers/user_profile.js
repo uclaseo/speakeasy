@@ -51,6 +51,7 @@ class User_Profile extends Component {
   }
 
   renderPhoto() {
+    {console.log("this.props.profile.photo",this.props.profile.photo)}
     return (
       <section id="user-profile-pic">
         <div className="dropzone text-center center-block">

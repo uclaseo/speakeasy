@@ -22,7 +22,8 @@ class Event_Setting extends Component {
     this.state = {
       redirect: false,
       currenEventLocation: [],
-      files: []
+      eventPicture: [],
+      tempEventProfilePicture: {}
       
     }
     this.getEventLocation = this.getEventLocation.bind(this)
@@ -68,7 +69,7 @@ class Event_Setting extends Component {
   }
 
   onSubmit(values) {
-    console.log("event photo in onSubmit", this.state.files[0])
+    
 
     axios.post('/api/event/create', {
       eventName: values.eventname,
@@ -77,7 +78,7 @@ class Event_Setting extends Component {
       longitude: this.state.currenEventLocation[1],
       userId: this.props.profile.id,
       isLive: true,
-      eventPhoto: this.state.files[0]
+      eventPhoto: this.state.tempEventProfilePicture
     }).then((response) => {
       console.log("what's event id?", response.data.id)
       this.props.setActiveEvent(response.data)
@@ -88,17 +89,20 @@ class Event_Setting extends Component {
     })
   }
 
-  onDrop(acceptedFiles, rejectedFiles) {
-    let array = this.state.files;
-    acceptedFiles.map(file => {
-      array.push(file);
-    })
+  onDrop(acceptedFile, rejectedFile) {
+    console.log("acceptedFiles", acceptedFile[0]);
+    console.log("rejectedFiles", rejectedFile)
+    
     this.setState({
-      files: array
+      eventPicture: acceptedFile[0]
+    },()=>{
+      console.log("eventPicture before this.upload()", this.state.eventPicture)
+      this.upload();
     })
+    
 
     //don't do upload yet, do it after you get the eventId
-    this.upload();
+    // this.upload();
   }
 
 
@@ -109,7 +113,7 @@ class Event_Setting extends Component {
           <Dropzone onDrop={this.onDrop} accept="image/jpeg, image/png" className="center-block">
             {console.log("in Dropzone")}
              <img
-              src={this.props.eventPhoto || 'http://www.citi.io/wp-content/uploads/2015/08/1168-09-neworleans.jpg'}
+              src={this.state.tempEventProfilePicture || 'http://www.citi.io/wp-content/uploads/2015/08/1168-09-neworleans.jpg'}
               id="event-profile-pic"
               className="img-rounded img-responsive center-block"
               width="304"
@@ -126,28 +130,37 @@ class Event_Setting extends Component {
 
   upload() {
     const id = this.props.profile.id;
-    const images = {};
+    console.log("this.state.eventPhoto's name", this.state.eventPicture.name)
 
-    this.state.files.map((file, index) => {
-      images[index] = Math.floor(Math.random() * 10000) + file.name
-    });
+    const images = {};
+    // image = Math.floor(Math.random()*10000) + this.state.eventPicture.name
+    
+    // this.state.eventPicture.map((file, index) => {
+      images[0] = Math.floor(Math.random() * 10000) + this.state.eventPicture.name
+    // });
     
     axios.post(`/api/user/profile/${id}/geturl`, images)
       .then((response) => {
+        console.log("getting in to axios.post? ", response);
+        // axios.put(response.data[0].url, 0)
+        // .then((awsResponse) =>{
+        //   this.registerImageUrl(response.data[0])
+        // })
         let counter = 0;
         response.data.map((eachFile) => {
-          axios.put(eachFile.url, this.state.files[counter])
+          axios.put(eachFile.url, this.state.eventPicture)
             .then((awsResponse) => {
               counter++;
               this.registerImageUrl(eachFile);
+              console.log("no error in axios.post, response is ", awsResponse);
             })
-          counter++;
-        })
+            counter++;
+          })
       })
       .catch((error) => {
-        console.log('error in upload', error);
+        console.log('error in upload');
       })
-    }
+  }
 
 
     registerImageUrl(eachFile) {
@@ -155,12 +168,20 @@ class Event_Setting extends Component {
         name: eachFile.fileName,
         imageLink: `https://s3-us-west-1.amazonaws.com/hrlaspeakeasy/${eachFile.fileName}`,
       };
-      
-      this.props.profile.photo = imageData.imageLink;
-      this.props.editUserProfile(profile, profile.id);
+      console.log("is it different from imageData in Userprofile??", imageData.imageLink)
       this.setState({
-        files: []
-      });
+        tempEventProfilePicture: imageData.imageLink 
+      })
+
+
+      //edit the event profile picture here
+      // this.props.profile.photo = imageData.imageLink;
+      // this.props.editUserProfile(profile, profile.id);
+      
+      //USE IF YOU WANT TO REFRESH THE EVENT PROFILE PICS
+      // this.setState({
+      //   files: []
+      // });
     }
 
 
@@ -233,6 +254,7 @@ function mapStateToProps(state) {
     currentLocation: state.active_event_location,
     profile: state.profile,
     eventPhoto: state.eventPhoto,
+    eventId: state.eventId
   }
 }
 export default reduxForm({

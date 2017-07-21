@@ -18,7 +18,8 @@ class Home extends Component {
 
     this.state = {
       gettingUserLocation : true,
-      noNearbyEvents: false
+      noNearbyEvents: false,
+      nearbyEventProfilePicture: ''
     }
 
     this.registerUser = this.registerUser.bind(this);
@@ -69,7 +70,9 @@ class Home extends Component {
       // console.log("before we compare, this.state.userLocation is", this.state.userLocation)
       for (var i = 0; i < response.data.length; i ++) {
         if (this.getDistance([this.state.userLocation[0], this.state.userLocation[1]], [response.data[i].latitude, response.data[i].longitude])){
+          // console.log("what are the nearbyEvents?", response.data);
           nearbyEvents.push(response.data[i]);
+
         }
       }
     })
@@ -121,11 +124,16 @@ class Home extends Component {
     if (this.props.nearbyEvents.length !== 0) {
       events = this.props.nearbyEvents.map((event) => {
         return (
+                <div>
                   <NearbyEventDetail 
                     event={event} 
                     key={event.id}
                     handleEventClick={this.handleEventClick}
                   />
+                  <img 
+                    src = {event.eventPhoto}
+                  />
+                </div>
         )
       })
     } 
