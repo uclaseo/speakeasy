@@ -164,26 +164,26 @@ class Event_Setting extends Component {
   }
 
 
-    registerImageUrl(eachFile) {
-      const imageData = {
-        name: eachFile.fileName,
-        imageLink: `https://s3-us-west-1.amazonaws.com/hrlaspeakeasy/${eachFile.fileName}`,
-      };
-      console.log("is it different from imageData in Userprofile??", imageData.imageLink)
-      this.setState({
-        tempEventProfilePicture: imageData.imageLink 
-      })
+  registerImageUrl(eachFile) {
+    const imageData = {
+      name: eachFile.fileName,
+      imageLink: `https://s3-us-west-1.amazonaws.com/hrlaspeakeasy/${eachFile.fileName}`,
+    };
+    console.log("is it different from imageData in Userprofile??", imageData.imageLink)
+    this.setState({
+      tempEventProfilePicture: imageData.imageLink 
+    })
 
 
-      //edit the event profile picture here
-      // this.props.profile.photo = imageData.imageLink;
-      // this.props.editUserProfile(profile, profile.id);
-      
-      //USE IF YOU WANT TO REFRESH THE EVENT PROFILE PICS
-      // this.setState({
-      //   files: []
-      // });
-    }
+    //edit the event profile picture here
+    // this.props.profile.photo = imageData.imageLink;
+    // this.props.editUserProfile(profile, profile.id);
+    
+    //USE IF YOU WANT TO REFRESH THE EVENT PROFILE PICS
+    // this.setState({
+    //   files: []
+    // });
+  }
 
 
   render() {
@@ -257,7 +257,6 @@ function mapStateToProps(state) {
     currentLocation: state.active_event_location,
     profile: state.profile,
     eventPhoto: state.eventPhoto,
-    eventId: state.eventId
   }
 }
 export default reduxForm({
