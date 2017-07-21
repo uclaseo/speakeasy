@@ -9,7 +9,8 @@ const signupUser = (req, res) => {
         email: req.body.email
       }, defaults: {
         photo: req.body.photo,
-        name: req.body.name
+        name: req.body.name,
+        photo: req.body.picture
       }
     })
     .spread((response, isCreated) => {

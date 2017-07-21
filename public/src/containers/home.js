@@ -47,7 +47,7 @@ class Home extends Component {
   }
 
   registerUser(profile) {
-    // console.log("what's registerUser profile arg", profile)
+    console.log("what's registerUser profile arg", profile)
     axios
       .post(`/api/user/signup`, profile)
       .then((response) => {
@@ -166,15 +166,39 @@ class Home extends Component {
     return events;
   }
 
-  renderNoEvents() {
-    let noEvents = null;
-    if (this.state.gettingUserLocation === false) {
-      if (this.props.nearbyEvents.length === 0) {
-        noEvents = <div>No events nearby</div>
-      }
+      events = this.props.nearbyEvents.map((event, idx) => {
+        return
+        <NearbyEventDetail
+          idx={idx}
+          event={event}
+          key={event.id}
+          handleEventClick={this.handleEventClick}
+        />
+      });
+
+      return (
+        <div>
+          <div className="col-lg-8 col-lg-offset-2 container content-section text-center">
+            <p>
+              Or join a nearby event!
+                </p>
+          </div>
+          events
+      </div>
+      );
+    } else {
+      return (
+        <div>
+          <div className="col-lg-8 col-lg-offset-2 container content-section text-center">
+            <h2>
+              No events nearby
+            </h2>
+          </div>
+        </div>
+      )
     }
-    return noEvents;
   }
+
 
   render() {
 
@@ -196,24 +220,14 @@ class Home extends Component {
         <section>
           <div className="container content-section text-center">
             <div className="row">
-              <div className="col-lg-8 col-lg-offset-2">
-                <p>
-                  Set up your own event chat based on your current location!
-                </p>
-              </div>
               <div
-
                 className="container text-center row col-md-8 col-md-offset-2">
                 <Link to="/event_setting" className="btnghost">
                   <i className="fa"></i>
                   Host an Event
                 </Link>
               </div>
-              <div className="col-lg-8 col-lg-offset-2">
-                <p>
-                  Or join a nearby event!
-                </p>
-              </div>
+
 
             </div>
           </div>
@@ -225,7 +239,6 @@ class Home extends Component {
             <ul>
               {this.renderEvents()}
             </ul>
-            {this.renderNoEvents()}
           </div>
         </section>
       </div>

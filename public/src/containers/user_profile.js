@@ -51,11 +51,11 @@ class User_Profile extends Component {
   renderPhoto() {
     {console.log("this.props.profile.photo",this.props.profile.photo)}
     return (
-      <section id="user-profile-pic">
-        <div className="dropzone text-center center-block">
-          <Dropzone onDrop={this.onDrop} accept="image/jpeg, image/png" className="center-block">
+      <section>
+        <div className="dropzone text-center">
+          <Dropzone onDrop={this.onDrop} accept="image/jpeg, image/png">
             <img
-              src={this.props.profile.photo || 'https://s3-us-west-1.amazonaws.com/hrlaspeakeasy/1722Speakeasy1.png'}
+              src={this.props.profile.photo}
               id="user-profile-pic"
               className="img-rounded img-responsive center-block"
               width="304"
@@ -147,7 +147,7 @@ class User_Profile extends Component {
     const { handleSubmit } = this.props;
 
     return (
-      <div id="user-profile" className="container-fluid bg-3 text-center" >
+      <div>
         {this.renderPhoto()}
 
         < form onSubmit={handleSubmit(this.onSubmit.bind(this))} >
@@ -168,12 +168,12 @@ class User_Profile extends Component {
             component={this.renderField}
           />
 
-          <button type="submit" className="btn btn-secondary btn-lg my-btns">
+          <button type="submit" className="">
             Submit
           </button>
 
           <Link to="/home">
-            <button type="button" className="btn btn-danger btn-lg my-btns">
+            <button type="button" className="">
               Cancel
             </button>
           </Link>

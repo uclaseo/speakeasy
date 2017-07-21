@@ -377,6 +377,7 @@ footer {
     z-index: 1;
     position: relative;
     clear: both;
+    color: #333;
 }
 
 footer p {
@@ -620,3 +621,4 @@ textarea.error {
 .event-detail {
     color: #fff;
 }
+
