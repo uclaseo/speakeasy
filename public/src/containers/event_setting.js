@@ -72,7 +72,7 @@ class Event_Setting extends Component {
       latitude: this.state.currenEventLocation[0],
       longitude: this.state.currenEventLocation[1],
       userId: this.props.profile.id,
-      isLive: values.isLive
+      isLive: true
     }).then((response) => {
       console.log("what's event id?", response.data.id)
       this.props.setActiveEvent(response.data)
@@ -103,13 +103,7 @@ class Event_Setting extends Component {
             type="text"
             component={this.renderField}
           />
-          <Field
-            label="IsLive"
-            name="isLive"
-            type="text"
-            component={this.renderField}
-          />
-          
+        
             <button type="submit" className="btn btn-secondary btn-lg myBtns">
                 Submit
             </button>
@@ -134,9 +128,6 @@ function validate(values) {
   if (!values.Longitude) {
     error.Longitude = 'Enter your Longitude';
   }
-  if (!values.isLive) {
-    error.isLive = 'Enter your isLive';
-  }
   return error;
 }
 function mapDispatchToProps(dispatch) {
@@ -152,18 +143,3 @@ export default reduxForm({
   validate: validate,
   form: 'EventSettingForm'
 })(connect( mapStateToProps,mapDispatchToProps)(Event_Setting));
-// geolocated({
-//   positionOptions: {
-//     enableHighAccuracy: false,
-//   },
-//   userDecisionTimeout: 5000,
-// })(Event_Setting);
-// export default reduxForm({
-//   validate: validate,
-//   form: 'EventSettingForm'
-// })(connect(mapDispatchToProps, { setActiveEventId })(geolocated({
-//   positionOptions: {
-//     enableHighAccuracy: false,
-//   },
-//   userDecisionTimeout: 5000,
-// })(Event_Setting)));
