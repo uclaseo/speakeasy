@@ -209,9 +209,7 @@ class Event_Setting extends Component {
             type="text"
             component={this.renderField}
           />
-<<<<<<< HEAD
         
-=======
           <Field
             label="description"
             name="description"
@@ -219,7 +217,6 @@ class Event_Setting extends Component {
             component={this.renderField}
           />
           
->>>>>>> eventSettingImage
             <button type="submit" className="btn btn-secondary btn-lg myBtns">
                 Submit
             </button>
@@ -246,10 +243,7 @@ function validate(values) {
   if (!values.Longitude) {
     error.Longitude = 'Enter your Longitude';
   }
-<<<<<<< HEAD
-=======
   
->>>>>>> eventSettingImage
   return error;
 }
 function mapDispatchToProps(dispatch) {
