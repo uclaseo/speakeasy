@@ -130,7 +130,6 @@ class Home extends Component {
             <NearbyEventDetail
               idx={idx}
               event={event}
-              key={event.id}
               handleEventClick={this.handleEventClick}
             />
             <img src={event.eventPhoto} />
@@ -227,7 +226,7 @@ class Home extends Component {
 
         <header className="intro">
           <div className="intro-body">
-            <div className="container">
+            <div className="container row col-md-8 col-md-offset-2">
               <div className="row">
                 <div className="col-md-8 col-md-offset-2">
                   <h1 className="brand-heading">SPEAKEASY</h1>

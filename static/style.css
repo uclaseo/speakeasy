@@ -483,9 +483,9 @@ section:after {
 }
 
 section {
-	 background-color:#f9f9f9; 
-	color:#333;
-	overflow:hidden;
+    background-color: #f9f9f9;
+    color: #333;
+    overflow: hidden;
 }
 
 .done {
@@ -584,41 +584,3 @@ textarea.error {
     background-size: cover;
     -o-background-size: cover;
 }
-
-
-
-/* .space .space-body {
-    display: table-cell;
-    vertical-align: middle;
-    padding: 0 0 50px 0;
-}
-
-.space .space-body .brand-heading {
-    font-size: 40px;
-}
-
-.space .space-body .intro-text {
-    font-size: 18px;
-}
-
-@media(min-width:768px) {
-    .space {
-        height: 100%;
-        padding: 0;
-    }
-    .space .space-body .brand-heading {
-        font-size: 60px;
-        margin: 10px 0 10px 0;
-        border-top: 2px solid #fff;
-        border-bottom: 2px solid #fff;
-        display: inline-block;
-        padding: 10px 0;
-    }
-    .space .space-body .intro-text {
-        font-size: 20px;
-        font-weight: 300;
-        letter-spacing: 3px;
-    }
-}
-
- */ */

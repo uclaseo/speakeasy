@@ -4,9 +4,9 @@ import { connect } from 'react-redux';
 import { Field, reduxForm } from 'redux-form';
 import { Link } from 'react-router-dom';
 import Dropzone from 'react-dropzone';
-import Auth from '../Auth0/Auth0';
 import axios from 'axios';
 
+import Auth from '../Auth0/Auth0';
 import { fetchProfile, editUserProfile } from '../actions/user_actions';
 
 const auth = new Auth();
@@ -23,7 +23,7 @@ class User_Profile extends Component {
   }
 
   componentDidMount() {
-    console.log('REDUX PROFILE PHOTO:', this.props.profile.photo);
+
   }
 
   renderField(field) {
@@ -50,7 +50,7 @@ class User_Profile extends Component {
 
   renderPhoto() {
     return (
-      <section id="user-profile-pic">
+      <div id="user-profile-pic">
         <div className="dropzone text-center center-block">
           <Dropzone onDrop={this.onDrop} accept="image/jpeg, image/png" className="center-block">
             <img
@@ -62,7 +62,7 @@ class User_Profile extends Component {
             />
           </Dropzone>
         </div>
-      </section>
+      </div>
     )
   }
 
