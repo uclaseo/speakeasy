@@ -7,6 +7,7 @@ import ChatLog from '../components/chatLog'
 import { Image, Glyphicon, InputGroup, PageHeader, Col, Button, FormGroup, FormControl } from 'react-bootstrap'
 import { recentEventMessages, newEventMessage } from '../actions/eventMessagesActions'
 import { createDMRoom } from '../actions/dmRoomsActions'
+import { setIsVisited } from '../actions/index.js'
 import { Redirect } from 'react-router-dom'
 import axios from 'axios'
 
@@ -21,7 +22,11 @@ class EventChat extends Component {
       closed: false,
       dm: false,
       files: [],
-      imagePreviewUrls: []
+      imagePreviewUrls: [],
+      passwordInput: '',
+      showPasswordInput: true,
+      showChat: !!!this.props.event.password,
+      redirectHome: false,
     };
 
     this.handleInputChange = this.handleInputChange.bind(this)
@@ -38,12 +43,20 @@ class EventChat extends Component {
     this.handleUpload = this.handleUpload.bind(this);
     this.renderImagePreview = this.renderImagePreview.bind(this);
     this.registerImageUrl = this.registerImageUrl.bind(this);
+
+    this.submitPasswordForm = this.submitPasswordForm.bind(this);
+    this.handlePasswordChange = this.handlePasswordChange.bind(this);
+    this.redirectHome = this.redirectHome.bind(this);
+    this.setShowForm = this.setShowForm.bind(this);
   }
+
+
 
   componentDidMount() {
     this._handleLogIn();
     this._handleRecentMessages();
     this._handleRefreshMessages();
+    this.setShowForm();
   }
 
   componentWillUnmount() {
@@ -57,6 +70,19 @@ class EventChat extends Component {
     });
   }
 
+  setShowForm() {
+    //if event has password show form
+    if (!!this.props.event.password) {
+      console.log('set show form !!this.props.event.password\n\n')
+      this.setState({ showPasswordInput: true })
+    }
+    //if user is the event creator 
+    if (this.props.event.userId == this.props.user_id) {
+      console.log('setshow form comparing active event \n\n', this.props)
+      this.setState({ showChat: true, showPasswordInput: false })
+    }
+  }
+
   handleSendClick(event) {
     event.preventDefault();
     if (this.state.files.length !== 0) {
@@ -65,32 +91,32 @@ class EventChat extends Component {
       const text = this.state.text;
       this.state.files.map((file, index) => {
         images[index] = Math.floor(Math.random() * 100000) + file.name,
-        imageLink[index] = `https://s3-us-west-1.amazonaws.com/hrlaspeakeasy/${images[index]}`
+          imageLink[index] = `https://s3-us-west-1.amazonaws.com/hrlaspeakeasy/${images[index]}`
       });
       console.log('images', images);
       axios.post('/api/event/image/upload/geturl', images)
-      .then((response) => {
-        console.log('1');
-        response.data.map((eachFile, index) => {
-          this.registerImageUrl(eachFile)
-          axios.put(eachFile.url, this.state.files[index])
-          .then(() => {
-            socket.emit('newmessage', {
-              event_id: this.props.event.id,
-              user_name: this.props.user_name,
-              user_id: this.props.user_id,
-              text: text
-            }, imageLink)
+        .then((response) => {
+          console.log('1');
+          response.data.map((eachFile, index) => {
+            this.registerImageUrl(eachFile)
+            axios.put(eachFile.url, this.state.files[index])
+              .then(() => {
+                socket.emit('newmessage', {
+                  event_id: this.props.event.id,
+                  user_name: this.props.user_name,
+                  user_id: this.props.user_id,
+                  text: text
+                }, imageLink)
+              })
           })
         })
-      })
-      .then(() => {
-        this.setState({
-          text: '',
-          files: [],
-          imagePreviewUrls: []
+        .then(() => {
+          this.setState({
+            text: '',
+            files: [],
+            imagePreviewUrls: []
+          })
         })
-      })
     } else {
       socket.emit('newmessage', {
         event_id: this.props.event.id,
@@ -127,32 +153,32 @@ class EventChat extends Component {
         const text = this.state.text;
         this.state.files.map((file, index) => {
           images[index] = Math.floor(Math.random() * 100000) + file.name,
-          imageLink[index] = `https://s3-us-west-1.amazonaws.com/hrlaspeakeasy/${images[index]}`
+            imageLink[index] = `https://s3-us-west-1.amazonaws.com/hrlaspeakeasy/${images[index]}`
         });
         console.log('images', images);
         axios.post('/api/event/image/upload/geturl', images)
-        .then((response) => {
-          console.log('1');
-          response.data.map((eachFile, index) => {
-            this.registerImageUrl(eachFile)
-            axios.put(eachFile.url, this.state.files[index])
-            .then(() => {
-              socket.emit('newmessage', {
-                event_id: this.props.event.id,
-                user_name: this.props.user_name,
-                user_id: this.props.user_id,
-                text: text
-              }, imageLink)
+          .then((response) => {
+            console.log('1');
+            response.data.map((eachFile, index) => {
+              this.registerImageUrl(eachFile)
+              axios.put(eachFile.url, this.state.files[index])
+                .then(() => {
+                  socket.emit('newmessage', {
+                    event_id: this.props.event.id,
+                    user_name: this.props.user_name,
+                    user_id: this.props.user_id,
+                    text: text
+                  }, imageLink)
+                })
             })
           })
-        })
-        .then(() => {
-          this.setState({
-            text: '',
-            files: [],
-            imagePreviewUrls: []
+          .then(() => {
+            this.setState({
+              text: '',
+              files: [],
+              imagePreviewUrls: []
+            })
           })
-        })
       } else {
         socket.emit('newmessage', {
           event_id: this.props.event.id,
@@ -170,14 +196,14 @@ class EventChat extends Component {
   handleCloseClick(event) {
     event.preventDefault()
     socket.emit('closeevent', { event_id: this.props.event.id });
-    axios.put('/api/crosspath/', { eventId: this.props.event.id }) 
+    axios.put('/api/crosspath/', { eventId: this.props.event.id })
       .then(() => {
         axios.put('/api/event/close', { event_id: this.props.event.id })
           .then(() => {
             this.setState({
               closed: true
             })
-        })
+          })
       })
   }
 
@@ -269,7 +295,30 @@ class EventChat extends Component {
     )
   }
 
+  submitPasswordForm(event) {
+    event.preventDefault();
+    if (this.state.passwordInput == this.props.event.password) {
+      this.setState({ showChat: true, showPasswordInput: false })
+      // this.props.isVisited(this.props.event.id, true)
+    } else {
+      alert("wrong password")
+    }
+  }
+
+  handlePasswordChange(event) {
+    console.log("handlePasswordChange", event);
+    this.setState({
+      passwordInput: event.target.value
+    })
+  }
+
+  redirectHome() {
+    console.log("in redirectHome");
+    this.setState({ redirectHome: true })
+  }
+
   render() {
+
     let closeEvent;
     if (this.props.user_id === this.props.event.userId) {
       closeEvent = <button type="button"
@@ -312,28 +361,55 @@ class EventChat extends Component {
       return <div>You need to log in</div>;
     }
 
+    if (this.state.redirectHome) {
+      return (
+        <Redirect to='/home' />
+      )
+    }
+
     return (
       <div>
-        {closeEvent}
-        <ChatLog
-          roomMessages={this.props.messages}
-          dmClick={this.handleDMClick}
-        />
-        <input
-          type="text"
-          onChange={this.handleInputChange}
-          value={this.state.text}
-          onKeyPress={this.handleKeyPress}
-        />
-        <button type="button" onClick={this.handleSendClick}>
-          Send
-        </button>
+
+        {console.log("password should be", this.props.event.password, "userId is", this.props.event, "creator is ", this.props.user_id)}
+        {console.log('this is the state of showpasswordinput ', this.state.showPasswordInput)}
+        {(this.state.showPasswordInput) ?
+          <div>
+            Please EnterPassword:
+            <form onSubmit={this.submitPasswordForm}>
+              <input type="text"
+                name="eventpassword"
+                value={this.state.passwordInput}
+                onChange={this.handlePasswordChange}
+              />
+              <br></br>
+              <input type="submit" value="Submit" />
+              <input type="button" value="Return to Home" onClick={this.redirectHome} />
+            </form>
+          </div>
+          : null}
 
 
-        <input type="file" id="fileinput" multiple="multiple" accept="image/*"
-          onChange={(event) => this.handleUpload(event)} />
-
-        {this.renderImagePreview()}
+        {this.state.showChat ?
+          <div>
+            {closeEvent}
+            <ChatLog
+              roomMessages={this.props.messages}
+              dmClick={this.handleDMClick}
+            />
+            <input
+              type="text"
+              onChange={this.handleInputChange}
+              value={this.state.text}
+              onKeyPress={this.handleKeyPress}
+            />
+            <button type="button" onClick={this.handleSendClick}>
+              Send
+          </button>
+            <input type="file" id="fileinput" multiple="multiple" accept="image/*"
+              onChange={(event) => this.handleUpload(event)} />
+            {this.renderImagePreview()}
+          </div>
+          : null}
       </div>
     );
   }
@@ -345,6 +421,7 @@ function mapStateToProps(state) {
     user_name: state.profile.name,
     user_id: state.profile.id,
     messages: state.event_messages,
+    isVisited: state.isVisited
   };
 }
 
@@ -352,7 +429,8 @@ function mapDispatchToProps(dispatch) {
   return bindActionCreators({
     recentEventMessages: recentEventMessages,
     newEventMessage: newEventMessage,
-    createDMRoom: createDMRoom
+    createDMRoom: createDMRoom,
+    isVisited: setIsVisited
   }, dispatch)
 }
 

@@ -188,7 +188,8 @@ class Event_Setting extends Component {
 
   render() {
     const { handleSubmit } = this.props;
-
+    console.log("what is the props in event_setting", this.props)
+    console.log('what is ithe state of redirect ', this.state.redirect);
     if (this.state.redirect === true) {
       return <Redirect to='/active_event'/>;
     }
