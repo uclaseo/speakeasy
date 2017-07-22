@@ -6,6 +6,7 @@ export const SET_ACTIVE_EVENT_ID = 'SET_ACTIVE_EVENT_ID';
 export const SET_CURRENT_EVENT_LOCATION = 'SET_CURRENT_EVENT_LOCATION';
 export const SET_NEARBY_EVENTS = 'SET_NEARBY_EVENTS';
 
+
 export function setActiveEventId(activeEventId){
   // console.log("Step 2, activeEventId in action ", activeEventId)
   return {
@@ -29,6 +30,7 @@ export function setNearbyEvents (nearbyEvents){
     payload: nearbyEvents
   }
 }
+
 
 // export function addTempEventProfilePhoto (imageData){
 //   return {

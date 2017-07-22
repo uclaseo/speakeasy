@@ -28,7 +28,8 @@ const rootReducer = combineReducers({
   dmRooms: dmRoomsReducers,
   activeDMRoom: activeDMReducers,
   dm_messages: dmMessageReducers,
-  possibleFriends: possibleFriendsReducer
+  possibleFriends: possibleFriendsReducer,
+
 })
 
 export default rootReducer;
