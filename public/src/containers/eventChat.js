@@ -97,7 +97,7 @@ class EventChat extends Component {
         const text = this.state.text;
         this.state.files.map((file, index) => {
           images[index] = Math.floor(Math.random() * 100000) + file.name,
-          imageLink[index] = `https://s3-us-west-1.amazonaws.com/hrlaspeakeasy/${images[index]}`
+            imageLink[index] = `https://s3-us-west-1.amazonaws.com/hrlaspeakeasy/${images[index]}`
         });
         axios.post('/api/event/image/upload/geturl', images)
         .then((response) => {
@@ -171,14 +171,14 @@ class EventChat extends Component {
             response.data.map((eachFile, index) => {
               this.registerImageUrl(eachFile)
               axios.put(eachFile.url, this.state.files[index])
-              .then(() => {
-                socket.emit('newmessage', {
-                  event_id: this.props.event.id,
-                  user_name: this.props.user_name,
-                  user_id: this.props.user_id,
-                  text: text
-                }, imageLink)
-              })
+                .then(() => {
+                  socket.emit('newmessage', {
+                    event_id: this.props.event.id,
+                    user_name: this.props.user_name,
+                    user_id: this.props.user_id,
+                    text: text
+                  }, imageLink)
+                })
             })
           })
           .then(() => {
@@ -188,18 +188,13 @@ class EventChat extends Component {
               imagePreviewUrls: []
             })
           })
-        } else {
-          socket.emit('newmessage', {
-            event_id: this.props.event.id,
-            user_name: this.props.user_name,
-            user_id: this.props.user_id,
-            text: this.state.text
-          });
-          this.setState({
-            text: '',
-          });
-        };
       } else {
+        socket.emit('newmessage', {
+          event_id: this.props.event.id,
+          user_name: this.props.user_name,
+          user_id: this.props.user_id,
+          text: this.state.text
+        });
         this.setState({
           isInput: false
         })
@@ -336,65 +331,50 @@ class EventChat extends Component {
     )
   }
 
-    renderCloseEvent() {
-      let closeEvent;
-      if (this.props.user_id === this.props.event.userId) {
+  renderCloseEvent() {
+    let closeEvent;
+    if (this.props.user_id === this.props.event.userId) {
 
-        closeEvent = <button
-          className="btnghost"
-          onClick={this.handleCloseClick}>
-          <i className="fa"></i>
-          Close Event
+      closeEvent = <button
+        className="btnghost"
+        onClick={this.handleCloseClick}>
+        <i className="fa"></i>
+        Close Event
                   </button>
-      } else {
-        button = null;
-      }
-      return closeEvent;
+    } else {
+      button = null;
     }
+    return closeEvent;
+  }
 
-    renderSendButton() {
-      let send =
-        <button
-          className="btnghost"
-          onClick={this.handleSendClick}>
-          <i className="fa"></i>
-          Send
+  renderSendButton() {
+    let send =
+      <button
+        className="btnghost"
+        onClick={this.handleSendClick}>
+        <i className="fa"></i>
+        Send
       </button>
-      return send;
+    return send;
+  }
+  renderUploadPhoto() {
+    let upload =
+      <input
+        className=""
+        type="file"
+        accept="image/*"
+        onChange={(event) => this.handleUpload(event)}
+      />
+    return upload;
+  }
+
+  render() {
+
+    if (this.state.closed === true) {
+      return (
+        <Redirect to='/home' />
+      )
     }
-
-
-    render() {
-
-      let webcam;
-      let takeScreenshot;
-
-      if (this.state.showWebcam) {
-        webcam =
-          <Webcam
-            audio={false}
-            height={200}
-            ref={this.setRef}
-            screenshotFormat="image/jpeg"
-            width={200}
-          />
-        takeScreenshot =
-          <button onClick={this.takeScreenshot}>take photo!</button>
-      } else {
-        webcam = null;
-      }
-
-      if (this.state.closed === true) {
-        return (
-          <Redirect to='/home' />
-        )
-      }
-
-      if (this.state.dm === true) {
-        return (
-          <Redirect to='/dm_chat' />
-        )
-      }
 
     if (this.state.redirectHome) {
       return (
@@ -433,6 +413,7 @@ class EventChat extends Component {
 
     return (
       <div>
+        <Header />
 
 
           <Header /> 
@@ -495,29 +476,49 @@ class EventChat extends Component {
         />
       </div>
 
-          <section>
-            <div className="container content-section text-center">
-              <div className="container text-center row col-md-8 col-md-offset-2 row">
-                {this.renderSendButton()}
-                {this.renderCloseEvent()}
+        <section id="profile">
+          <div className="container content-section row col-lg-8 col-lg-offset-2">
+            <form onSubmit={handleSubmit(this.onSubmit.bind(this))} id="profileform">
+              </form>
               </div>
-            </div>
           </section>
 
 
 
+        <div id="profileform">
+
+          <input
+            className="form-control"
+            type="text"
+            onChange={this.handleInputChange}
+            value={this.state.text}
+            onKeyPress={this.handleKeyPress}
+          />
+
           <section>
-            <div className="container content-section text-center">
-              <div className="container text-center row col-md-8 col-md-offset-2 row">
-                {this.renderImagePreview()}
-              </div>
+            <div className="container text-center row col-md-8 col-md-offset-2 row">
+              {this.renderSendButton()}
+              {this.renderCloseEvent()}
             </div>
           </section>
 
         </div>
-      );
-    }
+
+
+
+        <section>
+          <div className="container content-section text-center">
+            <div className="container text-center row col-md-8 col-md-offset-2 row">
+              {this.renderUploadPhoto()}
+              {this.renderImagePreview()}
+            </div>
+          </div>
+        </section>
+
+      </div>
+    );
   }
+}
 
 function mapStateToProps(state) {
   return {
