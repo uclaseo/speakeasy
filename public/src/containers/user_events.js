@@ -3,6 +3,9 @@ import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import axios from 'axios'
 
+import NearbyEventDetail from '../components/nearbyEventDetail';
+
+
 class User_Events extends Component {
   constructor(props) {
     super(props)
@@ -14,62 +17,98 @@ class User_Events extends Component {
   }
 
   componentWillMount() {
-    console.log("user id is ", this.props.profile)
-    // axios.get(`/api/event/fetchuserevents/${this.props.profile.id}`)
+
     axios.get(`/api/event/fetchuserevents/${this.props.profile.id}`)
       .then((response) => {
-        console.log("getting stuff from user 1's events", response.data)
         this.setState({
           userEvents: response.data,
         })
-
       })
       .catch((error) => {
-        consol.log("not getting user1's event", error);
+        console.log("not getting user1's event", error);
       })
   }
 
   showEventPhotos(clickedEvent) {
-    console.log('fucking clicked event', clickedEvent)
-    console.log('clicked event Id', clickedEvent.eventId);
     axios.get(`/api/event/image/fetcheventimages/${clickedEvent.eventId}`)
-    .then((response) => {
-      console.log('this is response for event images', response);
-      const photos = response.data;
-      this.setState({
-        photos
+      .then((response) => {
+        console.log('this is response for event images', response);
+        const photos = response.data;
+        this.setState({
+          photos: photos
+        })
       })
+  }
 
-    })
+  renderEventMessage() {
+    let msg;
+
+    if (this.state.userEvents.length) {
+      msg = 'Some past events';
+    } else {
+      msg = 'You haven\'t been to any events yet!';
+    }
+
+    return (
+      <div className="col-lg-8 col-lg-offset-2 container content-section text-center">
+        <h2>{msg}</h2>
+      </div>
+    );
+  }
+
+  renderEvents() {
+    let events = null;
+    if (this.state.userEvents.length !== 0) {
+      events = this.state.userEvents.map((event, idx) => {
+        return (
+          <div key={idx}>
+            <NearbyEventDetail
+              idx={idx}
+              event={event}
+              handleEventClick={this.handleEventClick}
+            />
+            <img src={event.eventPhoto} />
+          </div>
+        )
+      })
+    }
+    return events;
   }
 
   render() {
     return (
-      <div className="container-fluid">
-        <div className="row">
+      <div>
 
-          <div className="col-md-4">
+        <header className="intro">
+          <div className="intro-body">
+            <div className="container row col-md-8 col-md-offset-2">
+              <div className="row">
+                <div className="col-md-8 col-md-offset-2">
+                  <h1 className="brand-heading">SPEAKEASY</h1>
+                </div>
+              </div>
+            </div>
+          </div>
+        </header>
+
+        <section>
+          <div className="container content-section text-center">
+            <div className="row">
+              <div className="container text-center row col-md-8 col-md-offset-2">
+                {this.renderEventMessage()}
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section id="portfolio">
+          <div className="gallery">
             <ul>
-              <h3>Previous Event </h3>
-              {/*{console.log("what's userID in user_events", this.props.profile.userID)}*/}
-
-              {this.state.userEvents.length > 0 ?
-                this.state.userEvents.map((userEvent) => {
-                  return <li onClick={() => this.showEventPhotos(userEvent)}>{userEvent.event.eventName} </li>
-                }) : null
-              }
+              {this.renderEvents()}
             </ul>
           </div>
+        </section>
 
-          <div className="col-md-8">
-            
-              {this.state.photos ? this.state.photos.map((photo) => {
-                return <div className="col-md-3"><img className="img-responsive"src={photo.imageLink} /></div>
-              }) : null}
-            
-          </div>
-
-        </div>
       </div>
     )
   }
@@ -80,6 +119,5 @@ function mapStateToProps(state) {
     profile: state.profile
   }
 }
-
 
 export default connect(mapStateToProps)(User_Events)

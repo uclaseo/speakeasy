@@ -37,8 +37,6 @@ class Home extends Component {
       this.registerUser(profile);
     });
     this.getUserLocation(this.getNearbyEvents);
-    console.log('REDUX NEARBY EVENTS:::', this.props.nearbyEvents);
-    console.log('STATE USER LOC:::', this.state.userLocation);
   }
 
   registerUser(profile) {
@@ -139,7 +137,7 @@ class Home extends Component {
     return events;
   }
 
-  renderEventOption() {
+  renderEventMessage() {
     let msg;
     if (this.state.gettingUserLocation) {
       msg = 'Searching for nearby events...';
@@ -201,7 +199,7 @@ class Home extends Component {
                   <i className="fa"></i>
                   Host an Event
                 </Link>
-                {this.renderEventOption()}
+                {this.renderEventMessage()}
               </div>
             </div>
           </div>
