@@ -117,19 +117,18 @@ class Home extends Component {
   }
 
   handleEventClick(event) {
-    this
-      .props
-      .setActiveEvent(event, this.props.profile.id);
+    this.props.setActiveEvent(event, this.props.profile.id);
   }
 
   renderEvents() {
     let events = null;
     if (this.props.nearbyEvents.length !== 0) {
       console.log('this.props.nearbyEvents:::', this.props.nearbyEvents);
-      events = this.props.nearbyEvents.map((event) => {
+      events = this.props.nearbyEvents.map((event, idx) => {
         return (
-          <div>
+          <div key={idx}>
             <NearbyEventDetail
+              idx={idx}
               event={event}
               key={event.id}
               handleEventClick={this.handleEventClick}
@@ -140,6 +139,28 @@ class Home extends Component {
       })
     }
     return events;
+  }
+
+  renderJoiningOption() {
+    if (this.props.nearbyEvents.length) {
+      return (
+        <div>
+          <div className="col-lg-8 col-lg-offset-2 container content-section text-center">
+            <h2>Nearby events</h2>
+          </div>
+        </div>
+      );
+    } else {
+      return (
+        <div>
+          <div className="col-lg-8 col-lg-offset-2 container content-section text-center">
+            <h2>
+              Searching for nearby events...
+            </h2>
+          </div>
+        </div>
+      )
+    }
   }
 
 
@@ -225,6 +246,7 @@ class Home extends Component {
                   <i className="fa"></i>
                   Host an Event
                 </Link>
+                  {this.renderJoiningOption()}
               </div>
             </div>
           </div>

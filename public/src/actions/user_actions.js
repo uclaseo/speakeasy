@@ -10,8 +10,8 @@ export function fetchProfile(profile) {
 }
 
 export const EDIT_PROFILE = 'EDIT_PROFILE';
-export function editUserProfile(profile) {
-  const request = axios.put(`api/user/profile/${profile.id}`, profile);
+export function editUserProfile(changes) {
+  const request = axios.put(`api/user/profile/${changes.id}`, changes);
   return {
     type: EDIT_PROFILE,
     payload: request

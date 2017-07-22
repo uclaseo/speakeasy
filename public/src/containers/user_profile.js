@@ -16,14 +16,14 @@ class User_Profile extends Component {
     super(props);
     this.state = {
       submitted: false,
-      files: []
+      files: [],
     };
     this.upload = this.upload.bind(this);
     this.onDrop = this.onDrop.bind(this);
   }
 
   componentDidMount() {
-    console.log('REDUX :', this.props);
+    console.log('REDUX PROFILE PHOTO:', this.props.profile.photo);
   }
 
   renderField(field) {
@@ -87,7 +87,7 @@ class User_Profile extends Component {
     const images = {};
 
     this.state.files.map((file, index) => {
-      images[index] = Math.floor(Math.random() * 10000) + file.name
+      images[index] = Math.floor(Math.random() * 10000) + file.name;
     });
 
     axios.post(`/api/user/profile/${id}/geturl`, images)
@@ -113,20 +113,29 @@ class User_Profile extends Component {
       imageLink: `https://s3-us-west-1.amazonaws.com/hrlaspeakeasy/${eachFile.fileName}`,
     };
 
-    let profile = this.props.profile;
-    profile.photo = imageData.imageLink;
-    this.props.editUserProfile(profile, profile.id);
     this.setState({
-      files: []
+      files: [],
     });
+
+    let changes = {
+      id: this.props.profile.id,
+      name: this.props.profile.name,
+      handle: this.props.profile.handle,
+      photo: imageData.imageLink
+    };
+
+    this.props.editUserProfile(changes, this.props.profile.id);
   }
 
   onSubmit(values) {
-    console.log('!! values !!', values);
-    let profile = this.props.profile;
-    profile.name = values.name || profile.name;
-    profile.handle = values.handle || profile.handle;
-    this.props.editUserProfile(profile);
+    let changes = {
+      id: this.props.profile.id,
+      name: values.name || this.props.profile.name,
+      handle: values.handle || this.props.profile.handle,
+      photo: this.props.profile.photo
+    };
+
+    this.props.editUserProfile(changes, this.props.profile.id);
     this.setState({ submitted: true });
   }
 
@@ -147,7 +156,7 @@ class User_Profile extends Component {
       <div>
 
         <header className="space">
-          <div className="space-body">
+          <div className="-body">
             <div className="container">
               <div className="row">
                 <div className="col-md-8 col-md-offset-2">
@@ -209,4 +218,4 @@ function mapStateToProps(state) {
 export default reduxForm({
   validate: validate,
   form: 'ProfileForm'
-})(connect(mapStateToProps, { editUserProfile, fetchProfile })(User_Profile));
+})(connect(mapStateToProps, { fetchProfile, editUserProfile })(User_Profile));

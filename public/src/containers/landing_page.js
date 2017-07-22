@@ -38,8 +38,7 @@ class Landing_Page extends Component {
 
         <section>
           <div className="container content-section text-center">
-            <div className="row">
-              <div className="col-lg-8 col-lg-offset-2">
+              <div className="row col-lg-8 col-lg-offset-2">
                 <p>
                   DIY semiotics succulents, put a bird on it tattooed hoodie +1 letterpress woke.
               Umami knausgaard hexagon tumblr. Polaroid disrupt sartorial cliche prism retro
@@ -56,7 +55,6 @@ class Landing_Page extends Component {
               </div>
 
 
-            </div>
           </div>
         </section>
       </div>
