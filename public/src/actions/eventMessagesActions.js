@@ -4,7 +4,6 @@ export const CLEAR_EVENT_MESSAGES = 'CLEAR_EVENT_MESSAGES'
 
 export function recentEventMessages(messages) {
   let recentMessages = messages.reverse()
-  console.log('recent event messages ', recentMessages);
   return { 
     type: RECENT_EVENT_MESSAGES, 
     payload: recentMessages

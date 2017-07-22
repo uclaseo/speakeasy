@@ -4,7 +4,6 @@ import { bindActionCreators } from 'redux'
 import io from 'socket.io-client'
 import ChatDetail from '../components/chatDetail'
 import ChatLog from '../components/chatLog'
-import { Image, Glyphicon, InputGroup, PageHeader, Col, Button, FormGroup, FormControl } from 'react-bootstrap'
 import { recentEventMessages, newEventMessage } from '../actions/eventMessagesActions'
 import { createDMRoom } from '../actions/dmRoomsActions'
 import { Redirect } from 'react-router-dom'
@@ -39,30 +38,35 @@ class EventChat extends Component {
     this._handleRefreshMessages = this._handleRefreshMessages.bind(this)
     this._handleRecentMessages = this._handleRecentMessages.bind(this)
     this._handleClosedEvent = this._handleClosedEvent.bind(this)
-
-    this.handleUpload = this.handleUpload.bind(this);
-    this.renderImagePreview = this.renderImagePreview.bind(this);
-    this.registerImageUrl = this.registerImageUrl.bind(this);
-
-
-    this.submitPasswordForm = this.submitPasswordForm.bind(this);
-    this.handlePasswordChange = this.handlePasswordChange.bind(this);
-    this.redirectHome = this.redirectHome.bind(this);
-    this.setShowForm = this.setShowForm.bind(this);
+    this.handleUpload = this.handleUpload.bind(this)
+    this.renderImagePreview = this.renderImagePreview.bind(this)
+    this.registerImageUrl = this.registerImageUrl.bind(this)
+    this.submitPasswordForm = this.submitPasswordForm.bind(this)
+    this.handlePasswordChange = this.handlePasswordChange.bind(this)
+    this.redirectHome = this.redirectHome.bind(this)
+    this.setShowForm = this.setShowForm.bind(this)
+    this.scrollToBottom = this.scrollToBottom.bind(this)
   }
 
-
+  scrollToBottom() {
+    this.messagesEnd.scrollIntoView({ behavior: 'smooth' })
+  }
 
   componentDidMount() {
-    this._handleLogIn();
-    this._handleRecentMessages();
-    this._handleRefreshMessages();
-    this.setShowForm();
+    this._handleLogIn()
+    this._handleRecentMessages()
+    this._handleRefreshMessages()
+    this.setShowForm()
+    this.scrollToBottom()
+  }
+
+  componentDidUpdate() {
+    this.scrollToBottom()
   }
 
   componentWillUnmount() {
-    socket.removeAllListeners();
-    this._handleLogOut();
+    socket.removeAllListeners()
+    this._handleLogOut()
   }
 
   handleInputChange(e) {
@@ -73,17 +77,12 @@ class EventChat extends Component {
   }
 
   setShowForm() {
-    //if event has password show form
     if (!!this.props.event.password) {
       this.setState({ showPasswordInput: true })
     }
-    //if user is the event creator 
     if (this.props.event.userId === this.props.user_id) {
       this.setState({ showChat: true, showPasswordInput: false })
     }
-
-    //if you are not the creator and there is no password -> don't ask for password
-
   }
 
  handleSendClick(event) {
@@ -97,10 +96,8 @@ class EventChat extends Component {
           images[index] = Math.floor(Math.random() * 100000) + file.name,
           imageLink[index] = `https://s3-us-west-1.amazonaws.com/hrlaspeakeasy/${images[index]}`
         });
-        console.log('images', images);
         axios.post('/api/event/image/upload/geturl', images)
         .then((response) => {
-          console.log('1');
           response.data.map((eachFile, index) => {
             this.registerImageUrl(eachFile)
             axios.put(eachFile.url, this.state.files[index])
@@ -176,10 +173,8 @@ class EventChat extends Component {
             images[index] = Math.floor(Math.random() * 100000) + file.name,
             imageLink[index] = `https://s3-us-west-1.amazonaws.com/hrlaspeakeasy/${images[index]}`
           });
-          console.log('images', images);
           axios.post('/api/event/image/upload/geturl', images)
           .then((response) => {
-            console.log('1');
             response.data.map((eachFile, index) => {
               this.registerImageUrl(eachFile)
               axios.put(eachFile.url, this.state.files[index])
@@ -241,7 +236,6 @@ class EventChat extends Component {
       })
         .then((response) => {
           let dm_id = response.data.room.id;
-          console.log('dm click response: ', dm_id)
           this.props.createDMRoom(message.user_name, dm_id)
           this.setState({ dm: true })
         })
@@ -289,12 +283,10 @@ class EventChat extends Component {
   handleUpload(event) {
     event.preventDefault();
     const files = event.target.files;
-    console.log('files uploaded', files);
     const stateFiles = this.state.files;
     const stateImagePreviewUrls = this.state.imagePreviewUrls;
 
     for (let i = 0, file; file = files[i]; i++) {
-      console.log('hello', i)
       let reader = new FileReader();
       reader.onloadend = () => {
         stateFiles.push(file);
@@ -303,7 +295,6 @@ class EventChat extends Component {
           files: stateFiles,
           imagePreviewUrls: stateImagePreviewUrls
         });
-        console.log(this.state);
       };
       reader.readAsDataURL(file);
     }
@@ -330,14 +321,12 @@ class EventChat extends Component {
   }
 
   handlePasswordChange(event) {
-    console.log("handlePasswordChange", event);
     this.setState({
       passwordInput: event.target.value
     })
   }
 
   redirectHome() {
-    console.log("in redirectHome");
     this.setState({ redirectHome: true })
   }
 
@@ -351,10 +340,6 @@ class EventChat extends Component {
     } else {
       closeEvent = null;
     }
-    let enterText;
-
-
-
 
     if (this.state.closed === true) {
       return (
@@ -368,27 +353,6 @@ class EventChat extends Component {
       )
     }
 
-    if (this.props.messages.length === 0) {
-      return (
-        <div>
-          {closeEvent}
-          <input
-            type="text"
-            value={this.state.text}
-            onKeyPress={this.handleKeyPress}
-            onChange={this.handleInputChange}
-          />
-          <button type="button" onClick={this.handleSendClick}>
-            Send
-          </button>
-        </div>
-      );
-    }
-
-    if (!this.props.user_name) {
-      return <div>You need to log in</div>;
-    }
-
     if (this.state.redirectHome) {
       return (
         <Redirect to='/home' />
@@ -397,7 +361,6 @@ class EventChat extends Component {
 
     return (
       <div>
-        {console.log("password should be", this.props.event.password, "userId is", this.props.event, "creator is ", this.props.user_id)}
         {(this.state.showPasswordInput) ?
           <div>
             Please EnterPassword:
@@ -411,6 +374,7 @@ class EventChat extends Component {
               <input type="submit" value="Submit" />
               <input type="button" value="Return to Home" onClick={this.redirectHome} />
             </form>
+            <div ref={(el) => this.messagesEnd = el} />
           </div>
           : null}
 
@@ -434,9 +398,9 @@ class EventChat extends Component {
             <input type="file" id="fileinput" multiple="multiple" accept="image/*"
               onChange={(event) => this.handleUpload(event)} />
             {this.renderImagePreview()}
-
           </div>
           : null}
+        <div ref={(el) => this.messagesEnd = el} />
       </div>
     );
   }
@@ -447,8 +411,7 @@ function mapStateToProps(state) {
     event: state.active_event,
     user_name: state.profile.name,
     user_id: state.profile.id,
-    messages: state.event_messages,
-    
+    messages: state.event_messages
   };
 }
 
@@ -456,8 +419,7 @@ function mapDispatchToProps(dispatch) {
   return bindActionCreators({
     recentEventMessages: recentEventMessages,
     newEventMessage: newEventMessage,
-    createDMRoom: createDMRoom,
-    
+    createDMRoom: createDMRoom
   }, dispatch)
 }
 

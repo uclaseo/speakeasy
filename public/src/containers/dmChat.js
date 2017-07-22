@@ -25,12 +25,22 @@ class DMChat extends Component {
     this._handleLogOut = this._handleLogOut.bind(this)
     this._handleRefreshMessages = this._handleRefreshMessages.bind(this)
     this._handleRecentMessages = this._handleRecentMessages.bind(this) 
+    this.scrollToBottom = this.scrollToBottom.bind(this)
+  }
+
+  scrollToBottom() {
+    this.messagesEnd.scrollIntoView({ behavior: 'smooth' })
   }
 
   componentDidMount() {
     this._handleLogIn()
     this._handleRecentMessages()
     this._handleRefreshMessages()
+    this.scrollToBottom()
+  }
+
+  componentDidUpdate() {
+    this.scrollToBottom()
   }
 
   componentWillUnmount() {
@@ -101,29 +111,24 @@ class DMChat extends Component {
 
   render() {
 
-    if (this.props.dmMessages.length === 0) {
-      return  <div>
+    // if (this.props.dmMessages.length === 0) {
+    //   return  <div>
                
-                <input  
-                  type="text" 
-                  value={this.state.text}
-                  onKeyPress={this.handleKeyPress}
-                  onChange={this.handleInputChange}
-                />             
-                <button 
-                  type="button" 
-                  onClick={this.handleSendClick}
-                > Send </button> 
-              </div>
-    }
-
-    if (!this.props.user_from_name) {
-      return <div>You need to log in</div>
-    }
+    //             <input  
+    //               type="text" 
+    //               value={this.state.text}
+    //               onKeyPress={this.handleKeyPress}
+    //               onChange={this.handleInputChange}
+    //             />             
+    //             <button 
+    //               type="button" 
+    //               onClick={this.handleSendClick}
+    //             > Send </button> 
+    //           </div>
+    // }
 
     return (
       <div>   
-
         <DMLog directMessages={this.props.dmMessages}/>
         <input  
           type="text" 
@@ -134,7 +139,8 @@ class DMChat extends Component {
          <button 
           type="button" 
           onClick={this.handleSendClick}
-        > Send </button>           
+        > Send </button>   
+        <div ref={(el) => this.messagesEnd = el} />        
       </div>
     );
   }
