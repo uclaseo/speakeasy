@@ -132,9 +132,7 @@ class Home extends Component {
                     key={event.id}
                     handleEventClick={this.handleEventClick}
                   />
-                  <img 
-                    src = {event.eventPhoto}
-                  />
+                  
                 </div>
         )
       })
