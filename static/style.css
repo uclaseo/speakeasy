@@ -561,6 +561,15 @@ textarea.error {
     margin-bottom: 50px;
 }
 
+#event-profile {
+    margin: 20px;
+    margin-top: 40px;
+}
+
+#event-profile-pic {
+    margin-bottom: 50px;
+}
+
 #host-button {
     padding: 20px 0 20px 0;
     margin: 20px 0 20px 0;

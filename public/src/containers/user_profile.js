@@ -23,7 +23,25 @@ class User_Profile extends Component {
   }
 
   componentDidMount() {
+    //nada for now
+  }
 
+  renderPhoto() {
+    return (
+      <div id="user-profile-pic">
+        <div className="dropzone text-center center-block">
+          <Dropzone onDrop={this.onDrop} accept="image/jpeg, image/png" className="center-block">
+            <img
+              src={this.props.profile.photo}
+              id="user-profile-pic"
+              className="img-rounded img-responsive center-block"
+              width="456" 
+              height="708"
+            />
+          </Dropzone>
+        </div>
+      </div>
+    )
   }
 
   renderField(field) {
@@ -48,27 +66,13 @@ class User_Profile extends Component {
     );
   }
 
-  renderPhoto() {
-    return (
-      <div id="user-profile-pic">
-        <div className="dropzone text-center center-block">
-          <Dropzone onDrop={this.onDrop} accept="image/jpeg, image/png" className="center-block">
-            <img
-              src={this.props.profile.photo}
-              id="user-profile-pic"
-              className="img-rounded img-responsive center-block"
-              width="304"
-              height="236"
-            />
-          </Dropzone>
-        </div>
-      </div>
-    )
-  }
-
   renderSuccess() {
     const success = (this.state.submitted) ? 'Successfully updated profile' : '';
-    return (<div>{success}</div>);
+    return (
+      <div>
+        {success}
+      </div>
+    );
   }
 
   onDrop(acceptedFiles, rejectedFiles) {
@@ -151,12 +155,11 @@ class User_Profile extends Component {
 
   render() {
     const { handleSubmit } = this.props;
-
     return (
       <div>
 
         <header className="space">
-          <div className="-body">
+          <div className="intro-body">
             <div className="container">
               <div className="row">
                 <div className="col-md-8 col-md-offset-2">
@@ -198,6 +201,8 @@ class User_Profile extends Component {
             </form>
           </div>
         </section>
+
+
 
       </div>
     );

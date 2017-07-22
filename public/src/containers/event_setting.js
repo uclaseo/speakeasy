@@ -14,7 +14,7 @@ import { geolocated } from 'react-geolocated';
 import createBrowserHistory from 'history/createBrowserHistory';
 import { setActiveEvent } from './../actions/activeEventAction';
 
-const history = createBrowserHistory({forceRefresh:true});
+const history = createBrowserHistory({ forceRefresh: true });
 class Event_Setting extends Component {
   constructor(props) {
     super(props);
@@ -24,7 +24,7 @@ class Event_Setting extends Component {
       currentEventLocation: [],
       eventPicture: [],
       tempEventProfilePicture: ''
-      
+
     }
     this.getEventLocation = this.getEventLocation.bind(this)
     this.renderPhoto = this.renderPhoto.bind(this)
@@ -63,12 +63,10 @@ class Event_Setting extends Component {
     } else {
       console.log("Geolocation is not supported by this browser.");
     }
-  }  
-  
+  }
+
 
   onSubmit(values) {
-    console.log("this.state in onSubmit", this.state)
-    console.log('this.state.currentEventLocation onSubmit::', this.state.currentEventLocation);
     axios.post('/api/event/create', {
       eventName: values.eventname,
       password: values.password,
@@ -81,48 +79,38 @@ class Event_Setting extends Component {
       this.props.setActiveEvent(response.data)
       this.setState({ redirect: true })
     })
-    .catch((error) => {
-      console.log(error)
-    })
+      .catch((error) => {
+        console.log(error)
+      })
   }
 
   onDrop(acceptedFile, rejectedFile) {
-    console.log("acceptedFiles", acceptedFile[0]);
-    console.log("rejectedFiles", rejectedFile)
-    
     this.setState({
       eventPicture: acceptedFile[0]
-    },()=>{
+    }, () => {
       console.log("eventPicture before this.upload()", this.state.eventPicture)
       this.upload();
     })
-    
-
-    //don't do upload yet, do it after you get the eventId
-    // this.upload();
   }
 
 
   renderPhoto() {
     return (
-      <section id="event-profile-pic">
+      <div id="event-profile-pic">
         <div className="dropzone text-center center-block">
           <Dropzone onDrop={this.onDrop} accept="image/jpeg, image/png" className="center-block">
-            {console.log("in Dropzone")}
-             <img
-              src={this.state.tempEventProfilePicture || 'http://www.citi.io/wp-content/uploads/2015/08/1168-09-neworleans.jpg'}
+            <img
+              src={this.state.tempEventProfilePicture || 'http://bit.ly/2toy1xv'}
               id="event-profile-pic"
               className="img-rounded img-responsive center-block"
-              width="304"
-              height="236"
-            /> 
+              width="608"
+              height="472"
+            />
           </Dropzone>
-          <p className="center-block">click to change your event profile pic</p>
         </div>
-      </section>
+      </div>
     )
   }
-
 
 
   upload() {
@@ -131,11 +119,11 @@ class Event_Setting extends Component {
 
     const images = {};
     // image = Math.floor(Math.random()*10000) + this.state.eventPicture.name
-    
+
     // this.state.eventPicture.map((file, index) => {
-      images[0] = Math.floor(Math.random() * 10000) + this.state.eventPicture.name
+    images[0] = Math.floor(Math.random() * 10000) + this.state.eventPicture.name
     // });
-    
+
     axios.post(`/api/user/profile/${id}/geturl`, images)
       .then((response) => {
         console.log("getting in to axios.post? ", response);
@@ -151,8 +139,8 @@ class Event_Setting extends Component {
               this.registerImageUrl(eachFile);
               console.log("no error in axios.post, response is ", awsResponse);
             })
-            counter++;
-          })
+          counter++;
+        })
       })
       .catch((error) => {
         console.log('error in upload');
@@ -169,16 +157,6 @@ class Event_Setting extends Component {
     this.setState({
       tempEventProfilePicture: imageData.imageLink 
     })
-
-
-    //edit the event profile picture here
-    // this.props.profile.photo = imageData.imageLink;
-    // this.props.editUserProfile(profile, profile.id);
-    
-    //USE IF YOU WANT TO REFRESH THE EVENT PROFILE PICS
-    // this.setState({
-    //   files: []
-    // });
   }
 
 
@@ -187,42 +165,65 @@ class Event_Setting extends Component {
     console.log("what is the props in event_setting", this.props)
     console.log('what is ithe state of redirect ', this.state.redirect);
     if (this.state.redirect === true) {
-      return <Redirect to='/active_event'/>;
+      return <Redirect to='/active_event' />;
     }
 
     return (
-      <div id="user-profile">
-        {this.renderPhoto()}
+      <div>
 
-        <form onSubmit={handleSubmit(this.onSubmit.bind(this))}>
-          <Field
-            label="EventName"
-            name="eventname"
-            type="text"
-            component={this.renderField}
-          />
-          <Field
-            label="Password"
-            name="password"
-            type="text"
-            component={this.renderField}
-          />
-        
-          <Field
-            label="description"
-            name="description"
-            type="text"
-            component={this.renderField}
-          />
-          
-            <button type="submit" className="btn btn-secondary btn-lg myBtns">
-                Submit
-            </button>
-          
-        </form>
+        <header className="space">
+          <div className="intro-body">
+            <div className="container">
+              <div className="row">
+                <div className="col-md-8 col-md-offset-2">
+                  {this.renderPhoto()}
+                  <label>Click to change your event photo</label>
+                </div>
+              </div>
+            </div>
+          </div>
+        </header>
+
+        <section id="profile">
+          <div className="container content-section row col-lg-8 col-lg-offset-2">
+            <form onSubmit={handleSubmit(this.onSubmit.bind(this))} id="profileform">
+              <Field
+                label="EventName"
+                name="eventname"
+                type="text"
+                component={this.renderField}
+              />
+              <Field
+                label="Password"
+                name="password"
+                type="text"
+                component={this.renderField}
+              />
+
+              <Field
+                label="description"
+                name="description"
+                type="text"
+                component={this.renderField}
+              />
+
+              <div className="container text-center row col-md-8 col-md-offset-2">
+                <button type="submit" className="btnghost">Submit</button>
+                <Link to="/home">
+                  <button type="button" className="btnghost">Cancel</button>
+                </Link>
+              </div>
+
+
+            </form>
+          </div>
+        </section>
+
+
+
 
       </div>
-    );
+    )
   }
 }
 
@@ -241,7 +242,7 @@ function validate(values) {
   if (!values.Longitude) {
     error.Longitude = 'Enter your Longitude';
   }
-  
+
   return error;
 }
 function mapDispatchToProps(dispatch) {
@@ -258,4 +259,4 @@ function mapStateToProps(state) {
 export default reduxForm({
   validate: validate,
   form: 'EventSettingForm'
-})(connect( mapStateToProps,mapDispatchToProps)(Event_Setting));
+})(connect(mapStateToProps, mapDispatchToProps)(Event_Setting));

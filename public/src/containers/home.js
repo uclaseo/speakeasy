@@ -123,7 +123,6 @@ class Home extends Component {
   renderEvents() {
     let events = null;
     if (this.props.nearbyEvents.length !== 0) {
-      console.log('this.props.nearbyEvents:::', this.props.nearbyEvents);
       events = this.props.nearbyEvents.map((event, idx) => {
         return (
           <div key={idx}>
@@ -140,26 +139,23 @@ class Home extends Component {
     return events;
   }
 
-  renderJoiningOption() {
-    if (this.props.nearbyEvents.length) {
-      return (
-        <div>
-          <div className="col-lg-8 col-lg-offset-2 container content-section text-center">
-            <h2>Nearby events</h2>
-          </div>
-        </div>
-      );
+  renderEventOption() {
+    let msg;
+    if (this.state.gettingUserLocation) {
+      msg = 'Searching for nearby events...';
     } else {
-      return (
-        <div>
-          <div className="col-lg-8 col-lg-offset-2 container content-section text-center">
-            <h2>
-              Searching for nearby events...
-            </h2>
-          </div>
-        </div>
-      )
+      if (this.props.nearbyEvents.length) {
+        msg = 'Nearby events';
+      } else {
+        msg = 'No nearby events';
+      }
     }
+
+    return (
+      <div className="col-lg-8 col-lg-offset-2 container content-section text-center">
+        <h2>{msg}</h2>
+      </div>
+    );
   }
 
 
@@ -168,56 +164,17 @@ class Home extends Component {
     if (this.props.nearbyEvents.length !== 0) {
       events = this.props.nearbyEvents.map((event) => {
         return (
-                <div>
-                  <NearbyEventDetail 
-                    event={event} 
-                    key={event.id}
-                    handleEventClick={this.handleEventClick}
-                  />
-                  
-                </div>
-        )
-      })
-    } 
-      events = this.props.nearbyEvents
-        .map((event, idx) => {
-          return (
           <div>
-
-            <NearbyEventDetail
-              event={event}
+            <NearbyEventDetail 
+              event={event} 
               key={event.id}
               handleEventClick={this.handleEventClick}
             />
-            <img
-              src={event.eventPhoto}
-            />
+            
           </div>
         )
       })
-      console.log('events::', events);
-
-      if (events.length) {
-        return (
-          <div>
-            <div className="col-lg-8 col-lg-offset-2 container content-section text-center">
-              <p>Or join a nearby event!</p>
-            </div>
-            {events}
-          </div>
-        );
-      } else {
-        return (
-          <div>
-            <div className="col-lg-8 col-lg-offset-2 container content-section text-center">
-              <h2>
-                No events nearby
-            </h2>
-            </div>
-          </div>
-        )
-      }
-    }
+    } 
   }
 
   render() {
@@ -239,18 +196,16 @@ class Home extends Component {
         <section>
           <div className="container content-section text-center">
             <div className="row">
-              <div
-                className="container text-center row col-md-8 col-md-offset-2">
+              <div className="container text-center row col-md-8 col-md-offset-2">
                 <Link to="/event_setting" className="btnghost">
                   <i className="fa"></i>
                   Host an Event
                 </Link>
-                  {this.renderJoiningOption()}
+                {this.renderEventOption()}
               </div>
             </div>
           </div>
         </section>
-
 
         <section id="portfolio">
           <div className="gallery">
