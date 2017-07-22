@@ -411,7 +411,7 @@ class EventChat extends Component {
   }
   submitPasswordForm(event) {
     event.preventDefault();
-    if (this.state.passwordInput == this.props.event.password) {
+    if (this.state.passwordInput === this.props.event.password) {
       this.setState({ showChat: true, showPasswordInput: false })
       // this.props.isVisited(this.props.event.id, true)
     } else {
@@ -555,7 +555,7 @@ function mapStateToProps(state) {
     user_name: state.profile.name,
     user_id: state.profile.id,
     messages: state.event_messages,
-    isVisited: state.isVisited
+    
   };
 }
 
@@ -564,7 +564,7 @@ function mapDispatchToProps(dispatch) {
     recentEventMessages: recentEventMessages,
     newEventMessage: newEventMessage,
     createDMRoom: createDMRoom,
-    isVisited: setIsVisited
+    
   }, dispatch)
 }
 

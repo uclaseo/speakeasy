@@ -13,7 +13,7 @@ import dmRoomsReducers from './dmRoomsReducers';
 import activeDMReducers from './activeDMReducers';
 import dmMessageReducers from './dmMessageReducers';
 import possibleFriendsReducer from './possibleFriendsReducer';
-import isViistedReducer from './isVisitedReducer'
+
 
 const rootReducer = combineReducers({
   profile: fetchUserProfileReducer,
@@ -29,7 +29,7 @@ const rootReducer = combineReducers({
   activeDMRoom: activeDMReducers,
   dm_messages: dmMessageReducers,
   possibleFriends: possibleFriendsReducer,
-  isVisited: isViistedReducer
+
 })
 
 export default rootReducer;
