@@ -517,7 +517,7 @@ class EventChat extends Component {
             </form>
           </div>
           : null}
-          
+
         {this.state.showChat ?
           <div>
             {closeEvent}
@@ -537,6 +537,11 @@ class EventChat extends Component {
             <input type="file" id="fileinput" multiple="multiple" accept="image/*"
               onChange={(event) => this.handleUpload(event)} />
             {this.renderImagePreview()}
+            <button onClick={this.handleShowWebcam}>take selfie</button>
+            {webcam}
+            {takeScreenshot}
+            {this.state.screenshot ? <img src={this.state.screenshot} /> : null}
+
           </div>
           : null}
       </div>
