@@ -140,16 +140,6 @@ class EventChat extends Component {
     }
   }
 
-  registerScreenshotUrl(file) {
-    const imageData = {
-      name: file.fileName,
-      imageLink: `"https://hrlaspeakeasy.s3-us-west-1.amazonaws.com/${file.fileName}`,
-      userId: this.props.user_id,
-      eventId: this.props.event.id
-    };
-    axios.post('/api/event/image/upload', imageData)
-  }
-
   registerImageUrl(eachFile) {
     const imageData = {
       name: eachFile.fileName,
@@ -443,6 +433,8 @@ class EventChat extends Component {
 
     return (
       <div>
+
+
           <Header /> 
                  
           <section id="portfolio">
@@ -521,6 +513,7 @@ class EventChat extends Component {
               </div>
             </div>
           </section>
+
         </div>
       );
     }

@@ -5,12 +5,10 @@ class Callback extends Component {
     return (
       <div className="container-fluid bg-3 text-center">
         <img 
-         src="https://apps.applozic.com/resources/sidebox/css/app/images/mck-loading.gif" />
+         src="http://bit.ly/2tQ7ZCP" />
       </div>
     );
   }
 }
 
 export default Callback;
-
-// src="http://www.downgraf.com/wp-content/uploads/2014/09/01-progress.gif" />,

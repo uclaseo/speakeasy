@@ -37,23 +37,6 @@ class Event_Setting extends Component {
     this.getEventLocation();
   }
 
-
-  renderField(field) {
-    const { meta: { touched, error } } = field;
-    const className = `form-group ${touched && error ? 'has-error' : ''}`;
-    return (
-      <div className={className}>
-        <label>
-          {field.label}
-        </label>
-        <input className="form-control" type="text" {...field.input} />
-        <div className="help-block">
-          {touched ? error : ''}
-        </div>
-      </div>
-    );
-  }
-
   getEventLocation() {
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition((position) => {
@@ -67,6 +50,7 @@ class Event_Setting extends Component {
     }
   }
 
+<<<<<<< 27433a9eddaf6c4b3212a8250a524424a899fa02
 
   onSubmit(values) {
     axios.post('/api/event/create', {
@@ -96,6 +80,8 @@ class Event_Setting extends Component {
   }
 
 
+=======
+>>>>>>> Pair program w Inseok
   renderPhoto() {
     return (
       <div id="event-profile-pic">
@@ -114,6 +100,30 @@ class Event_Setting extends Component {
     )
   }
 
+  renderField(field) {
+    const { meta: { touched, error } } = field;
+    const className = `form-group ${touched && error ? 'has-error' : ''}`;
+    return (
+      <div className={className}>
+        <label>
+          {field.label}
+        </label>
+        <input className="form-control" type="text" {...field.input} />
+        <div className="help-block">
+          {touched ? error : ''}
+        </div>
+      </div>
+    );
+  }
+
+  onDrop(acceptedFile, rejectedFile) {
+    this.setState({
+      eventPicture: acceptedFile[0]
+    }, () => {
+      console.log("eventPicture before this.upload()", this.state.eventPicture)
+      this.upload();
+    })
+  }
 
   upload() {
     const id = this.props.profile.id;
@@ -128,7 +138,6 @@ class Event_Setting extends Component {
 
     axios.post(`/api/user/profile/${id}/geturl`, images)
       .then((response) => {
-        console.log("getting in to axios.post? ", response);
         // axios.put(response.data[0].url, 0)
         // .then((awsResponse) =>{
         //   this.registerImageUrl(response.data[0])
@@ -155,11 +164,32 @@ class Event_Setting extends Component {
       name: eachFile.fileName,
       imageLink: `https://s3-us-west-1.amazonaws.com/hrlaspeakeasy/${eachFile.fileName}`,
     };
-    console.log("is it different from imageData in Userprofile??", imageData.imageLink)
     this.setState({
       tempEventProfilePicture: imageData.imageLink 
     })
   }
+
+
+
+  onSubmit(values) {
+    axios.post('/api/event/create', {
+      eventName: values.eventname,
+      password: values.password,
+      latitude: this.state.currentEventLocation[0],
+      longitude: this.state.currentEventLocation[1],
+      userId: this.props.profile.id,
+      isLive: true
+    }).then((response) => {
+      console.log("what's event id?", response.data.id) //here
+      this.props.setActiveEvent(response.data)
+      this.setState({ redirect: true })
+    })
+      .catch((error) => {
+        console.log(error)
+      })
+  }
+
+
 
 
   render() {
@@ -173,10 +203,10 @@ class Event_Setting extends Component {
     return (
       <div>
 
-      <Header 
-        renderPhoto={this.renderPhoto}
-        label={'Click to change your event photo'}
-      />
+        <Header
+          renderPhoto={this.renderPhoto}
+          label={'Click to change your event photo'}
+        />
 
         <section id="profile">
           <div className="container content-section row col-lg-8 col-lg-offset-2">
