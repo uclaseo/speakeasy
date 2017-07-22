@@ -129,7 +129,6 @@ class Home extends Component {
               event={event}
               handleEventClick={this.handleEventClick}
             />
-            <img src={event.eventPhoto} />
           </div>
         )
       })
@@ -193,14 +192,12 @@ class Home extends Component {
 
         <section>
           <div className="container content-section text-center">
-            <div className="row">
-              <div className="container text-center row col-md-8 col-md-offset-2">
+              <div className="container text-center row col-md-8 col-md-offset-2 row">
                 <Link to="/event_setting" className="btnghost">
                   <i className="fa"></i>
                   Host an Event
                 </Link>
                 {this.renderEventMessage()}
-              </div>
             </div>
           </div>
         </section>

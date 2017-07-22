@@ -67,7 +67,6 @@ class User_Events extends Component {
               event={event}
               handleEventClick={this.handleEventClick}
             />
-            <img src={event.eventPhoto} />
           </div>
         )
       })
@@ -76,6 +75,9 @@ class User_Events extends Component {
   }
 
   render() {
+    console.log("this.state.userEvents::", this.state.userEvents);
+
+
     return (
       <div>
 

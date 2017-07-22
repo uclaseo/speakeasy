@@ -415,7 +415,6 @@ img {
 }
 
 .gallery img {
-    border: solid 1px red;    
     max-width: 100%;
     height: auto;
     padding: 5px;

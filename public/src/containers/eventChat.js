@@ -2,12 +2,14 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import io from 'socket.io-client'
-import ChatDetail from '../components/chatDetail'
 import ChatLog from '../components/chatLog'
 import { recentEventMessages, newEventMessage } from '../actions/eventMessagesActions'
 import { createDMRoom } from '../actions/dmRoomsActions'
 import { Redirect } from 'react-router-dom'
 import axios from 'axios'
+import Webcam from 'react-webcam';
+import { Link } from 'react-router-dom';
+
 
 const socket = io();
 
@@ -330,20 +332,35 @@ class EventChat extends Component {
     this.setState({ redirectHome: true })
   }
 
-  render() {
-    let closeEvent;
+  renderChatLog() {
+    return (
+      <div>
+        <ChatLog
+          className=""
+          roomMessages={this.props.messages}
+          dmClick={this.handleDMClick}
+        />
+      </div>
+    )
+  }
 
+  renderCloseEvent() {
+    let closeEvent;
     if (this.props.user_id === this.props.event.userId) {
-      closeEvent = <button type="button"
-        onClick={this.handleCloseClick}
-      >Close Event</button>
+
+      closeEvent = <button
+                    className="btnghost"
+                    onClick={this.handleCloseClick}>
+                    <i className="fa"></i>
+                    Close Event
+                  </button>
     } else {
-      closeEvent = null;
+      button = null;
     }
 
     if (this.state.closed === true) {
       return (
-        <Redirect to='/open_events' />
+        <Redirect to='/home' />
       )
     }
 
@@ -400,7 +417,58 @@ class EventChat extends Component {
             {this.renderImagePreview()}
           </div>
           : null}
+          
         <div ref={(el) => this.messagesEnd = el} />
+
+        <header className="intro">
+          <div className="intro-body">
+            <div className="container row col-md-8 col-md-offset-2">
+              <div className="row">
+                <div className="col-md-8 col-md-offset-2">
+                  <h1 className="brand-heading">SPEAKEASY</h1>
+                </div>
+              </div>
+            </div>
+          </div>
+        </header>
+        
+
+        <section id="portfolio">
+          <div className="gallery">
+            <ul>
+              {this.renderChatLog()}
+            </ul>
+          </div>
+        </section>
+
+      <div id="profileform">
+        <input
+          className="form-control" 
+          type="text"
+          onChange={this.handleInputChange}
+          value={this.state.text}
+          onKeyPress={this.handleKeyPress}
+        />
+      </div>
+
+        <section>
+          <div className="container content-section text-center">
+            <div className="container text-center row col-md-8 col-md-offset-2 row">
+              {this.renderSendButton()}
+              {this.renderCloseEvent()}
+            </div>
+          </div>
+        </section>
+
+
+
+        <section>
+          <div className="container content-section text-center">
+            <div className="container text-center row col-md-8 col-md-offset-2 row">
+            {this.renderImagePreview() }
+            </div>
+          </div>
+        </section>
       </div>
     );
   }

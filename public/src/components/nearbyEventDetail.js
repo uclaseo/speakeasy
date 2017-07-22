@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom'
 
 
 const NearbyEventDetail = ({ event, handleEventClick, idx }) => {
+  console.log("event", event);
   return (
     <div className="event-detail">
       <Link to="/active_event" onClick={() => handleEventClick(event)}>
@@ -20,3 +21,4 @@ const NearbyEventDetail = ({ event, handleEventClick, idx }) => {
 }
 
 export default NearbyEventDetail
+
