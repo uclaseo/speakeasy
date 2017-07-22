@@ -500,32 +500,6 @@ class EventChat extends Component {
 
     return (
       <div>
-        {closeEvent}
-        <ChatLog
-          roomMessages={this.props.messages}
-          dmClick={this.handleDMClick}
-        />
-        <input
-          type="text"
-          onChange={this.handleInputChange}
-          value={this.state.text}
-          onKeyPress={this.handleKeyPress}
-        />
-        <button type="button" onClick={this.handleSendClick}>
-          Send
-        </button>
-
-
-        <input type="file" id="fileinput" multiple="multiple" accept="image/*"
-          onChange={(event) => this.handleUpload(event)} />
-
-        {this.renderImagePreview()}
-        <button onClick={this.handleShowWebcam}>take selfie</button>
-        {webcam}
-        {takeScreenshot}
-        {this.state.screenshot ? <img src={this.state.screenshot} /> : null}
-
-
         {console.log("password should be", this.props.event.password, "userId is", this.props.event, "creator is ", this.props.user_id)}
         {console.log('this is the state of showpasswordinput ', this.state.showPasswordInput)}
         {(this.state.showPasswordInput) ?
@@ -543,8 +517,7 @@ class EventChat extends Component {
             </form>
           </div>
           : null}
-
-
+          
         {this.state.showChat ?
           <div>
             {closeEvent}
