@@ -26,7 +26,7 @@ class EventChat extends Component {
       showWebcam: false,
       screenshot: null,
       passwordInput: '',
-      showPasswordInput: true,
+      showPasswordInput: false,
       showChat: !!!this.props.event.password,
       redirectHome: false,
     };
@@ -85,6 +85,9 @@ class EventChat extends Component {
     if (this.props.event.userId === this.props.user_id) {
       this.setState({ showChat: true, showPasswordInput: false })
     }
+
+    //if you are not the creator and there is no password -> don't ask for password
+
   }
 
  handleSendClick(event) {
