@@ -23,12 +23,13 @@ class EventChat extends Component {
       dm: false,
       files: [],
       imagePreviewUrls: [],
-      showWebcam: false,
-      screenshot: null,
+      // showWebcam: false,
+      // screenshot: null,
       passwordInput: '',
       showPasswordInput: false,
       showChat: !!!this.props.event.password,
       redirectHome: false,
+      isInput: true
     };
 
     this.handleInputChange = this.handleInputChange.bind(this)
@@ -72,7 +73,8 @@ class EventChat extends Component {
 
   handleInputChange(e) {
     this.setState({
-      text: e.target.value
+      text: e.target.value,
+      isInput: true
     });
   }
 
@@ -92,108 +94,7 @@ class EventChat extends Component {
 
  handleSendClick(event) {
     event.preventDefault();
-    if (this.state.files.length !== 0) {
-      const images = {};
-      const imageLink = {};
-      const text = this.state.text;
-      this.state.files.map((file, index) => {
-        images[index] = Math.floor(Math.random() * 100000) + file.name,
-        imageLink[index] = `https://s3-us-west-1.amazonaws.com/hrlaspeakeasy/${images[index]}`
-      });
-      console.log('images', images);
-      axios.post('/api/event/image/upload/geturl', images)
-      .then((response) => {
-        console.log('1');
-        response.data.map((eachFile, index) => {
-          this.registerImageUrl(eachFile)
-          axios.put(eachFile.url, this.state.files[index])
-          .then(() => {
-            socket.emit('newmessage', {
-              event_id: this.props.event.id,
-              user_name: this.props.user_name,
-              user_id: this.props.user_id,
-              text: text
-            }, imageLink)
-          })
-        })
-      })
-      .then(() => {
-        this.setState({
-          text: '',
-          files: [],
-          imagePreviewUrls: []
-        })
-      })
-    } else if (this.state.screenshot) {
-      const text = this.state.text;
-      console.log('ha');
-      const imageData = {
-        image: this.state.screenshot,
-        fileName: Math.floor(Math.random() * 10000000).toString() + '.jpg'
-      };
-      axios.post('/api/screenshot', imageData)
-      .then((response) => {
-        console.log('RESPONSE FROM SCREENSHOT', response);
-        const imageLink = {
-          0: response.data
-        }
-        this.registerImageUrl(imageData)
-        socket.emit('newmessage', {
-          event_id: this.props.event.id,
-          user_name: this.props.user_name,
-          user_id: this.props.user_id,
-          text: text          
-        }, imageLink)
-      })
-      .then(() => {
-        this.setState({
-          text: '',
-          files: [],
-          imagePreviewUrls: [],
-          showWebcam: false,
-          screenshot: null
-        })
-      })
-    } else {
-      socket.emit('newmessage', {
-        event_id: this.props.event.id,
-        user_name: this.props.user_name,
-        user_id: this.props.user_id,
-        text: this.state.text
-      });
-      this.setState({
-        text: ''
-      });
-    };
-  }
-
-  registerScreenshotUrl(file) {
-    const imageData = {
-      name: file.fileName,
-      imageLink: `"https://hrlaspeakeasy.s3-us-west-1.amazonaws.com/${file.fileName}`,
-      userId: this.props.user_id,
-      eventId: this.props.event.id
-    };
-    axios.post('/api/event/image/upload', imageData)
-  }
-
-  registerImageUrl(eachFile) {
-    const imageData = {
-      name: eachFile.fileName,
-      imageLink: `https://s3-us-west-1.amazonaws.com/hrlaspeakeasy/${eachFile.fileName}`,
-      userId: this.props.user_id,
-      eventId: this.props.event.id
-    };
-    axios.post('/api/event/image/upload', imageData)
-      .then((response) => {
-      })
-      .catch((error) => {
-        console.log('error', error);
-      })
-  }
-
-  handleKeyPress(event) {
-    if (event.key === 'Enter') {
+    if (this.state.text !== ''){
       if (this.state.files.length !== 0) {
         const images = {};
         const imageLink = {};
@@ -226,36 +127,37 @@ class EventChat extends Component {
             imagePreviewUrls: []
           })
         })
-      } else if (this.state.screenshot) {
-        const text = this.state.text;
-        console.log('ha');
-        const imageData = {
-          image: this.state.screenshot,
-          fileName: Math.floor(Math.random() * 10000000).toString() + '.jpg'
-        };
-        axios.post('/api/screenshot', imageData)
-        .then((response) => {
-          console.log('RESPONSE FROM SCREENSHOT', response);
-          const imageLink = {
-            0: response.data
-          }
-          this.registerImageUrl(imageData)
-          socket.emit('newmessage', {
-            event_id: this.props.event.id,
-            user_name: this.props.user_name,
-            user_id: this.props.user_id,
-            text: text          
-          }, imageLink)
-        })
-        .then(() => {
-          this.setState({
-            text: '',
-            files: [],
-            imagePreviewUrls: [],
-            showWebcam: false,
-            screenshot: null
-          })
-        })
+      // } else if (this.state.screenshot) {
+      //   const text = this.state.text;
+      //   console.log('ha');
+      //   const imageData = {
+      //     image: this.state.screenshot,
+      //     fileName: Math.floor(Math.random() * 10000000).toString() + '.jpg'
+      //   };
+      //   axios.post('/api/screenshot', imageData)
+      //   .then((response) => {
+      //     console.log('RESPONSE FROM SCREENSHOT', response);
+      //     const imageLink = {
+      //       0: response.data
+      //     }
+      //     this.registerImageUrl(imageData)
+      //     socket.emit('newmessage', {
+      //       event_id: this.props.event.id,
+      //       user_name: this.props.user_name,
+      //       user_id: this.props.user_id,
+      //       text: text          
+      //     }, imageLink)
+      //   })
+      //   .then(() => {
+      //     this.setState({
+      //       text: '',
+      //       files: [],
+      //       imagePreviewUrls: [],
+      //       showWebcam: false,
+      //       screenshot: null,
+      //       isInput: true
+      //     })
+      //   })
       } else {
         socket.emit('newmessage', {
           event_id: this.props.event.id,
@@ -264,9 +166,124 @@ class EventChat extends Component {
           text: this.state.text
         });
         this.setState({
-          text: ''
+          text: '',
+          isInput: true
         });
       };
+    } else {
+      this.setState({
+        isInput: false
+      })
+    }
+  }
+
+  registerScreenshotUrl(file) {
+    const imageData = {
+      name: file.fileName,
+      imageLink: `"https://hrlaspeakeasy.s3-us-west-1.amazonaws.com/${file.fileName}`,
+      userId: this.props.user_id,
+      eventId: this.props.event.id
+    };
+    axios.post('/api/event/image/upload', imageData)
+  }
+
+  registerImageUrl(eachFile) {
+    const imageData = {
+      name: eachFile.fileName,
+      imageLink: `https://s3-us-west-1.amazonaws.com/hrlaspeakeasy/${eachFile.fileName}`,
+      userId: this.props.user_id,
+      eventId: this.props.event.id
+    };
+    axios.post('/api/event/image/upload', imageData)
+      .then((response) => {
+      })
+      .catch((error) => {
+        console.log('error', error);
+      })
+  }
+
+  handleKeyPress(event) {
+
+    if (event.key === 'Enter') {
+      if (this.state.text !== '') {
+        if (this.state.files.length !== 0) {
+          const images = {};
+          const imageLink = {};
+          const text = this.state.text;
+          this.state.files.map((file, index) => {
+            images[index] = Math.floor(Math.random() * 100000) + file.name,
+            imageLink[index] = `https://s3-us-west-1.amazonaws.com/hrlaspeakeasy/${images[index]}`
+          });
+          console.log('images', images);
+          axios.post('/api/event/image/upload/geturl', images)
+          .then((response) => {
+            console.log('1');
+            response.data.map((eachFile, index) => {
+              this.registerImageUrl(eachFile)
+              axios.put(eachFile.url, this.state.files[index])
+              .then(() => {
+                socket.emit('newmessage', {
+                  event_id: this.props.event.id,
+                  user_name: this.props.user_name,
+                  user_id: this.props.user_id,
+                  text: text
+                }, imageLink)
+              })
+            })
+          })
+          .then(() => {
+            this.setState({
+              text: '',
+              files: [],
+              imagePreviewUrls: []
+            })
+          })
+        // } else if (this.state.screenshot) {
+        //   const text = this.state.text;
+        //   console.log('ha');
+        //   const imageData = {
+        //     image: this.state.screenshot,
+        //     fileName: Math.floor(Math.random() * 10000000).toString() + '.jpg'
+        //   };
+        //   axios.post('/api/screenshot', imageData)
+        //   .then((response) => {
+        //     console.log('RESPONSE FROM SCREENSHOT', response);
+        //     const imageLink = {
+        //       0: response.data
+        //     }
+        //     this.registerImageUrl(imageData)
+        //     socket.emit('newmessage', {
+        //       event_id: this.props.event.id,
+        //       user_name: this.props.user_name,
+        //       user_id: this.props.user_id,
+        //       text: text          
+        //     }, imageLink)
+        //   })
+        //   .then(() => {
+        //     this.setState({
+        //       text: '',
+        //       files: [],
+        //       imagePreviewUrls: [],
+        //       showWebcam: false,
+        //       screenshot: null,
+        //     })
+        //   })
+        } else {
+          socket.emit('newmessage', {
+            event_id: this.props.event.id,
+            user_name: this.props.user_name,
+            user_id: this.props.user_id,
+            text: this.state.text
+          });
+          this.setState({
+            text: '',
+          });
+        };
+      } else {
+        this.setState({
+          isInput: false
+        })
+      }
     }
   }
 
@@ -444,21 +461,24 @@ class EventChat extends Component {
     } else {
       closeEvent = null;
     }
+    let enterText;
 
-    if (this.state.showWebcam) {
-      webcam =
-       <Webcam
-        audio={false}
-        height={200}
-        ref={this.setRef}
-        screenshotFormat="image/jpeg"
-        width={200}
-      />
-      takeScreenshot = 
-        <button onClick={this.takeScreenshot}>take photo!</button>
-    } else {
-      webcam = null;
-    }
+    // if (this.state.showWebcam) {
+    //   webcam =
+    //    <Webcam
+    //     audio={false}
+    //     height={200}
+    //     ref={this.setRef}
+    //     screenshotFormat="image/jpeg"
+    //     width={200}
+    //   />
+    //   takeScreenshot = 
+    //     <button onClick={this.takeScreenshot}>take photo!</button>
+    // } else {
+    //   webcam = null;
+    // }
+
+
 
     if (this.state.closed === true) {
       return (
@@ -525,6 +545,7 @@ class EventChat extends Component {
               roomMessages={this.props.messages}
               dmClick={this.handleDMClick}
             />
+            {this.state.isInput? null : <div>please enter text</div>}
             <input
               type="text"
               onChange={this.handleInputChange}
@@ -537,10 +558,10 @@ class EventChat extends Component {
             <input type="file" id="fileinput" multiple="multiple" accept="image/*"
               onChange={(event) => this.handleUpload(event)} />
             {this.renderImagePreview()}
-            <button onClick={this.handleShowWebcam}>take selfie</button>
+            {/* <button onClick={this.handleShowWebcam}>take selfie</button>
             {webcam}
             {takeScreenshot}
-            {this.state.screenshot ? <img src={this.state.screenshot} /> : null}
+            {this.state.screenshot ? <img src={this.state.screenshot} /> : null} */}
 
           </div>
           : null}
