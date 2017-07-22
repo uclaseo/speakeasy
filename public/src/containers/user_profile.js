@@ -162,7 +162,7 @@ class User_Profile extends Component {
           label={'Your profile photo'}
         />
 
-        <section id="profile">
+        <section>
           <div className="container content-section row col-lg-8 col-lg-offset-2">
             <form onSubmit={handleSubmit(this.onSubmit.bind(this))} id="profileform">
               <div className="form">
@@ -189,11 +189,10 @@ class User_Profile extends Component {
                 </Link>
                 {this.renderSuccess()}
               </div>
+              
             </form>
           </div>
         </section>
-
-
 
       </div>
     );

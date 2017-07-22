@@ -190,8 +190,6 @@ class Event_Setting extends Component {
   }
 
 
-
-
   render() {
     const { handleSubmit } = this.props;
     console.log("what is the props in event_setting", this.props)
@@ -208,7 +206,7 @@ class Event_Setting extends Component {
           label={'Click to change your event photo'}
         />
 
-        <section id="profile">
+        <section>
           <div className="container content-section row col-lg-8 col-lg-offset-2">
             <form onSubmit={handleSubmit(this.onSubmit.bind(this))} id="profileform">
               <Field
@@ -242,9 +240,6 @@ class Event_Setting extends Component {
             </form>
           </div>
         </section>
-
-
-
 
       </div>
     )

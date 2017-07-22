@@ -504,14 +504,17 @@ textarea.error {
     transition: border linear 0.2s, box-shadow linear 0.2s;
 }
 
+#profileform {
+    display: inline;    
+}
+
 #profileform input,
 #profileform textarea {
     border: 0px;
     border-bottom: 2px solid #333;
-    width: 100%;
-    background-color: transparent;
+    width: 100%; 
+    background-color: #F5F5F5;
     padding: 20px 0px;
-    /* text-transform: uppercase; */
     letter-spacing: 2px;
     margin-bottom: 20px;
 }
@@ -521,6 +524,7 @@ textarea.error {
     border: 2px solid;
     padding: 10px 20px;
     display: inline-block;
+    
 }
 
 #profileform input#submit:hover {
@@ -573,6 +577,10 @@ textarea.error {
 #host-button {
     padding: 20px 0 20px 0;
     margin: 20px 0 20px 0;
+}
+
+#chat-form {
+    display: inline;
 }
 
 

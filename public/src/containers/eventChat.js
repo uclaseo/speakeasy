@@ -413,6 +413,7 @@ class EventChat extends Component {
 
     return (
       <div>
+
         <Header />
 
 
@@ -478,33 +479,22 @@ class EventChat extends Component {
 
         <section id="profile">
           <div className="container content-section row col-lg-8 col-lg-offset-2">
-            <form onSubmit={handleSubmit(this.onSubmit.bind(this))} id="profileform">
+            <div id="profileform">
+              <form onSubmit={this.handleSendClick} >
+                <input
+                  className="form-control"
+                  id="chat-form"
+                  type="text"
+                  onChange={this.handleInputChange}
+                  value={this.state.text}
+                  onKeyPress={this.handleKeyPress}
+                />
+                {this.renderSendButton()}
+                {this.renderCloseEvent()}
               </form>
-              </div>
-          </section>
-
-
-
-        <div id="profileform">
-
-          <input
-            className="form-control"
-            type="text"
-            onChange={this.handleInputChange}
-            value={this.state.text}
-            onKeyPress={this.handleKeyPress}
-          />
-
-          <section>
-            <div className="container text-center row col-md-8 col-md-offset-2 row">
-              {this.renderSendButton()}
-              {this.renderCloseEvent()}
             </div>
-          </section>
-
-        </div>
-
-
+          </div>
+        </section>
 
         <section>
           <div className="container content-section text-center">
@@ -515,7 +505,7 @@ class EventChat extends Component {
           </div>
         </section>
 
-      </div>
+      </div >
     );
   }
 }
