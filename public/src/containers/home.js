@@ -11,6 +11,7 @@ import { setNearbyEvents } from '../actions/index.js';
 import NearbyEventDetail from '../components/nearbyEventDetail';
 import { setActiveEvent } from '../actions/activeEventAction';
 import { clearEventMessages } from '../actions/eventMessagesActions';
+import Header from '../components/header';
 
 const ROOT_URL = 'localhost:8080';
 const auth = new Auth();
@@ -149,12 +150,11 @@ class Home extends Component {
     }
 
     return (
-      <div className="col-lg-8 col-lg-offset-2 container content-section text-center">
+      <div className="container content-section text-center col-lg-8 col-lg-offset-2 ">
         <h2>{msg}</h2>
       </div>
     );
   }
-
 
   renderEvents() {
     let events = null;
@@ -178,26 +178,16 @@ class Home extends Component {
     return (
       <div>
 
-        <header className="intro">
-          <div className="intro-body">
-            <div className="container row col-md-8 col-md-offset-2">
-              <div className="row">
-                <div className="col-md-8 col-md-offset-2">
-                  <h1 className="brand-heading">SPEAKEASY</h1>
-                </div>
-              </div>
-            </div>
-          </div>
-        </header>
+        <Header />
 
         <section>
           <div className="container content-section text-center">
-              <div className="container text-center row col-md-8 col-md-offset-2 row">
-                <Link to="/event_setting" className="btnghost">
-                  <i className="fa"></i>
-                  Host an Event
+            <div className="container text-center row col-md-8 col-md-offset-2 row">
+              <Link to="/event_setting" className="btnghost">
+                <i className="fa"></i>
+                Host an Event
                 </Link>
-                {this.renderEventMessage()}
+              {this.renderEventMessage()}
             </div>
           </div>
         </section>
@@ -211,9 +201,10 @@ class Home extends Component {
         </section>
 
       </div>
+    )
 
-    );
   }
+
 }
 
 

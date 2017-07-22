@@ -13,6 +13,8 @@ import Dropzone from 'react-dropzone';
 import { geolocated } from 'react-geolocated';
 import createBrowserHistory from 'history/createBrowserHistory';
 import { setActiveEvent } from './../actions/activeEventAction';
+import Header from '../components/header';
+
 
 const history = createBrowserHistory({ forceRefresh: true });
 class Event_Setting extends Component {
@@ -171,18 +173,10 @@ class Event_Setting extends Component {
     return (
       <div>
 
-        <header className="space">
-          <div className="intro-body">
-            <div className="container">
-              <div className="row">
-                <div className="col-md-8 col-md-offset-2">
-                  {this.renderPhoto()}
-                  <label>Click to change your event photo</label>
-                </div>
-              </div>
-            </div>
-          </div>
-        </header>
+      <Header 
+        renderPhoto={this.renderPhoto}
+        label={'Click to change your event photo'}
+      />
 
         <section id="profile">
           <div className="container content-section row col-lg-8 col-lg-offset-2">

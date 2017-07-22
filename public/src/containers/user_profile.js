@@ -5,6 +5,8 @@ import { Field, reduxForm } from 'redux-form';
 import { Link } from 'react-router-dom';
 import Dropzone from 'react-dropzone';
 import axios from 'axios';
+import Header from '../components/header';
+
 
 import Auth from '../Auth0/Auth0';
 import { fetchProfile, editUserProfile } from '../actions/user_actions';
@@ -20,10 +22,7 @@ class User_Profile extends Component {
     };
     this.upload = this.upload.bind(this);
     this.onDrop = this.onDrop.bind(this);
-  }
-
-  componentDidMount() {
-    //nada for now
+    this.renderPhoto = this.renderPhoto.bind(this);
   }
 
   renderPhoto() {
@@ -158,18 +157,10 @@ class User_Profile extends Component {
     return (
       <div>
 
-        <header className="space">
-          <div className="intro-body">
-            <div className="container">
-              <div className="row">
-                <div className="col-md-8 col-md-offset-2">
-                  {this.renderPhoto()}
-                  <label>Your profile photo</label>
-                </div>
-              </div>
-            </div>
-          </div>
-        </header>
+        <Header 
+          renderPhoto={this.renderPhoto}
+          label={'Your profile photo'}
+        />
 
         <section id="profile">
           <div className="container content-section row col-lg-8 col-lg-offset-2">

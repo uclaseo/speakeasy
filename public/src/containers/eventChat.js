@@ -9,6 +9,7 @@ import { Redirect } from 'react-router-dom'
 import axios from 'axios'
 import Webcam from 'react-webcam';
 import { Link } from 'react-router-dom';
+import Header from '../components/header';
 
 
 const socket = io();
@@ -87,7 +88,7 @@ class EventChat extends Component {
     }
   }
 
- handleSendClick(event) {
+  handleSendClick(event) {
     event.preventDefault();
     if (this.state.text !== ''){
       if (this.state.files.length !== 0) {
@@ -215,6 +216,7 @@ class EventChat extends Component {
       }
     }
   }
+
 
   handleCloseClick(event) {
     event.preventDefault()
@@ -344,31 +346,65 @@ class EventChat extends Component {
     )
   }
 
-  renderCloseEvent() {
-    let closeEvent;
-    if (this.props.user_id === this.props.event.userId) {
+    renderCloseEvent() {
+      let closeEvent;
+      if (this.props.user_id === this.props.event.userId) {
 
-      closeEvent = <button
-                    className="btnghost"
-                    onClick={this.handleCloseClick}>
-                    <i className="fa"></i>
-                    Close Event
+        closeEvent = <button
+          className="btnghost"
+          onClick={this.handleCloseClick}>
+          <i className="fa"></i>
+          Close Event
                   </button>
-    } else {
-      button = null;
+      } else {
+        button = null;
+      }
+      return closeEvent;
     }
 
-    if (this.state.closed === true) {
-      return (
-        <Redirect to='/home' />
-      )
+    renderSendButton() {
+      let send =
+        <button
+          className="btnghost"
+          onClick={this.handleSendClick}>
+          <i className="fa"></i>
+          Send
+      </button>
+      return send;
     }
 
-    if (this.state.dm === true) {
-      return (
-        <Redirect to='/dm_chat' />
-      )
-    }
+
+    render() {
+
+      let webcam;
+      let takeScreenshot;
+
+      if (this.state.showWebcam) {
+        webcam =
+          <Webcam
+            audio={false}
+            height={200}
+            ref={this.setRef}
+            screenshotFormat="image/jpeg"
+            width={200}
+          />
+        takeScreenshot =
+          <button onClick={this.takeScreenshot}>take photo!</button>
+      } else {
+        webcam = null;
+      }
+
+      if (this.state.closed === true) {
+        return (
+          <Redirect to='/home' />
+        )
+      }
+
+      if (this.state.dm === true) {
+        return (
+          <Redirect to='/dm_chat' />
+        )
+      }
 
     if (this.state.redirectHome) {
       return (
@@ -378,6 +414,7 @@ class EventChat extends Component {
 
     return (
       <div>
+        
         {(this.state.showPasswordInput) ?
           <div>
             Please EnterPassword:
@@ -403,7 +440,22 @@ class EventChat extends Component {
               dmClick={this.handleDMClick}
             />
             {this.state.isInput? null : <div>please enter text</div>}
+
+    return (
+      <div>
+          <Header /> 
+                 
+          <section id="portfolio">
+            <div className="gallery">
+              <ul>
+                {this.renderChatLog()}
+              </ul>
+            </div>
+          </section>
+
+          <div id="profileform">
             <input
+              className="form-control"
               type="text"
               onChange={this.handleInputChange}
               value={this.state.text}
@@ -451,28 +503,28 @@ class EventChat extends Component {
         />
       </div>
 
-        <section>
-          <div className="container content-section text-center">
-            <div className="container text-center row col-md-8 col-md-offset-2 row">
-              {this.renderSendButton()}
-              {this.renderCloseEvent()}
+          <section>
+            <div className="container content-section text-center">
+              <div className="container text-center row col-md-8 col-md-offset-2 row">
+                {this.renderSendButton()}
+                {this.renderCloseEvent()}
+              </div>
             </div>
-          </div>
-        </section>
+          </section>
 
 
 
-        <section>
-          <div className="container content-section text-center">
-            <div className="container text-center row col-md-8 col-md-offset-2 row">
-            {this.renderImagePreview() }
+          <section>
+            <div className="container content-section text-center">
+              <div className="container text-center row col-md-8 col-md-offset-2 row">
+                {this.renderImagePreview()}
+              </div>
             </div>
-          </div>
-        </section>
-      </div>
-    );
+          </section>
+        </div>
+      );
+    }
   }
-}
 
 function mapStateToProps(state) {
   return {
