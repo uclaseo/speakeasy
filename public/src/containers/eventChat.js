@@ -7,7 +7,6 @@ import ChatLog from '../components/chatLog'
 import { Image, Glyphicon, InputGroup, PageHeader, Col, Button, FormGroup, FormControl } from 'react-bootstrap'
 import { recentEventMessages, newEventMessage } from '../actions/eventMessagesActions'
 import { createDMRoom } from '../actions/dmRoomsActions'
-import { setIsVisited } from '../actions/index.js'
 import { Redirect } from 'react-router-dom'
 import axios from 'axios'
 import Webcam from 'react-webcam';
@@ -80,12 +79,10 @@ class EventChat extends Component {
   setShowForm() {
     //if event has password show form
     if (!!this.props.event.password) {
-      console.log('set show form !!this.props.event.password\n\n')
       this.setState({ showPasswordInput: true })
     }
     //if user is the event creator 
-    if (this.props.event.userId == this.props.user_id) {
-      console.log('setshow form comparing active event \n\n', this.props)
+    if (this.props.event.userId === this.props.user_id) {
       this.setState({ showChat: true, showPasswordInput: false })
     }
   }
@@ -166,6 +163,7 @@ class EventChat extends Component {
       });
     };
   }
+
   registerScreenshotUrl(file) {
     const imageData = {
       name: file.fileName,
@@ -175,6 +173,7 @@ class EventChat extends Component {
     };
     axios.post('/api/event/image/upload', imageData)
   }
+
   registerImageUrl(eachFile) {
     const imageData = {
       name: eachFile.fileName,
@@ -189,6 +188,7 @@ class EventChat extends Component {
         console.log('error', error);
       })
   }
+
   handleKeyPress(event) {
     if (event.key === 'Enter') {
       if (this.state.files.length !== 0) {
@@ -413,7 +413,6 @@ class EventChat extends Component {
     event.preventDefault();
     if (this.state.passwordInput === this.props.event.password) {
       this.setState({ showChat: true, showPasswordInput: false })
-      // this.props.isVisited(this.props.event.id, true)
     } else {
       alert("wrong password")
     }
@@ -432,7 +431,6 @@ class EventChat extends Component {
   }
 
   render() {
-
     let closeEvent;
     let webcam;
     let takeScreenshot;
@@ -501,7 +499,6 @@ class EventChat extends Component {
     return (
       <div>
         {console.log("password should be", this.props.event.password, "userId is", this.props.event, "creator is ", this.props.user_id)}
-        {console.log('this is the state of showpasswordinput ', this.state.showPasswordInput)}
         {(this.state.showPasswordInput) ?
           <div>
             Please EnterPassword:
