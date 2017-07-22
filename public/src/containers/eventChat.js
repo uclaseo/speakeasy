@@ -6,9 +6,9 @@ import ChatLog from '../components/chatLog'
 import { recentEventMessages, newEventMessage } from '../actions/eventMessagesActions'
 import { createDMRoom } from '../actions/dmRoomsActions'
 import { Redirect } from 'react-router-dom'
+import { Link } from 'react-router-dom';
 import axios from 'axios'
 import Webcam from 'react-webcam';
-import { Link } from 'react-router-dom';
 import Header from '../components/header';
 
 
