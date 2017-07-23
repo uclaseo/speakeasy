@@ -127,21 +127,11 @@ class Event_Setting extends Component {
 
   upload() {
     const id = this.props.profile.id;
-    console.log("this.state.eventPhoto's name", this.state.eventPicture.name)
-
     const images = {};
-    // image = Math.floor(Math.random()*10000) + this.state.eventPicture.name
-
-    // this.state.eventPicture.map((file, index) => {
     images[0] = Math.floor(Math.random() * 10000) + this.state.eventPicture.name
-    // });
 
     axios.post(`/api/user/profile/${id}/geturl`, images)
       .then((response) => {
-        // axios.put(response.data[0].url, 0)
-        // .then((awsResponse) =>{
-        //   this.registerImageUrl(response.data[0])
-        // })
         let counter = 0;
         response.data.map((eachFile) => {
           axios.put(eachFile.url, this.state.eventPicture)
@@ -170,20 +160,21 @@ class Event_Setting extends Component {
   }
 
 
-
   onSubmit(values) {
     axios.post('/api/event/create', {
+      userId: this.props.profile.id,
       eventName: values.eventname,
       password: values.password,
       latitude: this.state.currentEventLocation[0],
       longitude: this.state.currentEventLocation[1],
-      userId: this.props.profile.id,
-      isLive: true
-    }).then((response) => {
-      console.log("what's event id?", response.data.id) //here
-      this.props.setActiveEvent(response.data)
-      this.setState({ redirect: true })
+      isLive: true,
+      description: values.description,
+      eventPhoto: this.state.tempEventProfilePicture
     })
+      .then((response) => {
+        this.props.setActiveEvent(response.data)
+        this.setState({ redirect: true })
+      })
       .catch((error) => {
         console.log(error)
       })
@@ -192,8 +183,6 @@ class Event_Setting extends Component {
 
   render() {
     const { handleSubmit } = this.props;
-    console.log("what is the props in event_setting", this.props)
-    console.log('what is ithe state of redirect ', this.state.redirect);
     if (this.state.redirect === true) {
       return <Redirect to='/active_event' />;
     }

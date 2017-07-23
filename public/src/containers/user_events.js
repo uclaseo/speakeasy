@@ -57,6 +57,7 @@ class User_Events extends Component {
   }
 
   renderEvents() {
+    console.log("this.state.userEvents:::", this.state.userEvents);
     let events = null;
     if (this.state.userEvents.length !== 0) {
       events = this.state.userEvents.map((event, idx) => {
@@ -64,7 +65,7 @@ class User_Events extends Component {
           <div key={idx}>
             <NearbyEventDetail
               idx={idx}
-              event={event}
+              event={event.event}
               handleEventClick={this.handleEventClick}
             />
           </div>
@@ -75,7 +76,6 @@ class User_Events extends Component {
   }
 
   render() {
-    console.log("this.state.userEvents::", this.state.userEvents);
 
 
     return (
