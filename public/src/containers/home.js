@@ -41,7 +41,6 @@ class Home extends Component {
   }
 
   registerUser(profile) {
-    // console.log("what's registerUser profile arg", profile)
     axios.post(`/api/user/signup`, profile)
       .then((response) => {
         this.props
