@@ -5,7 +5,7 @@ class Callback extends Component {
     return (
       <div className="container-fluid bg-3 text-center">
         <img 
-         src="http://www.downgraf.com/wp-content/uploads/2014/09/01-progress.gif" />
+         src="http://bit.ly/2tQ7ZCP" />
       </div>
     );
   }

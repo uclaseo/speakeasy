@@ -9,7 +9,8 @@ const signupUser = (req, res) => {
         email: req.body.email
       }, defaults: {
         photo: req.body.photo,
-        name: req.body.name
+        name: req.body.name,
+        photo: req.body.picture
       }
     })
     .spread((response, isCreated) => {
@@ -17,7 +18,7 @@ const signupUser = (req, res) => {
       if (isCreated) {
         res.status(201).send(response);
       } else {
-  
+
         res.send(response);
       }
     })
@@ -41,21 +42,16 @@ const fetchUsers = (req, res) => {
 const editUserProfile = (req, res) => {
   let id = req.body.id;
   Table.User
-    .update(
-    {
+    .update({
       name: req.body.name,
       handle: req.body.handle,
       photo: req.body.photo
-    },
-    {
-      where: {
-        id: id
-      }
-    }
-    )
-    .then(response => {
-      res.status(200).send(res)
+    }, {
+      where: { id: id },
+      returning: true,
+      plain: true
     })
+    .then(response => res.status(200).send(response[1].dataValues))
     .catch(error => res.send(error));
 };
 

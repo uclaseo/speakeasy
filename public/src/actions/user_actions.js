@@ -2,10 +2,7 @@ import axios from 'axios';
 
 export const GET_PROFILE = 'GET_PROFILE';
 export function fetchProfile(profile) {
-  // console.log('PROFILE in user action:::', profile);
-  const id = profile.data.id;
-  const url = `api/user/profile/${id}`;
-  const request = axios.get(url);
+  const request = axios.get(`api/user/profile/${profile.id}`);
   return {
     type: GET_PROFILE,
     payload: request
@@ -13,9 +10,8 @@ export function fetchProfile(profile) {
 }
 
 export const EDIT_PROFILE = 'EDIT_PROFILE';
-export function editUserProfile(profile, id) {
-  const request = axios.put(`api/user/profile/${id}`, profile);
-  // console.log('profile!!!!! from action:', profile);
+export function editUserProfile(changes) {
+  const request = axios.put(`api/user/profile/${changes.id}`, changes);
   return {
     type: EDIT_PROFILE,
     payload: request

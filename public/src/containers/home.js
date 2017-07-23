@@ -11,14 +11,17 @@ import { setNearbyEvents } from '../actions/index.js';
 import NearbyEventDetail from '../components/nearbyEventDetail';
 import { setActiveEvent } from '../actions/activeEventAction';
 import { clearEventMessages } from '../actions/eventMessagesActions';
+import Header from '../components/header';
 
+const ROOT_URL = 'localhost:8080';
 const auth = new Auth();
 class Home extends Component {
   constructor(props) {
     super(props)
 
     this.state = {
-      gettingUserLocation : true,
+      userLocation: [],
+      gettingUserLocation: true,
       noNearbyEvents: false,
       nearbyEventProfilePicture: ''
     }
@@ -38,60 +41,54 @@ class Home extends Component {
   }
 
   registerUser(profile) {
-    // console.log("what's registerUser profile arg", profile)
     axios.post(`/api/user/signup`, profile)
-    .then((response) => {
-      console.log('registerUser response', response);
-      this.props.fetchProfile(response);
-    })
-    .catch((error) => {
-      console.log('this is registerUser error', error);
-    })
+      .then((response) => {
+        this.props
+          .fetchProfile(response.data);
+      })
+      .catch((error) => {
+        console.log('this is registerUser error', error);
+      })
   }
 
-  getUserLocation(cb){
+  getUserLocation(cb) {
     if (navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition((position)=>{
-        // console.log("getting position via html5", position.coords)
-          this.setState({
-            userLocation : [position.coords.latitude, position.coords.longitude]
+      navigator.geolocation.getCurrentPosition(position => {
+        this.setState({
+          userLocation: [position.coords.latitude, position.coords.longitude]
         }, () => {
-          // console.log("what is the user location?", this.state.userLocation);
           cb();
-        })  
+        })
       });
-    } else { 
-        // console.log("Geolocation is not supported by this browser.");
+    } else {
+      console.log("Geolocation is not supported by this browser.");
     }
   }
 
-  getNearbyEvents(){
+  getNearbyEvents() {
     var nearbyEvents = [];
     axios.get("/api/event/searchevents")
-    .then((response) => {
-      // console.log("before we compare, this.state.userLocation is", this.state.userLocation)
-      for (var i = 0; i < response.data.length; i ++) {
-        if (this.getDistance([this.state.userLocation[0], this.state.userLocation[1]], [response.data[i].latitude, response.data[i].longitude])){
-          // console.log("what are the nearbyEvents?", response.data);
-          nearbyEvents.push(response.data[i]);
-
+      .then(response => {
+        for (var i = 0; i < response.data.length; i++) {
+          if (this.getDistance([this.state.userLocation[0], this.state.userLocation[1]], [response.data[i].latitude, response.data[i].longitude])) {
+            nearbyEvents.push(response.data[i]);
+          }
         }
-      }
-    })
-    .then(() => {
-      this.props.setNearbyEvents(nearbyEvents);
-    })
-    .then(() => {
-      this.setState({
-        gettingUserLocation: false
       })
-    })
-    .catch((error) =>{
-      console.log("getNearbyEvents get request failed", error)
-    })
+      .then(() => {
+        this.props.setNearbyEvents(nearbyEvents);
+      })
+      .then(() => {
+        this.setState({
+          gettingUserLocation: false
+        })
+      })
+      .catch((error) => {
+        console.log("getNearbyEvents get request failed", error)
+      })
   }
 
-  getDistance(fromPoint, toPoint){
+  getDistance(fromPoint, toPoint) {
     var from = {
       "type": "Feature",
       "properties": {},
@@ -121,62 +118,101 @@ class Home extends Component {
     this.props.setActiveEvent(event, this.props.profile.id);
   }
 
-  render() {
+  renderEvents() {
+    console.log("this.props.nearbyEvents:::", this.props.nearbyEvents);
     let events = null;
     if (this.props.nearbyEvents.length !== 0) {
-      events = this.props.nearbyEvents.map((event) => {
+      events = this.props.nearbyEvents.map((event, idx) => {
         return (
-                <div>
-                  <NearbyEventDetail 
-                    event={event} 
-                    key={event.id}
-                    handleEventClick={this.handleEventClick}
-                  />
-                  
-                </div>
+          <div key={idx}>
+            <NearbyEventDetail
+              idx={idx}
+              event={event}
+              handleEventClick={this.handleEventClick}
+            />
+          </div>
         )
       })
-    } 
-    let noEvents = null;
-    if (this.state.gettingUserLocation === false) {
-      if (this.props.nearbyEvents.length === 0) {
-        noEvents = <div>No events nearby</div>
-      } 
-    } 
-    return (
-      <div>
-        <div className="jumbotron">
-          <div className="container text-center">
-            <h1>Speakeasy</h1>
-            <p>Some info about our application</p>
+    }
+    return events;
+  }
+
+  renderEvents() {
+    console.log("this.props.nearbyEvents:::", this.props.nearbyEvents);
+    let events = null;
+    if (this.props.nearbyEvents.length !== 0) {
+      events = this.props.nearbyEvents.map((event, idx) => {
+        return (
+          <div key={idx}>
+            <NearbyEventDetail
+              idx={idx}
+              event={event}
+              handleEventClick={this.handleEventClick}
+            />
           </div>
-        </div>
-        <div className="container-fluid bg-3 text-center">
-          <br />
-          <br />
-          <Link to="/event_setting">
-            <button
-              type="button" className="btn btn-secondary btn-lg myBtns">Create Event
-            </button>
-          </Link>
-            <ul>
-              { events }
-            </ul>
-            { noEvents }
-          {this.state.gettingUserLocation ? <div> Getting Nearby Events, please wait.... </div> : null}
-          
-        </div>
+        )
+      })
+    }
+    return events;
+  }
+
+  renderEventMessage() {
+    let msg;
+    if (this.state.gettingUserLocation) {
+      msg = 'Searching for nearby events...';
+    } else {
+      if (this.props.nearbyEvents.length) {
+        msg = 'Nearby events';
+      } else {
+        msg = 'No nearby events';
+      }
+    }
+    return (
+      <div className="container content-section text-center col-lg-8 col-lg-offset-2 ">
+        <h2>{msg}</h2>
       </div>
     );
   }
+
+  render() {
+    return (
+      <div>
+
+        <Header />
+
+        <section>
+          <div className="container content-section text-center">
+            <div className="container text-center row col-md-8 col-md-offset-2 row">
+              <Link to="/event_setting" className="btnghost">
+                <i className="fa"></i>
+                Host an Event
+                </Link>
+              {this.renderEventMessage()}
+            </div>
+          </div>
+        </section>
+
+        <section id="portfolio">
+          <div className="gallery">
+            <ul>
+              {this.renderEvents()}
+            </ul>
+          </div>
+        </section>
+
+      </div>
+    )
+
+  }
+
 }
+
+
 function mapStateToProps(state) {
-  return {
-    nearbyEvents: state.nearbyEvents,
-    profile: state.profile
-  };
+  return { nearbyEvents: state.nearbyEvents, profile: state.profile };
 }
-function mapDispatchToProps(dispatch){
+function mapDispatchToProps(dispatch) {
   return bindActionCreators({ setNearbyEvents, fetchProfile, setActiveEvent, clearEventMessages }, dispatch)
 }
+
 export default connect(mapStateToProps, mapDispatchToProps)(Home);

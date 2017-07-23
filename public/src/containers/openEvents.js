@@ -25,6 +25,7 @@ class OpenEventsList extends Component {
   }
 
   render() {
+    console.log('REDUX open_events:::', this.props.open_events);
     let events = this.props.open_events.map((event) => {
       return (
         <OpenEventDetail event={event} key={event.id} eventClick={this.handleEventClick}/>

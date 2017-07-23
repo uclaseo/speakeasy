@@ -15,7 +15,6 @@ import OpenEventsList from '../containers/openEvents';
 import Landing_Page from '../containers/landing_page';
 import Chat from '../components/chat';
 import DMChat from '../containers/dmChat';
-
 import Upload_Template from '../containers/upload_template';
 
 const auth = new Auth();
@@ -27,106 +26,98 @@ const handleAuthentication = (nextState, replace) => {
 
 function protectPath(comp) {
   return;
-  props =>
-    !auth.isAuthenticated()
-      ? <Redirect to="/" />
-      : <comp auth={auth} {...props} />;
+  props => !auth.isAuthenticated()
+    ? <Redirect to="/" />
+    : <comp auth={auth} {...props} />;
+}
+
+function renderNavBar() {
+  return ((auth.isAuthenticated())
+    ? <div><Navigation_Bar /></div>
+    : <div className="navbar"></div>);
+}
+
+function renderFooter() {
+  return (
+    <footer className="col-lg-8 col-lg-offset-2 text-center">
+      <p>
+        Created by JMNI at Hack Reactor</p>
+    </footer>
+  )
 }
 
 export default class App extends Component {
   render() {
-
     return (
-      <BrowserRouter>
-        <div>
-          <Navigation_Bar />
+      <div id="page-top" data-spy="scroll" data-target=".navbar-fixed-top">
+        <BrowserRouter>
+          <div>
+            {renderNavBar()}
+            <Switch>
+              <Route
+                exact
+                path="/"
+                render={props => {
+                  return <Landing_Page {...props} />;
+                }} />
+              <Route
+                exact
+                path="/callback"
+                render={props => {
+                  handleAuthentication(props);
+                  return <Callback {...props} />;
+                }} />
+              <Route
+                path="/home"
+                render={props => !auth.isAuthenticated()
+                  ? <Redirect to="/" />
+                  : <Home auth={auth} {...props} />} />
+              <Route
+                path="/friends"
+                render={props => !auth.isAuthenticated()
+                  ? <Redirect to="/" />
+                  : <PossibleFriendsList auth={auth} {...props} />} />
+              <Route
+                path="/dm"
+                render={props => !auth.isAuthenticated()
+                  ? <Redirect to="/" />
+                  : <DirectMessageList auth={auth} {...props} />} />
+              <Route
+                path="/past"
+                render={props => !auth.isAuthenticated()
+                  ? <Redirect to="/" />
+                  : <User_Events auth={auth} {...props} />} />
 
-          <Switch>
-            <Route
-              exact
-              path="/"
-              render={props => {
-                return <Landing_Page {...props} />;
-              }}
-            />
-            <Route
-              exact
-              path="/callback"
-              render={props => {
-                handleAuthentication(props);
-                return <Callback {...props} />;
-              }}
-            />
-            <Route
-              path="/home"
-              render={props =>
-                !auth.isAuthenticated()
+              <Route
+                path="/profile"
+                render={props => !auth.isAuthenticated()
                   ? <Redirect to="/" />
-                  : <Home auth={auth} {...props} />}
-            />
-            <Route
-              path="/friends"
-              render={props =>
-                !auth.isAuthenticated()
+                  : <User_Profile auth={auth} {...props} />} />
+              <Route
+                path="/event_setting"
+                render={props => !auth.isAuthenticated()
                   ? <Redirect to="/" />
-                  : <PossibleFriendsList auth={auth} {...props} />}
-            />
-            <Route
-              path="/dm"
-              render={props =>
-                !auth.isAuthenticated()
+                  : <Event_Setting auth={auth} {...props} />} />
+              <Route
+                path="/active_event"
+                render={props => !auth.isAuthenticated()
                   ? <Redirect to="/" />
-                  : <DirectMessageList auth={auth} {...props} />}
-            />
-            <Route
-              path="/past"
-              render={props =>
-                !auth.isAuthenticated()
+                  : <EventChat auth={auth} {...props} />} />
+              <Route
+                path="/open_events"
+                render={props => !auth.isAuthenticated()
                   ? <Redirect to="/" />
-                  : <User_Events auth={auth} {...props} />}
-            />
-            <Route
-              path="/friends"
-              render={props =>
-                !auth.isAuthenticated()
-                  ? <Redirect to="/" />
-                  : <User_Profile auth={auth} {...props} />}
-            />
-            <Route
-              path="/profile"
-              render={props =>
-                !auth.isAuthenticated()
-                  ? <Redirect to="/" />
-                  : <User_Profile auth={auth} {...props} />}
-            />
-            <Route
-              path="/event_setting"
-              render={props =>
-                !auth.isAuthenticated()
-                  ? <Redirect to="/" />
-                  : <Event_Setting auth={auth} {...props} />}
-            />
-            <Route
-              path="/active_event"
-              render={props =>
-                !auth.isAuthenticated()
-                  ? <Redirect to="/" />
-                  : <EventChat auth={auth} {...props} />}
-            />
-            <Route
-              path="/open_events"
-              render={props =>
-                !auth.isAuthenticated()
-                  ? <Redirect to="/" />
-                  : <OpenEventsList auth={auth} {...props} />}
-            />
-                {/* texting upload  */}
-            <Route path='/upload' component={Upload_Template}/>
-            <Route path='/dm_chat' component={DMChat} />
-            <Route path="/upload" component={Upload_Template} />
-          </Switch>
-        </div>
-      </BrowserRouter>
+                  : <OpenEventsList auth={auth} {...props} />} />
+              <Route path='/upload' component={Upload_Template} />
+              <Route path='/dm_chat' component={DMChat} />
+              <Route path="/upload" component={Upload_Template} />
+            </Switch>
+          </div>
+        </BrowserRouter>
+
+        {renderFooter()}
+
+      </div>
     );
   }
 }

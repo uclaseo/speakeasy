@@ -8,3 +8,4 @@ config.js
 auth0-variables.js
 configJwt.js
 aws.config.js
+aws.config

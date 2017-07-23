@@ -2,12 +2,15 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import io from 'socket.io-client'
-import ChatDetail from '../components/chatDetail'
 import ChatLog from '../components/chatLog'
 import { recentEventMessages, newEventMessage } from '../actions/eventMessagesActions'
 import { createDMRoom } from '../actions/dmRoomsActions'
 import { Redirect } from 'react-router-dom'
+import { Link } from 'react-router-dom';
 import axios from 'axios'
+import Webcam from 'react-webcam';
+import Header from '../components/header';
+
 
 const socket = io();
 
@@ -48,10 +51,6 @@ class EventChat extends Component {
     this.scrollToBottom = this.scrollToBottom.bind(this)
   }
 
-  scrollToBottom() {
-    this.messagesEnd.scrollIntoView({ behavior: 'smooth' })
-  }
-
   componentDidMount() {
     this._handleLogIn()
     this._handleRecentMessages()
@@ -67,6 +66,10 @@ class EventChat extends Component {
   componentWillUnmount() {
     socket.removeAllListeners()
     this._handleLogOut()
+  }
+
+  scrollToBottom() {
+    this.messagesEnd.scrollIntoView({ behavior: 'smooth' })
   }
 
   handleInputChange(e) {
@@ -85,39 +88,39 @@ class EventChat extends Component {
     }
   }
 
- handleSendClick(event) {
+  handleSendClick(event) {
     event.preventDefault();
-    if (this.state.text !== ''){
+    if (this.state.text !== '') {
       if (this.state.files.length !== 0) {
         const images = {};
         const imageLink = {};
         const text = this.state.text;
         this.state.files.map((file, index) => {
           images[index] = Math.floor(Math.random() * 100000) + file.name,
-          imageLink[index] = `https://s3-us-west-1.amazonaws.com/hrlaspeakeasy/${images[index]}`
+            imageLink[index] = `https://s3-us-west-1.amazonaws.com/hrlaspeakeasy/${images[index]}`
         });
         axios.post('/api/event/image/upload/geturl', images)
-        .then((response) => {
-          response.data.map((eachFile, index) => {
-            this.registerImageUrl(eachFile)
-            axios.put(eachFile.url, this.state.files[index])
-            .then(() => {
-              socket.emit('newmessage', {
-                event_id: this.props.event.id,
-                user_name: this.props.user_name,
-                user_id: this.props.user_id,
-                text: text
-              }, imageLink)
+          .then((response) => {
+            response.data.map((eachFile, index) => {
+              this.registerImageUrl(eachFile)
+              axios.put(eachFile.url, this.state.files[index])
+                .then(() => {
+                  socket.emit('newmessage', {
+                    event_id: this.props.event.id,
+                    user_name: this.props.user_name,
+                    user_id: this.props.user_id,
+                    text: text
+                  }, imageLink)
+                })
             })
           })
-        })
-        .then(() => {
-          this.setState({
-            text: '',
-            files: [],
-            imagePreviewUrls: []
+          .then(() => {
+            this.setState({
+              text: '',
+              files: [],
+              imagePreviewUrls: []
+            })
           })
-        })
       } else {
         socket.emit('newmessage', {
           event_id: this.props.event.id,
@@ -135,16 +138,6 @@ class EventChat extends Component {
         isInput: false
       })
     }
-  }
-
-  registerScreenshotUrl(file) {
-    const imageData = {
-      name: file.fileName,
-      imageLink: `"https://hrlaspeakeasy.s3-us-west-1.amazonaws.com/${file.fileName}`,
-      userId: this.props.user_id,
-      eventId: this.props.event.id
-    };
-    axios.post('/api/event/image/upload', imageData)
   }
 
   registerImageUrl(eachFile) {
@@ -171,30 +164,30 @@ class EventChat extends Component {
           const text = this.state.text;
           this.state.files.map((file, index) => {
             images[index] = Math.floor(Math.random() * 100000) + file.name,
-            imageLink[index] = `https://s3-us-west-1.amazonaws.com/hrlaspeakeasy/${images[index]}`
+              imageLink[index] = `https://s3-us-west-1.amazonaws.com/hrlaspeakeasy/${images[index]}`
           });
           axios.post('/api/event/image/upload/geturl', images)
-          .then((response) => {
-            response.data.map((eachFile, index) => {
-              this.registerImageUrl(eachFile)
-              axios.put(eachFile.url, this.state.files[index])
-              .then(() => {
-                socket.emit('newmessage', {
-                  event_id: this.props.event.id,
-                  user_name: this.props.user_name,
-                  user_id: this.props.user_id,
-                  text: text
-                }, imageLink)
+            .then((response) => {
+              response.data.map((eachFile, index) => {
+                this.registerImageUrl(eachFile)
+                axios.put(eachFile.url, this.state.files[index])
+                  .then(() => {
+                    socket.emit('newmessage', {
+                      event_id: this.props.event.id,
+                      user_name: this.props.user_name,
+                      user_id: this.props.user_id,
+                      text: text
+                    }, imageLink)
+                  })
               })
             })
-          })
-          .then(() => {
-            this.setState({
-              text: '',
-              files: [],
-              imagePreviewUrls: []
+            .then(() => {
+              this.setState({
+                text: '',
+                files: [],
+                imagePreviewUrls: []
+              })
             })
-          })
         } else {
           socket.emit('newmessage', {
             event_id: this.props.event.id,
@@ -203,16 +196,13 @@ class EventChat extends Component {
             text: this.state.text
           });
           this.setState({
-            text: '',
-          });
-        };
-      } else {
-        this.setState({
-          isInput: false
-        })
+            isInput: false
+          })
+        }
       }
     }
   }
+
 
   handleCloseClick(event) {
     event.preventDefault()
@@ -330,26 +320,62 @@ class EventChat extends Component {
     this.setState({ redirectHome: true })
   }
 
-  render() {
-    let closeEvent;
+  renderChatLog() {
+    return (
+      <div>
+        <ChatLog
+          className=""
+          roomMessages={this.props.messages}
+          dmClick={this.handleDMClick}
+        />
+      </div>
+    )
+  }
 
+  renderCloseEventButton() {
+    let closeEvent;
     if (this.props.user_id === this.props.event.userId) {
-      closeEvent = <button type="button"
-        onClick={this.handleCloseClick}
-      >Close Event</button>
+
+      closeEvent = <button
+        className="btnghost"
+        onClick={this.handleCloseClick}>
+        <i className="fa"></i>
+        Close Event
+                    </button>
     } else {
-      closeEvent = null;
+      button = null;
     }
+    return closeEvent;
+  }
+
+  renderSendButton() {
+    let send =
+      <button
+        className="btnghost"
+        onClick={this.handleSendClick}>
+        <i className="fa"></i>
+        Send
+      </button>
+    return send;
+  }
+  renderUploadPhoto() {
+    let upload =
+      <input
+        id="fileinput"
+        className=""
+        type="file"
+        accept="image/*"
+        multiple="multiple"
+        onChange={(event) => this.handleUpload(event)}
+      />
+    return upload;
+  }
+
+  render() {
 
     if (this.state.closed === true) {
       return (
-        <Redirect to='/open_events' />
-      )
-    }
-
-    if (this.state.dm === true) {
-      return (
-        <Redirect to='/dm_chat' />
+        <Redirect to='/home' />
       )
     }
 
@@ -359,50 +385,76 @@ class EventChat extends Component {
       )
     }
 
-    return (
-      <div>
-        {(this.state.showPasswordInput) ?
-          <div>
-            Please EnterPassword:
-            <form onSubmit={this.submitPasswordForm}>
-              <input type="text"
-                name="eventpassword"
-                value={this.state.passwordInput}
-                onChange={this.handlePasswordChange}
-              />
-              <br></br>
-              <input type="submit" value="Submit" />
-              <input type="button" value="Return to Home" onClick={this.redirectHome} />
-            </form>
-            <div ref={(el) => this.messagesEnd = el} />
-          </div>
-          : null}
+    // if (this.state.dm === true) {
+    //   return (
+    //     <Redirect to='/dm_chat' />
+    //   )
+    // }
 
-        {this.state.showChat ?
-          <div>
-            {closeEvent}
-            <ChatLog
-              roomMessages={this.props.messages}
-              dmClick={this.handleDMClick}
+    if (this.state.showPasswordInput) {
+      return (
+        <div>
+          Please EnterPassword:
+            <form onSubmit={this.submitPasswordForm}>
+            <input type="text"
+              name="eventpassword"
+              value={this.state.passwordInput}
+              onChange={this.handlePasswordChange}
             />
-            {this.state.isInput? null : <div>please enter text</div>}
-            <input
-              type="text"
-              onChange={this.handleInputChange}
-              value={this.state.text}
-              onKeyPress={this.handleKeyPress}
-            />
-            <button type="button" onClick={this.handleSendClick}>
-              Send
-          </button>
-            <input type="file" id="fileinput" multiple="multiple" accept="image/*"
-              onChange={(event) => this.handleUpload(event)} />
-            {this.renderImagePreview()}
-          </div>
-          : null}
-        <div ref={(el) => this.messagesEnd = el} />
-      </div>
-    );
+            <br></br>
+            <input type="submit" value="Submit" />
+            <input type="button" value="Return to Home" onClick={this.redirectHome} />
+          </form>
+          <div ref={(el) => this.messagesEnd = el} />
+        </div>
+      )
+    } else {
+      return (
+        <div>
+          <Header />
+
+          <section id="portfolio">
+            <div className="gallery">
+              <ul>
+                {this.renderChatLog()}
+                {this.state.isInput ? null : <div>please enter text</div>}
+              </ul>
+            </div>
+          </section>
+
+          <section>
+            <div className="container content-section row col-lg-8 col-lg-offset-2">
+              <div id="profileform">
+                <form onSubmit={this.handleSendClick} >
+                  <input
+                    className="form-control"
+                    id="chat-form"
+                    type="text"
+                    onChange={this.handleInputChange}
+                    value={this.state.text}
+                    onKeyPress={this.handleKeyPress}
+                  />
+                  {this.renderSendButton()}
+                  {this.renderCloseEventButton()}
+                </form>
+              </div>
+            </div>
+          </section>
+
+          <section>
+            <div className="container content-section text-center">
+              <div className="container text-center row col-md-8 col-md-offset-2 row">
+                {this.renderUploadPhoto()}
+                {this.renderImagePreview()}
+              </div>
+            </div>
+          </section>
+
+          <div ref={(el) => this.messagesEnd = el} />
+
+        </div >
+      )
+    }
   }
 }
 

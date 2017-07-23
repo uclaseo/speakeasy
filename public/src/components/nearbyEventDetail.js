@@ -2,15 +2,17 @@ import React, { Component } from 'react'
 import { Link } from 'react-router-dom'
 
 
-const NearbyEventDetail = ({ event, handleEventClick }) => {
+const NearbyEventDetail = ({ event, handleEventClick, idx }) => {
   return (
-    <div>
-      
+    <div className="event-detail">
       <Link to="/active_event" onClick={() => handleEventClick(event)}>
-        <li >
-          {event.eventName}
-          {event.id}
-          <img src = {event.eventPhoto}/>
+        <li className="col-md-3">
+          <img src={event.eventPhoto || `http://unsplash.it/680/380?random=${idx}`} />
+          <div className="text-center">
+            <p>
+              {event.eventName}
+            </p>
+          </div>
         </li>
       </Link>
     </div>
@@ -18,3 +20,5 @@ const NearbyEventDetail = ({ event, handleEventClick }) => {
 }
 
 export default NearbyEventDetail
+
+//<img src={`http://unsplash.it/680/380?random=${idx}`} alt="" />

@@ -4,9 +4,11 @@ import { connect } from 'react-redux';
 import { Field, reduxForm } from 'redux-form';
 import { Link } from 'react-router-dom';
 import Dropzone from 'react-dropzone';
-import Auth from '../Auth0/Auth0';
 import axios from 'axios';
+import Header from '../components/header';
 
+
+import Auth from '../Auth0/Auth0';
 import { fetchProfile, editUserProfile } from '../actions/user_actions';
 
 const auth = new Auth();
@@ -15,17 +17,30 @@ class User_Profile extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      profile: this.props.profile,
       submitted: false,
-      files: []
+      files: [],
     };
     this.upload = this.upload.bind(this);
     this.onDrop = this.onDrop.bind(this);
+    this.renderPhoto = this.renderPhoto.bind(this);
   }
 
-  componentDidMount() {
-    console.log('REDUX :', this.props);
-    this.props.fetchProfile(this.props.profile);
+  renderPhoto() {
+    return (
+      <div id="user-profile-pic">
+        <div className="dropzone text-center center-block">
+          <Dropzone onDrop={this.onDrop} accept="image/jpeg, image/png" className="center-block">
+            <img
+              src={this.props.profile.photo}
+              id="user-profile-pic"
+              className="img-rounded img-responsive center-block"
+              width="456" 
+              height="708"
+            />
+          </Dropzone>
+        </div>
+      </div>
+    )
   }
 
   renderField(field) {
@@ -50,29 +65,13 @@ class User_Profile extends Component {
     );
   }
 
-  renderPhoto() {
-    {console.log("this.props.profile.photo",this.props.profile.photo)}
-    return (
-      <section id="user-profile-pic">
-        <div className="dropzone text-center center-block">
-          <Dropzone onDrop={this.onDrop} accept="image/jpeg, image/png" className="center-block">
-            <img
-              src={this.props.profile.photo || 'https://s3-us-west-1.amazonaws.com/hrlaspeakeasy/1722Speakeasy1.png'}
-              id="user-profile-pic"
-              className="img-rounded img-responsive center-block"
-              width="304"
-              height="236"
-            />
-          </Dropzone>
-          <p className="center-block">click to change your profile pic</p>
-        </div>
-      </section>
-    )
-  }
-
   renderSuccess() {
     const success = (this.state.submitted) ? 'Successfully updated profile' : '';
-    return (<div>{success}</div>);
+    return (
+      <div>
+        {success}
+      </div>
+    );
   }
 
   onDrop(acceptedFiles, rejectedFiles) {
@@ -91,9 +90,9 @@ class User_Profile extends Component {
     const images = {};
 
     this.state.files.map((file, index) => {
-      images[index] = Math.floor(Math.random() * 10000) + file.name
+      images[index] = Math.floor(Math.random() * 10000) + file.name;
     });
-    
+
     axios.post(`/api/user/profile/${id}/geturl`, images)
       .then((response) => {
         let counter = 0;
@@ -117,19 +116,29 @@ class User_Profile extends Component {
       imageLink: `https://s3-us-west-1.amazonaws.com/hrlaspeakeasy/${eachFile.fileName}`,
     };
 
-    let profile = this.props.profile;
-    profile.photo = imageData.imageLink;
-    this.props.editUserProfile(profile, profile.id);
     this.setState({
-      files: []
+      files: [],
     });
+
+    let changes = {
+      id: this.props.profile.id,
+      name: this.props.profile.name,
+      handle: this.props.profile.handle,
+      photo: imageData.imageLink
+    };
+
+    this.props.editUserProfile(changes, this.props.profile.id);
   }
 
   onSubmit(values) {
-    let profile = this.props.profile;
-    profile.name = values.name;
-    profile.handle = values.handle;
-    this.props.editUserProfile(profile, profile.id);
+    let changes = {
+      id: this.props.profile.id,
+      name: values.name || this.props.profile.name,
+      handle: values.handle || this.props.profile.handle,
+      photo: this.props.profile.photo
+    };
+
+    this.props.editUserProfile(changes, this.props.profile.id);
     this.setState({ submitted: true });
   }
 
@@ -145,57 +154,53 @@ class User_Profile extends Component {
 
   render() {
     const { handleSubmit } = this.props;
-
     return (
-      <div id="user-profile" className="container-fluid bg-3 text-center" >
-        {this.renderPhoto()}
+      <div>
 
-        < form onSubmit={handleSubmit(this.onSubmit.bind(this))} >
-          <div>
-            <Field
-              label="Your name"
-              name="name"
-              type="text"
-              placeholder={this.showPlaceHolder('name')}
-              component={this.renderField}
-            />
+        <Header 
+          renderPhoto={this.renderPhoto}
+          label={'Your profile photo'}
+        />
+
+        <section>
+          <div className="container content-section row col-lg-8 col-lg-offset-2">
+            <form onSubmit={handleSubmit(this.onSubmit.bind(this))} id="profileform">
+              <div className="form">
+                <Field
+                  label="Your name"
+                  name="name"
+                  type="text"
+                  placeholder={this.showPlaceHolder('name')}
+                  component={this.renderField}
+                />
+                <Field
+                  label="Create a chat handle"
+                  name="handle"
+                  type="text"
+                  placeholder={this.showPlaceHolder('handle')}
+                  component={this.renderField}
+                />
+              </div>
+
+              <div className="container text-center row col-md-8 col-md-offset-2">
+                <button type="submit" className="btnghost">Submit</button>
+                <Link to="/home">
+                  <button type="button" className="btnghost">Cancel</button>
+                </Link>
+                {this.renderSuccess()}
+              </div>
+              
+            </form>
           </div>
-          <Field
-            label="Create a chat handle"
-            name="handle"
-            type="text"
-            placeholder={this.showPlaceHolder('handle')}
-            component={this.renderField}
-          />
+        </section>
 
-          <button type="submit" className="btn btn-secondary btn-lg my-btns">
-            Submit
-          </button>
-
-          <Link to="/home">
-            <button type="button" className="btn btn-danger btn-lg my-btns">
-              Cancel
-            </button>
-          </Link>
-        </form >
-        <div>
-          {this.renderSuccess()}
-        </div>
-      </div >
+      </div>
     );
   }
 }
 
 function validate(values) {
   const error = {};
-  if (!values.name) {
-    error.name = 'Enter your name';
-  }
-
-  if (!values.handle) {
-    error.handle = 'Enter a chat handle name';
-  }
-
   return error;
 }
 
@@ -208,4 +213,4 @@ function mapStateToProps(state) {
 export default reduxForm({
   validate: validate,
   form: 'ProfileForm'
-})(connect(mapStateToProps, { editUserProfile, fetchProfile })(User_Profile));
+})(connect(mapStateToProps, { fetchProfile, editUserProfile })(User_Profile));
