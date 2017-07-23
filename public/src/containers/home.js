@@ -119,7 +119,26 @@ class Home extends Component {
   }
 
   renderEvents() {
-  console.log("this.props.nearbyEvents:::", this.props.nearbyEvents);
+    console.log("this.props.nearbyEvents:::", this.props.nearbyEvents);
+    let events = null;
+    if (this.props.nearbyEvents.length !== 0) {
+      events = this.props.nearbyEvents.map((event, idx) => {
+        return (
+          <div key={idx}>
+            <NearbyEventDetail
+              idx={idx}
+              event={event}
+              handleEventClick={this.handleEventClick}
+            />
+          </div>
+        )
+      })
+    }
+    return events;
+  }
+
+  renderEvents() {
+    console.log("this.props.nearbyEvents:::", this.props.nearbyEvents);
     let events = null;
     if (this.props.nearbyEvents.length !== 0) {
       events = this.props.nearbyEvents.map((event, idx) => {
@@ -148,30 +167,11 @@ class Home extends Component {
         msg = 'No nearby events';
       }
     }
-
     return (
       <div className="container content-section text-center col-lg-8 col-lg-offset-2 ">
         <h2>{msg}</h2>
       </div>
     );
-  }
-
-  renderEvents() {
-    let events = null;
-    if (this.props.nearbyEvents.length !== 0) {
-      events = this.props.nearbyEvents.map((event) => {
-        return (
-          <div>
-            <NearbyEventDetail 
-              event={event} 
-              key={event.id}
-              handleEventClick={this.handleEventClick}
-            />
-            
-          </div>
-        )
-      })
-    } 
   }
 
   render() {

@@ -58,9 +58,6 @@ class Navigation_Bar extends Component {
               <li>
                 <Link onClick={this.logout} to="/">Logout</Link>
               </li>
-              <li>
-                <Link to="/upload">UPLOAD</Link>
-              </li>
             </ul>
           </div>
         </div>
