@@ -393,7 +393,9 @@ class EventChat extends Component {
 
     if (this.state.showPasswordInput) {
       return (
-        <div>
+        <div className="container content-section row col-lg-8 col-lg-offset-2">
+          <br></br>
+          <br></br>
           Please EnterPassword:
             <form onSubmit={this.submitPasswordForm}>
             <input type="text"
@@ -435,7 +437,7 @@ class EventChat extends Component {
                     onKeyPress={this.handleKeyPress}
                   />
                   {this.renderSendButton()}
-                  {this.renderCloseEventButton()}
+                  {this.renderCloseEventButton()} 
                 </form>
               </div>
             </div>
