@@ -30,8 +30,6 @@ class DMChat extends Component {
     this.scrollToBottom = this.scrollToBottom.bind(this)
   }
 
-
-
   componentDidMount() {
     console.log('this.props dmChat :::', this.props);
     this._handleLogIn()
@@ -70,6 +68,7 @@ class DMChat extends Component {
     this.setState({
       text: ''
     })
+    console.log("this.state.text::", this.state.text);
   }
 
   handleKeyPress(event) {

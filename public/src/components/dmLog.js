@@ -6,8 +6,8 @@ import DMDetail from './dmDetail';
 const DMLog = ({ directMessages }) => {
   const messages = directMessages.map((message) => {
     return (
-      <div>
-        <DMDetail key={message._id}
+      <div key={message._id}>
+        <DMDetail
           message={message}
         />
       </div>
@@ -17,7 +17,7 @@ const DMLog = ({ directMessages }) => {
   return (
     <div>
       <Grid>
-        <Col xs={8} xs={8}>
+        <Col>
           {messages}
         </Col>
       </Grid>
