@@ -138,7 +138,6 @@ class Home extends Component {
   }
 
   renderEvents() {
-    console.log("this.props.nearbyEvents:::", this.props.nearbyEvents);
     let events = null;
     if (this.props.nearbyEvents.length !== 0) {
       events = this.props.nearbyEvents.map((event, idx) => {

@@ -69,7 +69,7 @@ class EventChat extends Component {
   }
 
   scrollToBottom() {
-    this.messagesEnd.scrollIntoView({ behavior: 'smooth' })
+    // this.messagesEnd.scrollIntoView({ behavior: 'smooth' })
   }
 
   handleInputChange(e) {
@@ -202,7 +202,6 @@ class EventChat extends Component {
       }
     }
   }
-
 
   handleCloseClick(event) {
     event.preventDefault()
@@ -358,6 +357,7 @@ class EventChat extends Component {
       </button>
     return send;
   }
+
   renderUploadPhoto() {
     let upload =
       <input
@@ -385,11 +385,11 @@ class EventChat extends Component {
       )
     }
 
-    // if (this.state.dm === true) {
-    //   return (
-    //     <Redirect to='/dm_chat' />
-    //   )
-    // }
+    if (this.state.dm === true) {
+      return (
+        <Redirect to='/dm_chat' />
+      )
+    }
 
     if (this.state.showPasswordInput) {
       return (
@@ -434,7 +434,6 @@ class EventChat extends Component {
                     type="text"
                     onChange={this.handleInputChange}
                     value={this.state.text}
-                    onKeyPress={this.handleKeyPress}
                   />
                   {this.renderSendButton()}
                   {this.renderCloseEventButton()} 

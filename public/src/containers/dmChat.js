@@ -7,6 +7,8 @@ import { Image, Glyphicon, InputGroup, PageHeader, Col, Button, FormGroup, FormC
 import { recentDirectMessages, newDirectMessage } from '../actions/directMessagesActions'
 import { Redirect } from 'react-router-dom'
 import axios from 'axios'
+import Header from '../components/header';
+
 
 const socket = io();
 
@@ -24,15 +26,14 @@ class DMChat extends Component {
     this._handleLogIn = this._handleLogIn.bind(this)
     this._handleLogOut = this._handleLogOut.bind(this)
     this._handleRefreshMessages = this._handleRefreshMessages.bind(this)
-    this._handleRecentMessages = this._handleRecentMessages.bind(this) 
+    this._handleRecentMessages = this._handleRecentMessages.bind(this)
     this.scrollToBottom = this.scrollToBottom.bind(this)
   }
 
-  scrollToBottom() {
-    this.messagesEnd.scrollIntoView({ behavior: 'smooth' })
-  }
+
 
   componentDidMount() {
+    console.log('this.props dmChat :::', this.props);
     this._handleLogIn()
     this._handleRecentMessages()
     this._handleRefreshMessages()
@@ -46,6 +47,10 @@ class DMChat extends Component {
   componentWillUnmount() {
     socket.removeAllListeners()
     this._handleLogOut()
+  }
+
+  scrollToBottom() {
+    // this.messagesEnd.scrollIntoView({ behavior: 'smooth' })
   }
 
   handleInputChange(e) {
@@ -80,7 +85,7 @@ class DMChat extends Component {
       })
     }
   }
-  
+
   _handleLogIn() {
     socket.connect();
     socket.emit('enterdm', {
@@ -109,46 +114,69 @@ class DMChat extends Component {
     })
   }
 
+  renderDMLog() {
+    return (
+      <div>
+        <DMLog
+          className=""
+          directMessages={this.props.dmMessages}
+          dmClick={this.handleDMClick}
+        />
+      </div>
+    )
+  }
+
+  renderSendButton() {
+    let send =
+      <button
+        className="btnghost"
+        onClick={this.handleSendClick}>
+        <i className="fa"></i>
+        Send
+      </button>
+    return send;
+  }
+
   render() {
 
-    // if (this.props.dmMessages.length === 0) {
-    //   return  <div>
-               
-    //             <input  
-    //               type="text" 
-    //               value={this.state.text}
-    //               onKeyPress={this.handleKeyPress}
-    //               onChange={this.handleInputChange}
-    //             />             
-    //             <button 
-    //               type="button" 
-    //               onClick={this.handleSendClick}
-    //             > Send </button> 
-    //           </div>
-    // }
-
     return (
-      <div>   
-        <DMLog directMessages={this.props.dmMessages}/>
-        <input  
-          type="text" 
-          onChange={this.handleInputChange}
-          value={this.state.text}
-          onKeyPress={this.handleKeyPress}      
-        />             
-         <button 
-          type="button" 
-          onClick={this.handleSendClick}
-        > Send </button>   
-        <div ref={(el) => this.messagesEnd = el} />        
+      <div>
+        <Header />
+
+        <section id="portfolio">
+          <div className="gallery">
+            <ul>
+              {this.renderDMLog()}
+            </ul>
+          </div>
+        </section>
+
+        <section>
+          <div className="container content-section row col-lg-8 col-lg-offset-2">
+            <div id="profileform">
+              <form onSubmit={this.handleSendClick} >
+                <input
+                  className="form-control"
+                  id="chat-form"
+                  type="text"
+                  onChange={this.handleInputChange}
+                  value={this.state.text}
+                />
+                {this.renderSendButton()}
+              </form>
+            </div>
+          </div>
+        </section>
+
+
       </div>
     );
   }
 }
 
 function mapStateToProps(state) {
-  return { 
-    dmRoom: state.activeDMRoom, 
+  return {
+    dmRoom: state.activeDMRoom,
     user_from_name: state.profile.name,
     user_to_name: state.activeDMRoom.user_to_name,
     user_id: state.profile.id,
