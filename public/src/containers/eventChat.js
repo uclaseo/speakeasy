@@ -343,7 +343,7 @@ class EventChat extends Component {
         Close Event
                     </button>
     } else {
-      button = null;
+      closeEvent = null;
     }
     return closeEvent;
   }

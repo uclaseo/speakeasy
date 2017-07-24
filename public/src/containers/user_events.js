@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
-import axios from 'axios'
+import {bindActionCreators} from 'redux';
+import axios from 'axios';
 
-import NearbyEventDetail from '../components/nearbyEventDetail';
-
+import {setActivePreviousEvent, clearActivePreviousEvent} from '../actions/activePreviousEvent'
 
 class User_Events extends Component {
   constructor(props) {
@@ -13,7 +13,7 @@ class User_Events extends Component {
       userEvents: [],
       photos: []
     }
-    this.showEventPhotos = this.showEventPhotos.bind(this);
+    this.handlePreviousEventPhotos = this.handlePreviousEventPhotos.bind(this);
   }
 
   componentWillMount() {
@@ -27,17 +27,10 @@ class User_Events extends Component {
       .catch((error) => {
         console.log("not getting user1's event", error);
       })
-  }
 
-  showEventPhotos(clickedEvent) {
-    axios.get(`/api/event/image/fetcheventimages/${clickedEvent.eventId}`)
-      .then((response) => {
-        console.log('this is response for event images', response);
-        const photos = response.data;
-        this.setState({
-          photos: photos
-        })
-      })
+  }
+  componentDidMount() {
+    this.props.clearActivePreviousEvent();
   }
 
   renderEventMessage() {
@@ -60,14 +53,20 @@ class User_Events extends Component {
     console.log("this.state.userEvents:::", this.state.userEvents);
     let events = null;
     if (this.state.userEvents.length !== 0) {
-      events = this.state.userEvents.map((event, idx) => {
+      events = this.state.userEvents.map((event, index) => {
         return (
-          <div key={idx}>
-            <NearbyEventDetail
-              idx={idx}
-              event={event.event}
-              handleEventClick={this.handleEventClick}
-            />
+          <div key={index} className="event-detail">
+          <Link to="/previouseventphotos"
+          onClick={() => this.handlePreviousEventPhotos(event)}>
+            <li className="col-md-3">
+              <img src={event.event.eventPhoto} />
+              <div className="text-center">
+                <p>
+                {event.event.eventName}
+                </p>
+              </div>
+            </li>
+          </Link>
           </div>
         )
       })
@@ -75,8 +74,11 @@ class User_Events extends Component {
     return events;
   }
 
-  render() {
+  handlePreviousEventPhotos(event) {
+    this.props.setActivePreviousEvent(event)
+  }
 
+  render() {
 
     return (
       <div>
@@ -97,7 +99,9 @@ class User_Events extends Component {
           <div className="container content-section text-center">
             <div className="row">
               <div className="container text-center row col-md-8 col-md-offset-2">
+                <ul>
                 {this.renderEventMessage()}
+                </ul>
               </div>
             </div>
           </div>
@@ -108,6 +112,7 @@ class User_Events extends Component {
             <ul>
               {this.renderEvents()}
             </ul>
+            
           </div>
         </section>
 
@@ -118,8 +123,17 @@ class User_Events extends Component {
 
 function mapStateToProps(state) {
   return {
-    profile: state.profile
+    profile: state.profile,
+    photos: state.active_previous_event
   }
 }
 
-export default connect(mapStateToProps)(User_Events)
+
+function mapDispatchToProps(dispatch) {
+  return bindActionCreators({
+    setActivePreviousEvent: setActivePreviousEvent,
+    clearActivePreviousEvent: clearActivePreviousEvent
+  }, dispatch)
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(User_Events)

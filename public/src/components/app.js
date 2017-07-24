@@ -16,6 +16,7 @@ import Landing_Page from '../containers/landing_page';
 import Chat from '../components/chat';
 import DMChat from '../containers/dmChat';
 import Upload_Template from '../containers/upload_template';
+import previousEventPhotos from '../containers/previousEventPhotos';
 
 const auth = new Auth();
 const handleAuthentication = (nextState, replace) => {
@@ -111,6 +112,10 @@ export default class App extends Component {
               <Route path='/upload' component={Upload_Template} />
               <Route path='/dm_chat' component={DMChat} />
               <Route path="/upload" component={Upload_Template} />
+              <Route
+                  path="/previouseventphotos"
+                  component={previousEventPhotos}
+              />
             </Switch>
           </div>
         </BrowserRouter>
