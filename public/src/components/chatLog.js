@@ -16,11 +16,13 @@ const ChatLog = ({ roomMessages, dmClick }) => {
   })
 
   return (
-    <Grid>
-      <Col xs={8} xs={8}>
-        {messages}
-      </Col>
-    </Grid>
+    <div>
+      <Grid>
+        <Col>
+          {messages}
+        </Col>
+      </Grid>
+    </div>
   )
 }
 

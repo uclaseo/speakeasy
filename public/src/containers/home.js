@@ -158,16 +158,16 @@ class Home extends Component {
   renderEventMessage() {
     let msg;
     if (this.state.gettingUserLocation) {
-      msg = 'Searching for nearby events...';
+      msg = 'SEARCHING FOR NEARBY EVENTS...';
     } else {
       if (this.props.nearbyEvents.length) {
-        msg = 'Nearby events';
+        msg = 'NEARBY EVENTS';
       } else {
-        msg = 'No nearby events';
+        msg = 'NO NEARBY EVENTS';
       }
     }
     return (
-      <div className="container content-section text-center col-lg-8 col-lg-offset-2 ">
+      <div className="">
         <h2>{msg}</h2>
       </div>
     );
@@ -181,7 +181,7 @@ class Home extends Component {
 
         <section>
           <div className="container content-section text-center">
-            <div className="container text-center row col-md-8 col-md-offset-2 row">
+            <div className="container text-center row col-md-8 col-md-offset-2">
               <Link to="/event_setting" className="btnghost">
                 <i className="fa"></i>
                 Host an Event

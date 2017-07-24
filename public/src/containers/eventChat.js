@@ -321,9 +321,8 @@ class EventChat extends Component {
 
   renderChatLog() {
     return (
-      <div>
+      <div className="container content-section">
         <ChatLog
-          className=""
           roomMessages={this.props.messages}
           dmClick={this.handleDMClick}
         />
@@ -335,12 +334,13 @@ class EventChat extends Component {
     let closeEvent;
     if (this.props.user_id === this.props.event.userId) {
 
-      closeEvent = <button
-        className="btnghost"
-        onClick={this.handleCloseClick}>
-        <i className="fa"></i>
-        Close Event
-                    </button>
+      closeEvent =
+        <button
+          className="btnghost"
+          onClick={this.handleCloseClick}>
+          <i className="fa"></i>
+          Close
+        </button>
     } else {
       closeEvent = null;
     }
@@ -415,22 +415,20 @@ class EventChat extends Component {
         <div>
           <Header />
 
-          <section id="portfolio">
-            <div className="gallery">
-              <ul>
-                {this.renderChatLog()}
-                {this.state.isInput ? null : <div>please enter text</div>}
-              </ul>
-            </div>
-          </section>
+          <div className="my-log">
+            <ul>
+              {this.renderChatLog()}
+              {this.state.isInput ? null : <div>please enter text</div>}
+            </ul>
+          </div>
 
           <section>
-            <div className="container content-section row col-lg-8 col-lg-offset-2">
+            <div className="container content-section row col-lg-8 col-lg-offset-2 text-center">
+
               <div id="profileform">
                 <form onSubmit={this.handleSendClick} >
                   <input
                     className="form-control"
-                    id="chat-form"
                     type="text"
                     onChange={this.handleInputChange}
                     value={this.state.text}
