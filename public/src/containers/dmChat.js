@@ -168,15 +168,14 @@ class DMChat extends Component {
           </div>
         </section>
 
-
       </div>
-    );
+    )
   }
 }
 
 function mapStateToProps(state) {
   return {
-    dmRoom: state.activeDMRoom,
+          dmRoom: state.activeDMRoom,
     user_from_name: state.profile.name,
     user_to_name: state.activeDMRoom.user_to_name,
     user_id: state.profile.id,
@@ -186,7 +185,7 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
   return bindActionCreators({
-    recentDirectMessages: recentDirectMessages,
+          recentDirectMessages: recentDirectMessages,
     newDirectMessage: newDirectMessage
   }, dispatch)
 }

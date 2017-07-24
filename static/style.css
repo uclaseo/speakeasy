@@ -514,14 +514,14 @@ textarea.error {
 }
 
 #profileform {
-    display: inline;    
+    display: inline;
 }
 
 #profileform input,
 #profileform textarea {
     border: 0px;
     border-bottom: 2px solid #333;
-    width: 100%; 
+    width: 100%;
     background-color: #F5F5F5;
     padding: 20px 0px;
     letter-spacing: 2px;
@@ -533,7 +533,6 @@ textarea.error {
     border: 2px solid;
     padding: 10px 20px;
     display: inline-block;
-    
 }
 
 #profileform input#submit:hover {
@@ -630,6 +629,12 @@ textarea.error {
     -o-background-size: cover;
 }
 
+.my-list {
+    margin: auto;
+    font-family: Montserrat, "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-size: 18px;
+    letter-spacing: 1px;
+}
 .divCenter {
     /* position: relative;
     width:90%;

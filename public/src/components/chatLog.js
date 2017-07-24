@@ -6,11 +6,13 @@ import ChatDetail from './chatDetail';
 const ChatLog = ({ roomMessages, dmClick }) => {
   const messages = roomMessages.map((message) => {
     return (
-      <ChatDetail
-        message={message}
-        key={message._id}
-        dmClick={dmClick}
-      />)
+      <div key={message._id}>
+        <ChatDetail
+          message={message}
+          dmClick={dmClick}
+        />
+      </div >
+    )
   })
 
   return (

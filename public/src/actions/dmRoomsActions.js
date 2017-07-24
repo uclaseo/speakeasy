@@ -8,7 +8,6 @@ export const CREATE_DM_ROOM = 'CREATE_DM_ROOM'
 export function fetchDMRooms(userId) {
   let url = `/api/dmrooms/${userId}`
   let request = axios.get(url)
-  console.log(request);
   return { 
     type: FETCH_DM_ROOMS,
     payload: request

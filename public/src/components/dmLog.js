@@ -6,10 +6,12 @@ import DMDetail from './dmDetail';
 const DMLog = ({ directMessages }) => {
   const messages = directMessages.map((message) => {
     return (
-      <DMDetail
-        message={message}
-        key={message._id}
-      />)
+      <div>
+        <DMDetail key={message._id}
+          message={message}
+        />
+      </div>
+    )
   })
 
   return (

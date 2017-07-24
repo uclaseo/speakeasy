@@ -2,14 +2,16 @@ import React, { Component } from 'react'
 import { Link } from 'react-router-dom'
 
 
-const DMRoomDetail = ({room, handleRoomClick}) => {
+const DMRoomDetail = ({ room, handleRoomClick }) => {
   return (
-      <li onClick={() => handleRoomClick(room)}>
-        
-        {room.user_to_name}
+
+      <div className="my-list" onClick={() => handleRoomClick(room)}>
+        <li>
+          {room.user_to_name}
+        </li>
         <br></br>
-        {room.dm_id}
-      </li>
+      </div>
+
   )
 }
 
