@@ -14,6 +14,7 @@ class User_Events extends Component {
       photos: []
     }
     this.showEventPhotos = this.showEventPhotos.bind(this);
+    this.renderImages = this.renderImages.bind(this);
   }
 
   componentWillMount() {
@@ -62,21 +63,31 @@ class User_Events extends Component {
     if (this.state.userEvents.length !== 0) {
       events = this.state.userEvents.map((event, idx) => {
         return (
-          <div key={idx}>
-            <NearbyEventDetail
-              idx={idx}
-              event={event.event}
-              handleEventClick={this.handleEventClick}
-            />
-          </div>
+          <li onClick={() => this.showEventPhotos(event)}>
+            {event.event.eventName}
+            <img src={event.event.eventPhoto} />
+          </li>
         )
       })
     }
     return events;
   }
 
-  render() {
+  renderImages() {
+    let photos = null;
+    if (this.state.photos.length !== 0) {
+      photos = this.state.photos.map((photo, idx) => {
+        return (
+          <li>
+            <img src={photo.imageLink} />
+          </li>
+        )
+      })
+    }
+    return photos;
+  }
 
+  render() {
 
     return (
       <div>
@@ -97,7 +108,9 @@ class User_Events extends Component {
           <div className="container content-section text-center">
             <div className="row">
               <div className="container text-center row col-md-8 col-md-offset-2">
+                <ul>
                 {this.renderEventMessage()}
+                </ul>
               </div>
             </div>
           </div>
@@ -108,6 +121,12 @@ class User_Events extends Component {
             <ul>
               {this.renderEvents()}
             </ul>
+
+            <ul>
+
+              {this.renderImages()}
+            </ul>
+            
           </div>
         </section>
 
