@@ -31,7 +31,9 @@ class Navigation_Bar extends Component {
               <i className="fa fa-bars"></i>
             </button>
             <a className="navbar-brand page-scroll">
+              <Link to="/home">
               speakeasy
+              </Link>
             </a>
           </div>
 

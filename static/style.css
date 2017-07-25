@@ -415,10 +415,17 @@ img {
 }
 
 .gallery img {
-    max-width: 100%;
-    height: auto;
-    padding: 5px;
-    margin: 0;
+    /* max-width: 100%; */
+    /* height: auto; */
+    /* max-height: 100%; */
+    /* margin: 0; */
+    /*setting below ensure same size and stuff*/
+    padding: 10px; 
+    width:250px;
+    height:250px;
+    background-size:cover; 
+    background-position:center center; 
+    background-repeat:no-repeat;     
 }
 
 .gallery ul li {
@@ -427,6 +434,8 @@ img {
     list-style: none;
     float: left;
     padding: 0;
+    margin-left: auto;
+    margin-right: auto;
 }
 
 .gallery ul li a {
@@ -440,7 +449,7 @@ img {
 }
 
 .gallery ul li a:before {
-    position: absolute;
+    position: relative;
     width: 32px;
     height: 32px;
     top: 40%;
@@ -461,7 +470,7 @@ img {
 }
 
 .gallery ul li a:after {
-    position: absolute;
+    position: relative;
     width: 100%;
     top: 0;
     bottom: 0;
@@ -544,7 +553,7 @@ textarea.error {
 }
 
 .thumb {
-    height: 75px;
+    height: 50%;
     border: 1px solid #000;
     margin: 10px 5px 0 0;
     border-top: 0px;
@@ -584,8 +593,27 @@ textarea.error {
 }
 
 
-/* .event-detail {
-    color: #fff;
+ /* .event-detail {
+    color:#F5F5F5;
+}  */
+
+ /* .event-detail img {
+    width: 20px;
+    height: 20px;
+    border-radius: 40px;
+    padding: 5px;
+    margin: 10;
+}  */
+
+/* .eventDetailBackgroundImage {
+    background-image: url("https://ak5.picdn.net/shutterstock/videos/22434133/thumb/1.jpg"); 
+    background-size: 100%;
+    height: 400px;
+    width: 400px;
+    opacity: 0.5;
+    background-repeat: no-repeat;
+    background-position: 0 .4em;
+    padding-left: .6em;
 } */
 
 .space {
@@ -600,4 +628,33 @@ textarea.error {
     -moz-background-size: cover;
     background-size: cover;
     -o-background-size: cover;
+}
+
+.divCenter {
+    /* position: relative;
+    width:90%;
+    margin-top: auto;
+    margin-left: auto;
+    margin-right: auto; 
+    margin-bottom: auto; */
+    
+    /* position: relative;
+    margin-left: 0;
+    margin-right:0;
+    padding: 0;
+    width: 80%;  */
+
+    position: relative;
+    width:100%;
+    left: 50%;
+    margin-left: -50%;
+    background-color: #f9f9f9;
+    /* border: solid 2px red; */
+    
+}
+
+.portfolio{
+    width: 90%;
+    margin-left: 85px;
+    background-color: #f9f9f9;
 }
