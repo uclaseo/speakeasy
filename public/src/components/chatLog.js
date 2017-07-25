@@ -3,7 +3,7 @@ import { Col, Grid, Row } from 'react-bootstrap';
 import ChatDetail from './chatDetail';
 
 
-const ChatLog = ({ roomMessages, dmClick }) => {
+const ChatLog = ({ roomMessages, dmClick, enterText }) => {
   const messages = roomMessages.map((message) => {
     return (
       <div key={message._id}>
@@ -16,12 +16,14 @@ const ChatLog = ({ roomMessages, dmClick }) => {
   })
 
   return (
-    <div>
+    <div className="my-log">
+      <ul>
       <Grid>
         <Col>
           {messages}
         </Col>
       </Grid>
+      </ul>
     </div>
   )
 }

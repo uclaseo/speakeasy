@@ -49,6 +49,7 @@ class EventChat extends Component {
     this.redirectHome = this.redirectHome.bind(this)
     this.setShowForm = this.setShowForm.bind(this)
     this.scrollToBottom = this.scrollToBottom.bind(this)
+    this.renderEmptyTextMessage = this.renderEmptyTextMessage.bind(this);
   }
 
   componentDidMount() {
@@ -319,14 +320,10 @@ class EventChat extends Component {
     this.setState({ redirectHome: true })
   }
 
-  renderChatLog() {
+  renderEmptyTextMessage() {
+    let msg = this.state.isInput ? null : <div>please enter text</div>
     return (
-      <div className="container content-section">
-        <ChatLog
-          roomMessages={this.props.messages}
-          dmClick={this.handleDMClick}
-        />
-      </div>
+      {msg}
     )
   }
 
@@ -415,29 +412,33 @@ class EventChat extends Component {
         <div>
           <Header />
 
-          <div className="my-log">
-            <ul>
-              {this.renderChatLog()}
-              {this.state.isInput ? null : <div>please enter text</div>}
-            </ul>
-          </div>
 
-          <section>
-            <div className="container content-section row col-lg-8 col-lg-offset-2 text-center">
 
-              <div id="profileform">
-                <form onSubmit={this.handleSendClick} >
-                  <input
-                    className="form-control"
-                    type="text"
-                    onChange={this.handleInputChange}
-                    value={this.state.text}
-                  />
-                  {this.renderSendButton()}
-                  {this.renderCloseEventButton()} 
-                </form>
+          <section id="contact">
+          <ChatLog
+            roomMessages={this.props.messages}
+            dmClick={this.handleDMClick}
+          />
+
+            <div class="container content-section">
+              <div class="row">
+                <div class="col-lg-8 col-lg-offset-2">
+                  <form
+                    onSubmit={this.handleSendClick} id="contactform" className="msg-input text-center">
+                    <input
+                      placeholder="Your message here *"
+                      type="text"
+                      onChange={this.handleInputChange}
+                      value={this.state.text}
+                    />
+     
+                      {this.renderSendButton()}
+                      {this.renderCloseEventButton()}
+                  </form>
+                </div>
               </div>
             </div>
+
           </section>
 
           <section>

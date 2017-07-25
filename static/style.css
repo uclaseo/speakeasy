@@ -493,6 +493,7 @@ section:after {
 
 section {
     background-color: #f9f9f9;
+    background-color: #fff;    
     color: #333;
     overflow: hidden;
 }
@@ -512,6 +513,39 @@ textarea.error {
     -o-transition: border linear 0.2s, box-shadow linear 0.2s;
     transition: border linear 0.2s, box-shadow linear 0.2s;
 }
+
+#contactform input,
+#contactform textarea {
+  border: 0px;
+  border-bottom: 2px solid #333;
+  width: 1000px;
+  background-color: transparent;
+  padding: 20px 0px;
+  letter-spacing: 2px;
+  margin-bottom: 20px;
+}
+#contactform input#submit {
+  width: auto;
+  border: 2px solid;
+  padding: 10px 20px;
+  display: inline-block;
+}
+#contactform input#submit:hover {
+  background-color: #333;
+  color: #fff;
+  border: 2px solid #333;
+}
+#contactform input:focus,
+#contactform input:active,
+#contactform textarea:focus,
+#contactform textarea:active {
+  border-top: 0px;
+  border-bottom: 2px solid lightseagreen;
+  outline: 0;
+  outline: none;
+}
+
+/* ------------------------------------ */
 
 #profileform {
     display: inline;
@@ -562,7 +596,6 @@ textarea.error {
 }
 
 
-/* ------------------------------------ */
 
 #user-profile {
     margin: 20px;
@@ -673,7 +706,6 @@ textarea.error {
     background-color: transparent;
     padding: 15px 15px;
     letter-spacing: 3px;
-    /* font-size: 12px; */
     font-weight: 400;
     color: #000;
     display: block;
@@ -684,4 +716,8 @@ textarea.error {
     background-color: #333;
     color: #fff;
     border: 2px solid #333;
+}
+
+.msg-input {
+    margin: auto;
 }
