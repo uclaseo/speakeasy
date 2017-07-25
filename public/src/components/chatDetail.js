@@ -11,6 +11,11 @@ const ChatDetail = ({ message, dmClick }) => {
         <div className="my-chat-detail" onClick={() => { dmClick(message) }}>
           <p style={nameStyle}>{message.user_name}</p>
           <p style={msgStyle}>{message.text}</p>
+          <p>
+            <div className="gallery">
+              {message.images ? <img src={message.images[0]} /> : null}
+            </div>
+          </p>
         </div>
     </div >
   )
