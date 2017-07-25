@@ -276,7 +276,7 @@ class EventChat extends Component {
   renderEmptyTextMessage() {
     let msg = this.state.isInput ? null : <div>please enter text</div>
     return (
-      {msg}
+      { msg }
     )
   }
 
@@ -321,10 +321,10 @@ class EventChat extends Component {
   }
 
   renderCancelButton() {
-    return(
-    <Link to="/home">
-      <button type="button" className="btnghost">Cancel</button>
-    </Link>
+    return (
+      <Link to="/home">
+        <button type="button" className="btnghost">Cancel</button>
+      </Link>
     )
   }
 
@@ -341,7 +341,23 @@ class EventChat extends Component {
     return upload;
   }
 
+  renderMessage() {
+    let msg;
+    if (this.props.active_event) {
+      msg = this.props.active_event.eventName;
+    } else {
+      msg = 'hekko';
+    }
+
+    return (
+      <div className="">
+        <h2>{msg}</h2>
+      </div>
+    );
+  }
+
   render() {
+    console.log(this.props, this.props);
 
     if (this.state.closed === true) {
       return (
@@ -364,37 +380,49 @@ class EventChat extends Component {
     if (this.state.showPasswordInput) {
       return (
         <div>
-        <Header 
-          brand="SPEAKEASY"
-        />
+          <Header
+            brand="SPEAKEASY"
+          />
 
-        <section>
-          <div className="container content-section text-center">
-            <div className="container text-center row col-md-8 col-md-offset-2">
-              <h2>Please EnterPassword:</h2>
-              <form onSubmit={this.submitPasswordForm}>
-              <input type="text"
-                name="eventpassword"
-                value={this.state.passwordInput}
-                onChange={this.handlePasswordChange}
-              />
-              <br></br>
-              {this.renderPasswordButton()}
-              {this.renderCancelButton()}
-            </form>
-            <div ref={(el) => this.messagesEnd = el} />
+          <section>
+            <div className="container content-section text-center">
+              <div className="container text-center row col-md-8 col-md-offset-2">
+                <h2>Please EnterPassword:</h2>
+                <form onSubmit={this.submitPasswordForm}>
+                  <input type="text"
+                    name="eventpassword"
+                    value={this.state.passwordInput}
+                    onChange={this.handlePasswordChange}
+                  />
+                  <br></br>
+                  {this.renderPasswordButton()}
+                  {this.renderCancelButton()}
+                </form>
+                <div ref={(el) => this.messagesEnd = el} />
               </div>
-          </div>
-        </section>
+            </div>
+          </section>
         </div>
       )
     } else {
       return (
         <div>
-          
-          <Header 
+
+          <Header
             brand="SPEAKEASY"
           />
+
+
+          <section>
+            <div className="container content-section">
+              <div className="row">
+                <div className="container text-center row col-md-8 col-md-offset-2">
+                  {this.renderMessage()}
+                </div>
+              </div>
+            </div>
+          </section>
+
 
           <section id="contact">
             <ChatLog
@@ -409,13 +437,13 @@ class EventChat extends Component {
                 <ul>
                   <Grid>
                     <Col>
-                    <input
-                      className="msg-input"
-                      placeholder="Your message here *"
-                      type="text"
-                      onChange={this.handleInputChange}
-                      value={this.state.text}
-                    />
+                      <input
+                        className="msg-input"
+                        placeholder="Your message here *"
+                        type="text"
+                        onChange={this.handleInputChange}
+                        value={this.state.text}
+                      />
                     </Col>
                   </Grid>
                 </ul>
