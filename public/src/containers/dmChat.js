@@ -9,9 +9,6 @@ import { Redirect } from 'react-router-dom'
 import axios from 'axios'
 import Header from '../components/header'
 
-
-
-
 const socket = io();
 
 class DMChat extends Component {
@@ -49,7 +46,7 @@ class DMChat extends Component {
   }
 
   scrollToBottom() {
-    // this.messagesEnd.scrollIntoView({ behavior: 'smooth' })
+    this.messagesEnd.scrollIntoView({ behavior: 'smooth' })
   }
 
   handleInputChange(e) {
