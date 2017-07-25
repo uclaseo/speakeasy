@@ -420,9 +420,9 @@ class EventChat extends Component {
               dmClick={this.handleDMClick}
             />
 
-            <div class="container content-section">
-              <div class="row">
-                <div class="col-lg-8 col-lg-offset-2">
+            <div className="container content-section">
+              <div className="row">
+                <div className="col-lg-8 col-lg-offset-2">
                   <form
                     onSubmit={this.handleSendClick} id="contactform" className="msg-input text-center">
                       <input
