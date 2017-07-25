@@ -14,6 +14,7 @@ import { Col, Grid, Row } from 'react-bootstrap';
 
 
 
+
 const socket = io();
 
 class EventChat extends Component {
@@ -357,6 +358,26 @@ class EventChat extends Component {
     return send;
   }
 
+  renderPasswordButton() {
+    let send =
+      <button
+        className="btnghost"
+        type="submit"
+        value="Submit">
+        <i className="fa"></i>
+        Submit
+      </button>
+    return send;
+  }
+
+  renderCancelButton() {
+    return(
+    <Link to="/home">
+      <button type="button" className="btnghost">Cancel</button>
+    </Link>
+    )
+  }
+
   renderUploadPhoto() {
     let upload =
       <input
@@ -392,21 +413,27 @@ class EventChat extends Component {
 
     if (this.state.showPasswordInput) {
       return (
-        <div className="container content-section row col-lg-8 col-lg-offset-2">
-          <br></br>
-          <br></br>
-          Please EnterPassword:
-            <form onSubmit={this.submitPasswordForm}>
-            <input type="text"
-              name="eventpassword"
-              value={this.state.passwordInput}
-              onChange={this.handlePasswordChange}
-            />
-            <br></br>
-            <input type="submit" value="Submit" />
-            <input type="button" value="Return to Home" onClick={this.redirectHome} />
-          </form>
-          <div ref={(el) => this.messagesEnd = el} />
+        <div>
+        <Header />
+
+        <section>
+          <div className="container content-section text-center">
+            <div className="container text-center row col-md-8 col-md-offset-2">
+              <h2>Please EnterPassword:</h2>
+              <form onSubmit={this.submitPasswordForm}>
+              <input type="text"
+                name="eventpassword"
+                value={this.state.passwordInput}
+                onChange={this.handlePasswordChange}
+              />
+              <br></br>
+              {this.renderPasswordButton()}
+              {this.renderCancelButton()}
+            </form>
+            <div ref={(el) => this.messagesEnd = el} />
+              </div>
+          </div>
+        </section>
         </div>
       )
     } else {

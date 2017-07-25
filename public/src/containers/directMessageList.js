@@ -37,12 +37,12 @@ class DirectMessageList extends Component {
         <div key={room.dm_id} className="text-left">
           <DMRoomDetail
             room={room}
+            key={room.dm_id}
             handleRoomClick={this.handleRoomClick}
           />
         </div>
       )
-    }
-    )
+    })
     return rooms;
   }
 
@@ -50,6 +50,8 @@ class DirectMessageList extends Component {
     if (this.state.dm === true) {
       return (<Redirect to="/dm_chat" />)
     }
+
+    let listStyle = {margin: "0 0 0 150px"}
 
     return (
       <div>
@@ -61,7 +63,7 @@ class DirectMessageList extends Component {
             <div className="row">
               <div className="container text-center row col-md-8 col-md-offset-2">
                 <h2>You have direct messages with...</h2>
-                {this.renderRoomDetail()}
+                <p style={listStyle}>{this.renderRoomDetail()}</p>
               </div>
             </div>
           </div>
