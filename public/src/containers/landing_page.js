@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import { Field, reduxForm } from 'redux-form';
 import { Link } from 'react-router-dom';
 import Auth from '../Auth0/Auth0';
+import Header from '../components/header';
 
 const auth = new Auth();
 const { isAuthenticated } = auth;
@@ -24,17 +25,10 @@ class Landing_Page extends Component {
   render() {
     return (
       <div>
-        <header className="intro">
-          <div className="intro-body">
-            <div className="container">
-              <div className="row">
-                <div className="col-md-8 col-md-offset-2">
-                  <h1 className="brand-heading">SPEAKEASY</h1>
-                </div>
-              </div>
-            </div>
-          </div>
-        </header>
+
+        <Header 
+          brand="SPEAKEASY"
+        />
 
         <section>
           <div className="container content-section text-center">

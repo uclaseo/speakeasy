@@ -3,10 +3,14 @@ import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import io from 'socket.io-client'
 import DMLog from '../components/dmLog'
-import { Image, Glyphicon, InputGroup, PageHeader, Col, Button, FormGroup, FormControl } from 'react-bootstrap'
+import { Image, Glyphicon, InputGroup, PageHeader, Col, Grid, Row, Button, FormGroup, FormControl } from 'react-bootstrap'
 import { recentDirectMessages, newDirectMessage } from '../actions/directMessagesActions'
 import { Redirect } from 'react-router-dom'
 import axios from 'axios'
+import Header from '../components/header'
+
+
+
 
 const socket = io();
 
@@ -24,12 +28,8 @@ class DMChat extends Component {
     this._handleLogIn = this._handleLogIn.bind(this)
     this._handleLogOut = this._handleLogOut.bind(this)
     this._handleRefreshMessages = this._handleRefreshMessages.bind(this)
-    this._handleRecentMessages = this._handleRecentMessages.bind(this) 
+    this._handleRecentMessages = this._handleRecentMessages.bind(this)
     this.scrollToBottom = this.scrollToBottom.bind(this)
-  }
-
-  scrollToBottom() {
-    this.messagesEnd.scrollIntoView({ behavior: 'smooth' })
   }
 
   componentDidMount() {
@@ -46,6 +46,10 @@ class DMChat extends Component {
   componentWillUnmount() {
     socket.removeAllListeners()
     this._handleLogOut()
+  }
+
+  scrollToBottom() {
+    // this.messagesEnd.scrollIntoView({ behavior: 'smooth' })
   }
 
   handleInputChange(e) {
@@ -65,6 +69,7 @@ class DMChat extends Component {
     this.setState({
       text: ''
     })
+    console.log("this.state.text::", this.state.text);
   }
 
   handleKeyPress(event) {
@@ -80,7 +85,7 @@ class DMChat extends Component {
       })
     }
   }
-  
+
   _handleLogIn() {
     socket.connect();
     socket.emit('enterdm', {
@@ -109,46 +114,71 @@ class DMChat extends Component {
     })
   }
 
+  renderSendButton() {
+    let send =
+      <button
+        className="btnghost"
+        onClick={this.handleSendClick}>
+        <i className="fa"></i>
+        Send
+      </button>
+    return send;
+  }
+
   render() {
 
-    // if (this.props.dmMessages.length === 0) {
-    //   return  <div>
-               
-    //             <input  
-    //               type="text" 
-    //               value={this.state.text}
-    //               onKeyPress={this.handleKeyPress}
-    //               onChange={this.handleInputChange}
-    //             />             
-    //             <button 
-    //               type="button" 
-    //               onClick={this.handleSendClick}
-    //             > Send </button> 
-    //           </div>
-    // }
-
     return (
-      <div>   
-        <DMLog directMessages={this.props.dmMessages}/>
-        <input  
-          type="text" 
-          onChange={this.handleInputChange}
-          value={this.state.text}
-          onKeyPress={this.handleKeyPress}      
-        />             
-         <button 
-          type="button" 
-          onClick={this.handleSendClick}
-        > Send </button>   
-        <div ref={(el) => this.messagesEnd = el} />        
+      <div>
+        <Header 
+           brand="SPEAKEASY"
+        />
+ 
+        <section id="contact">
+          <DMLog
+            directMessages={this.props.dmMessages}
+          />
+        </section>
+
+        <section>
+          <form onSubmit={this.handleSendClick} id="contactform" className="text-center">
+            <div className="msg-input">
+              <ul>
+                <Grid>
+                  <Col>
+                  <input
+                    className="msg-input"
+                    placeholder="Your message here *"
+                    type="text"
+                    onChange={this.handleInputChange}
+                    value={this.state.text}
+                  />
+                  </Col>
+                </Grid>
+              </ul>
+            </div>
+          </form>
+        </section>
+
+        <section>
+          <ul className="text-center">
+            <Grid>
+              <Col>
+                {this.renderSendButton()}
+              </Col>
+            </Grid>
+          </ul>
+        </section>
+
+        <div ref={(el) => this.messagesEnd = el} />
+      
       </div>
-    );
+    )
   }
 }
 
 function mapStateToProps(state) {
-  return { 
-    dmRoom: state.activeDMRoom, 
+  return {
+    dmRoom: state.activeDMRoom,
     user_from_name: state.profile.name,
     user_to_name: state.activeDMRoom.user_to_name,
     user_id: state.profile.id,

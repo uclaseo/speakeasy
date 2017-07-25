@@ -30,11 +30,9 @@ class Navigation_Bar extends Component {
               data-target=".navbar-main-collapse">
               <i className="fa fa-bars"></i>
             </button>
-            <a className="navbar-brand page-scroll">
-              <Link to="/home">
+              <Link to="/home" className="navbar-brand page-scroll">
               speakeasy
               </Link>
-            </a>
           </div>
 
           <div className="collapse navbar-collapse navbar-right navbar-main-collapse">

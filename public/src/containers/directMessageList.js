@@ -1,10 +1,13 @@
 import React, { Component } from 'react'
-import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
+import { connect } from 'react-redux'
+import { Redirect } from 'react-router-dom'
+import { Col, Grid, Row } from 'react-bootstrap';
+
 import DMRoomDetail from './../components/dmRoomDetail'
 import { fetchDMRooms, setActiveDMRoom } from './../actions/dmRoomsActions'
 import { clearDirectMessages } from './../actions/directMessagesActions'
-import { Redirect } from 'react-router-dom'
+import Header from '../components/header'
 
 class DirectMessageList extends Component {
   constructor(props) {
@@ -27,27 +30,47 @@ class DirectMessageList extends Component {
     this.setState({ dm: true })
   }
 
-  render() {
-    if (this.state.dm === true) {
-      return (
-        <Redirect to="/dm_chat" />
-      )
-    }
 
-    let rooms = this.props.dmRooms.map((room) => {
+  renderRoomDetail() {
+    let rooms = this.props.dmRooms.map(room => {
       return (
-        <DMRoomDetail room={room} 
-                      key={room.dm_id} 
-                      handleRoomClick={this.handleRoomClick}
-        />
+        <div key={room.dm_id} className="text-left">
+          <DMRoomDetail
+            room={room}
+            key={room.dm_id}
+            handleRoomClick={this.handleRoomClick}
+          />
+        </div>
       )
     })
+    return rooms;
+  }
+
+  render() {
+    if (this.state.dm === true) {
+      return (<Redirect to="/dm_chat" />)
+    }
+
+    let listStyle = {margin: "0 0 0 150px"}
 
     return (
       <div>
-        <ul>
-          {rooms}
-        </ul>
+
+        <Header 
+           brand="SPEAKEASY"
+        />
+
+        <section>
+          <div className="container content-section">
+            <div className="row">
+              <div className="container text-center row col-md-8 col-md-offset-2">
+                <h2>You have direct messages with...</h2>
+                <p style={listStyle}>{this.renderRoomDetail()}</p>
+              </div>
+            </div>
+          </div>
+        </section>
+
       </div>
     );
   }

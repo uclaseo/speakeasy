@@ -12,6 +12,8 @@ import NearbyEventDetail from '../components/nearbyEventDetail';
 import { setActiveEvent } from '../actions/activeEventAction';
 import { clearEventMessages } from '../actions/eventMessagesActions';
 import Header from '../components/header';
+import Portfolio from '../components/portfolio';
+
 
 const ROOT_URL = 'localhost:8080';
 const auth = new Auth();
@@ -30,6 +32,7 @@ class Home extends Component {
     this.getNearbyEvents = this.getNearbyEvents.bind(this);
     this.getUserLocation = this.getUserLocation.bind(this);
     this.handleEventClick = this.handleEventClick.bind(this);
+    this.renderEvents = this.renderEvents.bind(this);
   }
 
   componentDidMount() {
@@ -119,28 +122,8 @@ class Home extends Component {
   }
 
   renderEvents() {
-    console.log("this.props.nearbyEvents:::", this.props.nearbyEvents);
     let events = null;
-    if (this.props.nearbyEvents.length !== 0) {
-      events = this.props.nearbyEvents.map((event, idx) => {
-        return (
-          <div key={idx}>
-            <NearbyEventDetail
-              idx={idx}
-              event={event}
-              handleEventClick={this.handleEventClick}
-            />
-          </div>
-        )
-      })
-    }
-    return events;
-  }
-
-  renderEvents() {
-    console.log("this.props.nearbyEvents:::", this.props.nearbyEvents);
-    let events = null;
-    if (this.props.nearbyEvents.length !== 0) {
+    if (this.props.nearbyEvents.length) {
       events = this.props.nearbyEvents.map((event, idx) => {
         return (
           <div key={idx} >
@@ -159,30 +142,33 @@ class Home extends Component {
   renderEventMessage() {
     let msg;
     if (this.state.gettingUserLocation) {
-      msg = 'Searching for nearby events...';
+      msg = 'SEARCHING FOR NEARBY EVENTS...';
     } else {
       if (this.props.nearbyEvents.length) {
-        msg = 'Nearby events';
+        msg = 'NEARBY EVENTS';
       } else {
-        msg = 'No nearby events';
+        msg = 'NO NEARBY EVENTS';
       }
     }
     return (
-      <div className="container content-section text-center col-lg-8 col-lg-offset-2 ">
+      <div className="">
         <h2>{msg}</h2>
       </div>
     );
   }
 
   render() {
+    console.log("this.props:::", this.props);
     return (
       <div>
 
-        <Header />
+        <Header
+          brand="SPEAKEASY"
+        />
 
         <section>
           <div className="container content-section text-center">
-            <div className="container text-center row col-md-8 col-md-offset-2 row">
+            <div className="container text-center row col-md-8 col-md-offset-2">
               <Link to="/event_setting" className="btnghost">
                 <i className="fa"></i>
                 Host an Event
@@ -192,15 +178,9 @@ class Home extends Component {
           </div>
         </section>
 
-            <div className="divCenter">  
-        <section id="portfolio" className="portfolio">
-          <div className="gallery">
-            <ul >
-              {this.renderEvents()}
-            </ul>
-          </div>
-        </section>
-            </div>  
+        <Portfolio
+          renderEvents={this.renderEvents}
+        />
 
       </div>
     )

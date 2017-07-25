@@ -7,6 +7,8 @@ import { fetchPossibleFriends, clearPossibleFriends } from './../actions/possibl
 import PossibleFriendDetail from './../components/possibleFriendDetail'
 import { setActiveDMRoom, createDMRoom } from './../actions/dmRoomsActions'
 import { clearDirectMessages } from './../actions/directMessagesActions'
+import Header from '../components/header'
+
 
 class PossibleFriendsList extends Component {
   constructor(props) {
@@ -45,29 +47,66 @@ class PossibleFriendsList extends Component {
         
   } 
 
+  renderFriends() {
+    let friends = this.props.possibleFriends.map(friend => {
+      return (
+        <div key={friend.user_to_id}  className="text-left">
+          <PossibleFriendDetail 
+            friend={friend} 
+            key={friend.user_to_id} 
+            handleFriendClick={this.handleFriendClick}
+          />
+        </div>
+      )
+    })
+    return friends;
+  }
+
+  renderMessage() {
+    let msg;
+
+    if (this.props.possibleFriends.length) {
+      msg = "YOUR FRIENDS"
+    } else {
+      msg = "YOU HAVE NO POSSIBLE FRIENDS"
+    }
+
+    return (
+      <div className="">
+        <h2>{msg}</h2>
+      </div>
+    );
+  }
 
   render() {
+    console.log('this.props from possible friends:', this.props);
+
     if (this.state.dm === true) {
       return (
         <Redirect to='/dm_chat' />
       )
     }
 
-    let friends = this.props.possibleFriends.map((friend) => {
-      return (
-        <PossibleFriendDetail 
-          friend={friend} 
-          key={friend.user_to_id} 
-          handleFriendClick={this.handleFriendClick}
-        />
-      )
-    })
+    let listStyle = {margin: "0 0 0 150px"}
 
     return (
       <div>
-        <ul>
-          {friends}
-        </ul>
+
+        <Header 
+           brand="SPEAKEASY"
+        />
+
+        <section>
+          <div className="container content-section">
+            <div className="row">
+              <div className="container text-center row col-md-8 col-md-offset-2">
+                  {this.renderMessage()}
+                  <p style={listStyle}>{this.renderFriends()}</p>
+              </div>
+            </div>
+          </div>
+        </section>
+
       </div>
     );
   }

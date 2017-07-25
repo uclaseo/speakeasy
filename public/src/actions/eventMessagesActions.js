@@ -11,7 +11,6 @@ export function recentEventMessages(messages) {
 }
 
 export function newEventMessage(message) {
-  console.log('new event message ', message);
   return {
     type: NEW_EVENT_MESSAGE,
     payload: message

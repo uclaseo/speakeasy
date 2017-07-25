@@ -10,6 +10,9 @@ import { Link } from 'react-router-dom';
 import axios from 'axios'
 import Webcam from 'react-webcam';
 import Header from '../components/header';
+import { Col, Grid, Row } from 'react-bootstrap';
+
+
 
 
 const socket = io();
@@ -49,6 +52,7 @@ class EventChat extends Component {
     this.redirectHome = this.redirectHome.bind(this)
     this.setShowForm = this.setShowForm.bind(this)
     this.scrollToBottom = this.scrollToBottom.bind(this)
+    this.renderEmptyTextMessage = this.renderEmptyTextMessage.bind(this);
   }
 
   componentDidMount() {
@@ -69,7 +73,7 @@ class EventChat extends Component {
   }
 
   scrollToBottom() {
-    this.messagesEnd.scrollIntoView({ behavior: 'smooth' })
+    // this.messagesEnd.scrollIntoView({ behavior: 'smooth' })
   }
 
   handleInputChange(e) {
@@ -203,7 +207,6 @@ class EventChat extends Component {
     }
   }
 
-
   handleCloseClick(event) {
     event.preventDefault()
     socket.emit('closeevent', { event_id: this.props.event.id });
@@ -320,15 +323,10 @@ class EventChat extends Component {
     this.setState({ redirectHome: true })
   }
 
-  renderChatLog() {
+  renderEmptyTextMessage() {
+    let msg = this.state.isInput ? null : <div>please enter text</div>
     return (
-      <div>
-        <ChatLog
-          className=""
-          roomMessages={this.props.messages}
-          dmClick={this.handleDMClick}
-        />
-      </div>
+      {msg}
     )
   }
 
@@ -336,12 +334,13 @@ class EventChat extends Component {
     let closeEvent;
     if (this.props.user_id === this.props.event.userId) {
 
-      closeEvent = <button
-        className="btnghost"
-        onClick={this.handleCloseClick}>
-        <i className="fa"></i>
-        Close Event
-                    </button>
+      closeEvent =
+        <button
+          className="btnghost"
+          onClick={this.handleCloseClick}>
+          <i className="fa"></i>
+          Close
+        </button>
     } else {
       closeEvent = null;
     }
@@ -358,6 +357,27 @@ class EventChat extends Component {
       </button>
     return send;
   }
+
+  renderPasswordButton() {
+    let send =
+      <button
+        className="btnghost"
+        type="submit"
+        value="Submit">
+        <i className="fa"></i>
+        Submit
+      </button>
+    return send;
+  }
+
+  renderCancelButton() {
+    return(
+    <Link to="/home">
+      <button type="button" className="btnghost">Cancel</button>
+    </Link>
+    )
+  }
+
   renderUploadPhoto() {
     let upload =
       <input
@@ -385,62 +405,83 @@ class EventChat extends Component {
       )
     }
 
-    // if (this.state.dm === true) {
-    //   return (
-    //     <Redirect to='/dm_chat' />
-    //   )
-    // }
+    if (this.state.dm === true) {
+      return (
+        <Redirect to='/dm_chat' />
+      )
+    }
 
     if (this.state.showPasswordInput) {
       return (
-        <div className="container content-section row col-lg-8 col-lg-offset-2">
-          <br></br>
-          <br></br>
-          Please EnterPassword:
-            <form onSubmit={this.submitPasswordForm}>
-            <input type="text"
-              name="eventpassword"
-              value={this.state.passwordInput}
-              onChange={this.handlePasswordChange}
-            />
-            <br></br>
-            <input type="submit" value="Submit" />
-            <input type="button" value="Return to Home" onClick={this.redirectHome} />
-          </form>
-          <div ref={(el) => this.messagesEnd = el} />
+        <div>
+        <Header 
+          brand="SPEAKEASY"
+        />
+
+        <section>
+          <div className="container content-section text-center">
+            <div className="container text-center row col-md-8 col-md-offset-2">
+              <h2>Please EnterPassword:</h2>
+              <form onSubmit={this.submitPasswordForm}>
+              <input type="text"
+                name="eventpassword"
+                value={this.state.passwordInput}
+                onChange={this.handlePasswordChange}
+              />
+              <br></br>
+              {this.renderPasswordButton()}
+              {this.renderCancelButton()}
+            </form>
+            <div ref={(el) => this.messagesEnd = el} />
+              </div>
+          </div>
+        </section>
         </div>
       )
     } else {
       return (
         <div>
-          <Header />
+          
+          <Header 
+            brand="SPEAKEASY"
+          />
 
-          <section id="portfolio">
-            <div className="gallery">
-              <ul>
-                {this.renderChatLog()}
-                {this.state.isInput ? null : <div>please enter text</div>}
-              </ul>
-            </div>
+          <section id="contact">
+            <ChatLog
+              roomMessages={this.props.messages}
+              dmClick={this.handleDMClick}
+            />
           </section>
 
           <section>
-            <div className="container content-section row col-lg-8 col-lg-offset-2">
-              <div id="profileform">
-                <form onSubmit={this.handleSendClick} >
-                  <input
-                    className="form-control"
-                    id="chat-form"
-                    type="text"
-                    onChange={this.handleInputChange}
-                    value={this.state.text}
-                    onKeyPress={this.handleKeyPress}
-                  />
-                  {this.renderSendButton()}
-                  {this.renderCloseEventButton()} 
-                </form>
+            <form onSubmit={this.handleSendClick} id="contactform" className="text-center">
+              <div>
+                <ul>
+                  <Grid>
+                    <Col>
+                    <input
+                      className="msg-input"
+                      placeholder="Your message here *"
+                      type="text"
+                      onChange={this.handleInputChange}
+                      value={this.state.text}
+                    />
+                    </Col>
+                  </Grid>
+                </ul>
               </div>
-            </div>
+            </form>
+          </section>
+
+          <section>
+            <ul className="text-center">
+              <Grid>
+                <Col>
+                  {this.renderSendButton()}
+                  {this.renderCloseEventButton()}
+                </Col>
+              </Grid>
+            </ul>
           </section>
 
           <section>
