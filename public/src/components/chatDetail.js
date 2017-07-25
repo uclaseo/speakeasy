@@ -13,7 +13,7 @@ const ChatDetail = ({ message, dmClick }) => {
           header={message.user_name}
         >
           {_.map(message.images, (image)=>{
-            return <img className="thumbnail" src={image}/>
+            return <img className="thumb" src={image}/>
           })}
         {message.text}
 

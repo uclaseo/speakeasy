@@ -143,7 +143,7 @@ class Home extends Component {
     if (this.props.nearbyEvents.length !== 0) {
       events = this.props.nearbyEvents.map((event, idx) => {
         return (
-          <div key={idx}>
+          <div key={idx} >
             <NearbyEventDetail
               idx={idx}
               event={event}
@@ -192,13 +192,15 @@ class Home extends Component {
           </div>
         </section>
 
-        <section id="portfolio">
+            <div className="divCenter">  
+        <section id="portfolio" className="portfolio">
           <div className="gallery">
-            <ul>
+            <ul >
               {this.renderEvents()}
             </ul>
           </div>
         </section>
+            </div>  
 
       </div>
     )

@@ -59,7 +59,7 @@ class User_Events extends Component {
           <Link to="/previouseventphotos"
           onClick={() => this.handlePreviousEventPhotos(event)}>
             <li className="col-md-3">
-              <img src={event.event.eventPhoto} />
+              <img src={event.event.eventPhoto || `http://unsplash.it/680/380?random=${index}`} />
               <div className="text-center">
                 <p>
                 {event.event.eventName}
