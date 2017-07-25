@@ -1,59 +1,65 @@
-import React, {Component} from 'react';
-import {connect} from 'react-redux';
+import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import Header from '../components/header';
+import Portfolio from '../components/portfolio';
 
 class previousEventPhotos extends Component {
-  constructor(props){
+  constructor(props) {
     super(props);
 
     this.renderImages = this.renderImages.bind(this);
   }
 
+  renderMessage() {
+    let msg;
+    if (this.props.photos.length) {
+      msg = 'EVENT IMAGES';
+    } else {
+      msg = 'NO EVENT IMAGES';
+    }
+    return (
+      <div className="">
+        <h2>{msg}</h2>
+      </div>
+    );
+  }
 
   renderImages() {
     let images;
-    console.log(this.props.photos);
+    if (this.props.photos.length) {
+      images = this.props.photos.map((photo, idx) => {
+        return (
+          <div key={idx} className="event-detail">
+            <li>
+              <img src={photo.imageLink} />
+            </li>
 
-    if (!this.props.photos.length) {
-      return (
-        <section>
-          <div className="container content-section text-center">
-            <div className="container text-center row col-md-8 col-md-offset-2 row">
-                <h1>
-                  no images
-                  </h1>
-            </div>
           </div>
-        </section>
-      )
+        )
+      })
     }
-    images = this.props.photos.map((photo, index) => {
-      return (
-        <div key={index} className="event-detail">
-          <li className="col-md-3">
-             <img src={photo.imageLink} /> 
-          </li>
-
-        </div>
-      )
-    })
-
     return images;
   }
-  
+
 
   render() {
     return (
       <div>
-        <Header />
+        <Header
+          brand="SPEAKEASY"
+        />
 
-        <section id="portfolio">
-          <div className="gallery">
-            <ul>
-              {this.renderImages()}
-            </ul>
+        <section>
+          <div className="container content-section text-center">
+            <div className="container text-center row col-md-8 col-md-offset-2">
+              {this.renderMessage()}
+            </div>
           </div>
         </section>
+
+        <Portfolio
+          renderEvents={this.renderImages}
+        />
       </div>
     )
   }
