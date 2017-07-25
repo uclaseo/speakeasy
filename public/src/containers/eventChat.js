@@ -419,35 +419,37 @@ class EventChat extends Component {
               roomMessages={this.props.messages}
               dmClick={this.handleDMClick}
             />
+          </section>
 
-            <div className="container content-section">
-              <div className="row">
-                <div className="col-lg-8 col-lg-offset-2">
-                  <form
-                    onSubmit={this.handleSendClick} id="contactform" className="msg-input text-center">
-                      <input
-                        placeholder="Your message here *"
-                        type="text"
-                        onChange={this.handleInputChange}
-                        value={this.state.text}
-                      />
-
-
-                      <div className="">
-                        <ul>
-                          <Grid>
-                            <Col>
-                              {this.renderSendButton()}
-                              {this.renderCloseEventButton()}
-                            </Col>
-                          </Grid>
-                        </ul>
-                    </div>
-
-                  </form>
-                </div>
+          <section>
+            <form onSubmit={this.handleSendClick} id="contactform" className="text-center">
+              <div>
+                <ul>
+                  <Grid>
+                    <Col>
+                    <input
+                      className="msg-input"
+                      placeholder="Your message here *"
+                      type="text"
+                      onChange={this.handleInputChange}
+                      value={this.state.text}
+                    />
+                    </Col>
+                  </Grid>
+                </ul>
               </div>
-            </div>
+            </form>
+          </section>
+
+          <section>
+            <ul className="text-center">
+              <Grid>
+                <Col>
+                  {this.renderSendButton()}
+                  {this.renderCloseEventButton()}
+                </Col>
+              </Grid>
+            </ul>
           </section>
 
           <section>

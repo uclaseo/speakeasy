@@ -132,41 +132,43 @@ class DMChat extends Component {
       <div>
         <Header />
  
-      <section id="contact">
-        <DMLog
-          directMessages={this.props.dmMessages}
-        />
+        <section id="contact">
+          <DMLog
+            directMessages={this.props.dmMessages}
+          />
+        </section>
 
-            <div className="container content-section">
-              <div className="row">
-                <div className="col-lg-8 col-lg-offset-2">
-                  <form
-                      id="contactform" className="msg-input text-center">
-                      <input
-                        placeholder="Your message here *"
-                        type="text"
-                        onChange={this.handleInputChange}
-                        value={this.state.text}
-                      />
-
-                      <div className="">
-                        <ul>
-                          <Grid>
-                            <Col>
-                              {this.renderSendButton()}
-                            </Col>
-                          </Grid>
-                        </ul>
-                    </div>
-
-                  </form>
-                </div>
-              </div>
+        <section>
+          <form onSubmit={this.handleSendClick} id="contactform" className="text-center">
+            <div className="msg-input">
+              <ul>
+                <Grid>
+                  <Col>
+                  <input
+                    className="msg-input"
+                    placeholder="Your message here *"
+                    type="text"
+                    onChange={this.handleInputChange}
+                    value={this.state.text}
+                  />
+                  </Col>
+                </Grid>
+              </ul>
             </div>
+          </form>
+        </section>
 
-      </section>
+        <section>
+          <ul className="text-center">
+            <Grid>
+              <Col>
+                {this.renderSendButton()}
+              </Col>
+            </Grid>
+          </ul>
+        </section>
 
-                <div ref={(el) => this.messagesEnd = el} />
+        <div ref={(el) => this.messagesEnd = el} />
         
 
       </div>

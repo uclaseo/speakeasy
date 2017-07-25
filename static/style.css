@@ -720,4 +720,5 @@ textarea.error {
 
 .msg-input {
     margin: auto;
+    border: solid 1px red;
 }
