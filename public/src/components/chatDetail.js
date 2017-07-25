@@ -8,12 +8,10 @@ const ChatDetail = ({ message, dmClick }) => {
 
   return (
     <div id="contactform">
-      <Link to="/dm_chat">
         <div className="my-chat-detail" onClick={() => { dmClick(message) }}>
           <p style={nameStyle}>{message.user_name}</p>
           <p style={msgStyle}>{message.text}</p>
         </div>
-      </Link>
     </div >
   )
 }
