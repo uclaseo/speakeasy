@@ -6,7 +6,6 @@ import { AppContainer } from 'react-hot-loader';
 import ReduxPromise from 'redux-promise';
 import rootReducer from './src/reducers/index';
 import App from './src/components/app';
-import thunk from 'redux-thunk';
 
 const store = createStore(
   rootReducer,

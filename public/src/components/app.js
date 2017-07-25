@@ -11,11 +11,8 @@ import PossibleFriendsList from '../containers/possibleFriendsList';
 import Home from '../containers/home';
 import Event_Setting from '../containers/event_setting';
 import EventChat from '../containers/eventChat';
-import OpenEventsList from '../containers/openEvents';
 import Landing_Page from '../containers/landing_page';
-import Chat from '../components/chat';
 import DMChat from '../containers/dmChat';
-import Upload_Template from '../containers/upload_template';
 import previousEventPhotos from '../containers/previousEventPhotos';
 
 const auth = new Auth();
@@ -104,14 +101,7 @@ export default class App extends Component {
                 render={props => !auth.isAuthenticated()
                   ? <Redirect to="/" />
                   : <EventChat auth={auth} {...props} />} />
-              <Route
-                path="/open_events"
-                render={props => !auth.isAuthenticated()
-                  ? <Redirect to="/" />
-                  : <OpenEventsList auth={auth} {...props} />} />
-              <Route path='/upload' component={Upload_Template} />
               <Route path='/dm_chat' component={DMChat} />
-              <Route path="/upload" component={Upload_Template} />
               <Route
                   path="/previouseventphotos"
                   component={previousEventPhotos}
