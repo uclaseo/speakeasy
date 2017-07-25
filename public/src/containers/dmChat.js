@@ -171,8 +171,7 @@ class DMChat extends Component {
         </section>
 
         <div ref={(el) => this.messagesEnd = el} />
-        
-
+      
       </div>
     )
   }

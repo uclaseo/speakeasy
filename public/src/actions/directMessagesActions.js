@@ -4,6 +4,7 @@ export const CLEAR_DIRECT_MESSAGES = 'CLEAR_DIRECT_MESSAGES'
 
 export function recentDirectMessages(messages) {
   let recentMessages = messages.reverse()
+  console.log('recentMessages::::', recentMessages);
   return {
     type: RECENT_DIRECT_MESSAGES,
     payload: recentMessages

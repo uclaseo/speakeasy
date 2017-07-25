@@ -9,6 +9,7 @@ const DMLog = ({ directMessages }) => {
       <div key={message._id}>
         <DMDetail
           message={message}
+          key={message._id}
         />
       </div>
     )
@@ -16,11 +17,13 @@ const DMLog = ({ directMessages }) => {
 
   return (
     <div>
+      <ul>
       <Grid>
         <Col>
           {messages}
         </Col>
       </Grid>
+      </ul>
     </div>
   )
 }
