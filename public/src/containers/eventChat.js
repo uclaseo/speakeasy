@@ -8,6 +8,7 @@ import { createDMRoom } from '../actions/dmRoomsActions'
 import { Redirect } from 'react-router-dom'
 import { Link } from 'react-router-dom';
 import axios from 'axios'
+import Webcam from 'react-webcam';
 import Header from '../components/header';
 import { Col, Grid, Row } from 'react-bootstrap';
 
@@ -35,6 +36,7 @@ class EventChat extends Component {
 
     this.handleInputChange = this.handleInputChange.bind(this)
     this.handleSendClick = this.handleSendClick.bind(this)
+    this.handleKeyPress = this.handleKeyPress.bind(this)
     this.handleCloseClick = this.handleCloseClick.bind(this)
     this.handleDMClick = this.handleDMClick.bind(this)
     this._handleLogIn = this._handleLogIn.bind(this)
@@ -71,7 +73,7 @@ class EventChat extends Component {
   }
 
   scrollToBottom() {
-    this.messagesEnd.scrollIntoView({ behavior: 'smooth' })
+    // this.messagesEnd.scrollIntoView({ behavior: 'smooth' })
   }
 
   handleInputChange(e) {
@@ -155,6 +157,54 @@ class EventChat extends Component {
       .catch((error) => {
         console.log('error', error);
       })
+  }
+
+  handleKeyPress(event) {
+    if (event.key === 'Enter') {
+      if (this.state.text !== '') {
+        if (this.state.files.length !== 0) {
+          const images = {};
+          const imageLink = {};
+          const text = this.state.text;
+          this.state.files.map((file, index) => {
+            images[index] = Math.floor(Math.random() * 100000) + file.name,
+              imageLink[index] = `https://s3-us-west-1.amazonaws.com/hrlaspeakeasy/${images[index]}`
+          });
+          axios.post('/api/event/image/upload/geturl', images)
+            .then((response) => {
+              response.data.map((eachFile, index) => {
+                this.registerImageUrl(eachFile)
+                axios.put(eachFile.url, this.state.files[index])
+                  .then(() => {
+                    socket.emit('newmessage', {
+                      event_id: this.props.event.id,
+                      user_name: this.props.user_name,
+                      user_id: this.props.user_id,
+                      text: text
+                    }, imageLink)
+                  })
+              })
+            })
+            .then(() => {
+              this.setState({
+                text: '',
+                files: [],
+                imagePreviewUrls: []
+              })
+            })
+        } else {
+          socket.emit('newmessage', {
+            event_id: this.props.event.id,
+            user_name: this.props.user_name,
+            user_id: this.props.user_id,
+            text: this.state.text
+          });
+          this.setState({
+            isInput: false
+          })
+        }
+      }
+    }
   }
 
   handleCloseClick(event) {
@@ -346,7 +396,7 @@ class EventChat extends Component {
     if (this.props.active_event) {
       msg = this.props.active_event.eventName;
     } else {
-      msg = 'hekko';
+      msg = '';
     }
 
     return (
@@ -422,7 +472,6 @@ class EventChat extends Component {
               </div>
             </div>
           </section>
-
 
           <section id="contact">
             <ChatLog
