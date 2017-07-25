@@ -421,8 +421,8 @@ img {
     /* margin: 0; */
     /*setting below ensure same size and stuff*/
     padding: 10px; 
-    width:250px;
-    height:250px;
+    width:400px;
+    height:300px;
     background-size:cover; 
     background-position:center center; 
     background-repeat:no-repeat;     
