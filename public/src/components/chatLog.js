@@ -16,7 +16,7 @@ const ChatLog = ({ roomMessages, dmClick, enterText }) => {
   })
 
   return (
-    <div className="my-log">
+    <div className="msg-input">
       <ul>
       <Grid>
         <Col>

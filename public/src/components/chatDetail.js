@@ -7,7 +7,7 @@ const ChatDetail = ({ message, dmClick }) => {
   let msgStyle = { margin: '0 0 0 0px', fontStyle: 'italic' }
 
   return (
-    <div id="profileform">
+    <div id="contactform">
       <Link to="/dm_chat">
         <div className="my-chat-detail" onClick={() => { dmClick(message) }}>
           <p style={nameStyle}>{message.user_name}</p>

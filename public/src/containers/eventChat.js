@@ -10,6 +10,8 @@ import { Link } from 'react-router-dom';
 import axios from 'axios'
 import Webcam from 'react-webcam';
 import Header from '../components/header';
+import { Col, Grid, Row } from 'react-bootstrap';
+
 
 
 const socket = io();
@@ -425,15 +427,25 @@ class EventChat extends Component {
                 <div class="col-lg-8 col-lg-offset-2">
                   <form
                     onSubmit={this.handleSendClick} id="contactform" className="msg-input text-center">
-                    <input
-                      placeholder="Your message here *"
-                      type="text"
-                      onChange={this.handleInputChange}
-                      value={this.state.text}
-                    />
-     
-                      {this.renderSendButton()}
-                      {this.renderCloseEventButton()}
+       
+                      <input
+                        placeholder="Your message here *"
+                        type="text"
+                        onChange={this.handleInputChange}
+                        value={this.state.text}
+                      />
+
+
+                    <div className="">
+                      <ul>
+                        <Grid>
+                          <Col>
+                            {this.renderSendButton()}
+                            {this.renderCloseEventButton()}
+                          </Col>
+                        </Grid>
+                      </ul>
+                    </div>
                   </form>
                 </div>
               </div>
