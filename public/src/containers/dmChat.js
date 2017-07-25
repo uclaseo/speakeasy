@@ -3,11 +3,13 @@ import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import io from 'socket.io-client'
 import DMLog from '../components/dmLog'
-import { Image, Glyphicon, InputGroup, PageHeader, Col, Button, FormGroup, FormControl } from 'react-bootstrap'
+import { Image, Glyphicon, InputGroup, PageHeader, Col, Grid, Row, Button, FormGroup, FormControl } from 'react-bootstrap'
 import { recentDirectMessages, newDirectMessage } from '../actions/directMessagesActions'
 import { Redirect } from 'react-router-dom'
 import axios from 'axios'
-import Header from '../components/header';
+import Header from '../components/header'
+
+
 
 
 const socket = io();
@@ -113,18 +115,6 @@ class DMChat extends Component {
     })
   }
 
-  renderDMLog() {
-    return (
-      <div>
-        <DMLog
-          className=""
-          directMessages={this.props.dmMessages}
-          dmClick={this.handleDMClick}
-        />
-      </div>
-    )
-  }
-
   renderSendButton() {
     let send =
       <button
@@ -141,31 +131,43 @@ class DMChat extends Component {
     return (
       <div>
         <Header />
+ 
+      <section id="contact">
+        <DMLog
+          directMessages={this.props.dmMessages}
+        />
 
-        <section id="portfolio">
-          <div className="gallery">
-            <ul>
-              {this.renderDMLog()}
-            </ul>
-          </div>
-        </section>
+            <div class="container content-section">
+              <div class="row">
+                <div class="col-lg-8 col-lg-offset-2">
+                  <form
+                      id="contactform" className="msg-input text-center">
+                      <input
+                        placeholder="Your message here *"
+                        type="text"
+                        onChange={this.handleInputChange}
+                        value={this.state.text}
+                      />
 
-        <section>
-          <div className="container content-section row col-lg-8 col-lg-offset-2">
-            <div id="profileform">
-              <form onSubmit={this.handleSendClick} >
-                <input
-                  className="form-control"
-                  id="chat-form"
-                  type="text"
-                  onChange={this.handleInputChange}
-                  value={this.state.text}
-                />
-                {this.renderSendButton()}
-              </form>
+                      <div className="">
+                        <ul>
+                          <Grid>
+                            <Col>
+                              {this.renderSendButton()}
+                            </Col>
+                          </Grid>
+                        </ul>
+                    </div>
+
+                  </form>
+                </div>
+              </div>
             </div>
-          </div>
-        </section>
+
+      </section>
+
+                <div ref={(el) => this.messagesEnd = el} />
+        
 
       </div>
     )

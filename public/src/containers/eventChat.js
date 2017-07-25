@@ -414,20 +414,17 @@ class EventChat extends Component {
         <div>
           <Header />
 
-
-
           <section id="contact">
-          <ChatLog
-            roomMessages={this.props.messages}
-            dmClick={this.handleDMClick}
-          />
+            <ChatLog
+              roomMessages={this.props.messages}
+              dmClick={this.handleDMClick}
+            />
 
             <div class="container content-section">
               <div class="row">
                 <div class="col-lg-8 col-lg-offset-2">
                   <form
                     onSubmit={this.handleSendClick} id="contactform" className="msg-input text-center">
-       
                       <input
                         placeholder="Your message here *"
                         type="text"
@@ -436,21 +433,21 @@ class EventChat extends Component {
                       />
 
 
-                    <div className="">
-                      <ul>
-                        <Grid>
-                          <Col>
-                            {this.renderSendButton()}
-                            {this.renderCloseEventButton()}
-                          </Col>
-                        </Grid>
-                      </ul>
+                      <div className="">
+                        <ul>
+                          <Grid>
+                            <Col>
+                              {this.renderSendButton()}
+                              {this.renderCloseEventButton()}
+                            </Col>
+                          </Grid>
+                        </ul>
                     </div>
+
                   </form>
                 </div>
               </div>
             </div>
-
           </section>
 
           <section>
