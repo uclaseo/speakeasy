@@ -414,7 +414,9 @@ class EventChat extends Component {
     if (this.state.showPasswordInput) {
       return (
         <div>
-        <Header />
+        <Header 
+          brand="SPEAKEASY"
+        />
 
         <section>
           <div className="container content-section text-center">

@@ -158,7 +158,7 @@ class Home extends Component {
   }
 
   render() {
-    console.log("this.props.nearbyEvents:::", this.props.nearbyEvents);
+    console.log("this.props:::", this.props);
     return (
       <div>
 

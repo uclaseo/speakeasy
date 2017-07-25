@@ -15,7 +15,7 @@ class previousEventPhotos extends Component {
     if (this.props.photos.length) {
       msg = 'EVENT IMAGES';
     } else {
-      msg = 'NO EVENT IMAGES';
+      msg = 'NO EVENT IMAGES YET';
     }
     return (
       <div className="">
@@ -43,6 +43,7 @@ class previousEventPhotos extends Component {
 
 
   render() {
+
     return (
       <div>
         <Header
