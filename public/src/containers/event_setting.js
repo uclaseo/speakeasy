@@ -57,8 +57,7 @@ class Event_Setting extends Component {
           <Dropzone onDrop={this.onDrop} accept="image/jpeg, image/png" className="center-block">
             <img
               src={this.state.tempEventProfilePicture || 'http://bit.ly/2toy1xv'}
-              id="event-profile-pic"
-              className="img-rounded img-responsive center-block"
+              className="img-rounded img-responsive center-block profile-pic"
               width="608"
               height="472"
             />

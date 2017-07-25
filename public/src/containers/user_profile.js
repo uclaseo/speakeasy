@@ -32,8 +32,7 @@ class User_Profile extends Component {
           <Dropzone onDrop={this.onDrop} accept="image/jpeg, image/png" className="center-block">
             <img
               src={this.props.profile.photo}
-              id="user-profile-pic"
-              className="img-rounded img-responsive center-block"
+              className="img-rounded img-responsive center-block profile-pic"
               width="456" 
               height="708"
             />

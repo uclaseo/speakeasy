@@ -56,7 +56,9 @@ class DirectMessageList extends Component {
     return (
       <div>
 
-        <Header />
+        <Header 
+           brand="SPEAKEASY"
+        />
 
         <section>
           <div className="container content-section">

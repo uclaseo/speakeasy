@@ -439,7 +439,10 @@ class EventChat extends Component {
     } else {
       return (
         <div>
-          <Header />
+          
+          <Header 
+            brand="SPEAKEASY"
+          />
 
           <section id="contact">
             <ChatLog

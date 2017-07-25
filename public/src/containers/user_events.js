@@ -1,10 +1,13 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
-import {bindActionCreators} from 'redux';
+import { bindActionCreators } from 'redux';
 import axios from 'axios';
+import Header from '../components/header';
+import Portfolio from '../components/portfolio';
 
-import {setActivePreviousEvent, clearActivePreviousEvent} from '../actions/activePreviousEvent'
+
+import { setActivePreviousEvent, clearActivePreviousEvent } from '../actions/activePreviousEvent'
 
 class User_Events extends Component {
   constructor(props) {
@@ -14,6 +17,8 @@ class User_Events extends Component {
       photos: []
     }
     this.handlePreviousEventPhotos = this.handlePreviousEventPhotos.bind(this);
+    this.renderEvents = this.renderEvents.bind(this);
+
   }
 
   componentWillMount() {
@@ -52,21 +57,21 @@ class User_Events extends Component {
   renderEvents() {
     console.log("this.state.userEvents:::", this.state.userEvents);
     let events = null;
-    if (this.state.userEvents.length !== 0) {
-      events = this.state.userEvents.map((event, index) => {
+    if (this.state.userEvents.length) {
+      events = this.state.userEvents.map((event, idx) => {
         return (
-          <div key={index} className="event-detail">
-          <Link to="/previouseventphotos"
-          onClick={() => this.handlePreviousEventPhotos(event)}>
-            <li className="col-md-3">
-              <img src={event.event.eventPhoto || `http://unsplash.it/680/380?random=${index}`} />
-              <div className="text-center">
-                <p>
-                {event.event.eventName}
-                </p>
-              </div>
-            </li>
-          </Link>
+          <div key={idx} >
+            <Link to="/previouseventphotos"
+              onClick={() => this.handlePreviousEventPhotos(event)}>
+              <li>
+                <img src={event.event.eventPhoto || `http://unsplash.it/680/380?random=${idx}`} />
+                <div className="text-center">
+                  <p>
+                    {event.event.eventName}
+                  </p>
+                </div>
+              </li>
+            </Link>
           </div>
         )
       })
@@ -83,38 +88,25 @@ class User_Events extends Component {
     return (
       <div>
 
-        <header className="intro">
-          <div className="intro-body">
-            <div className="container row col-md-8 col-md-offset-2">
-              <div className="row">
-                <div className="col-md-8 col-md-offset-2">
-                  <h1 className="brand-heading">SPEAKEASY</h1>
-                </div>
-              </div>
-            </div>
-          </div>
-        </header>
+        <Header 
+           brand="SPEAKEASY"
+        />
 
         <section>
           <div className="container content-section text-center">
             <div className="row">
               <div className="container text-center row col-md-8 col-md-offset-2">
                 <ul>
-                {this.renderEventMessage()}
+                  {this.renderEventMessage()}
                 </ul>
               </div>
             </div>
           </div>
         </section>
 
-        <section id="portfolio">
-          <div className="gallery">
-            <ul>
-              {this.renderEvents()}
-            </ul>
-            
-          </div>
-        </section>
+        <Portfolio
+          renderEvents={this.renderEvents}
+        />
 
       </div>
     )

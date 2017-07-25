@@ -130,7 +130,9 @@ class DMChat extends Component {
 
     return (
       <div>
-        <Header />
+        <Header 
+           brand="SPEAKEASY"
+        />
  
         <section id="contact">
           <DMLog

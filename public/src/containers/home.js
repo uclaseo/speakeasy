@@ -12,6 +12,8 @@ import NearbyEventDetail from '../components/nearbyEventDetail';
 import { setActiveEvent } from '../actions/activeEventAction';
 import { clearEventMessages } from '../actions/eventMessagesActions';
 import Header from '../components/header';
+import Portfolio from '../components/portfolio';
+
 
 const ROOT_URL = 'localhost:8080';
 const auth = new Auth();
@@ -30,6 +32,7 @@ class Home extends Component {
     this.getNearbyEvents = this.getNearbyEvents.bind(this);
     this.getUserLocation = this.getUserLocation.bind(this);
     this.handleEventClick = this.handleEventClick.bind(this);
+    this.renderEvents = this.renderEvents.bind(this);
   }
 
   componentDidMount() {
@@ -119,27 +122,8 @@ class Home extends Component {
   }
 
   renderEvents() {
-    console.log("this.props.nearbyEvents:::", this.props.nearbyEvents);
     let events = null;
-    if (this.props.nearbyEvents.length !== 0) {
-      events = this.props.nearbyEvents.map((event, idx) => {
-        return (
-          <div key={idx}>
-            <NearbyEventDetail
-              idx={idx}
-              event={event}
-              handleEventClick={this.handleEventClick}
-            />
-          </div>
-        )
-      })
-    }
-    return events;
-  }
-
-  renderEvents() {
-    let events = null;
-    if (this.props.nearbyEvents.length !== 0) {
+    if (this.props.nearbyEvents.length) {
       events = this.props.nearbyEvents.map((event, idx) => {
         return (
           <div key={idx} >
@@ -174,10 +158,13 @@ class Home extends Component {
   }
 
   render() {
+    console.log("this.props.nearbyEvents:::", this.props.nearbyEvents);
     return (
       <div>
 
-        <Header />
+        <Header
+          brand="SPEAKEASY"
+        />
 
         <section>
           <div className="container content-section text-center">
@@ -191,15 +178,9 @@ class Home extends Component {
           </div>
         </section>
 
-            <div className="divCenter">  
-        <section id="portfolio" className="portfolio">
-          <div className="gallery">
-            <ul >
-              {this.renderEvents()}
-            </ul>
-          </div>
-        </section>
-            </div>  
+        <Portfolio
+          renderEvents={this.renderEvents}
+        />
 
       </div>
     )
