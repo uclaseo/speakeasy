@@ -99,10 +99,13 @@ class User_Events extends Component {
             </div>
           </div>
         </section>
-
-        <Portfolio
-          renderEvents={this.renderEvents}
-        />
+        <section>
+          <div className="container-fluid">
+            <Portfolio
+              renderEvents={this.renderEvents}
+            />
+          </div>
+        </section>
 
       </div>
     )
