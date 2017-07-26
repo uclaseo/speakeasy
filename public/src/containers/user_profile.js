@@ -6,6 +6,8 @@ import { Link } from 'react-router-dom';
 import Dropzone from 'react-dropzone';
 import axios from 'axios';
 import Header from '../components/header';
+import { Col, Grid, Row } from 'react-bootstrap';
+
 
 
 import Auth from '../Auth0/Auth0';
@@ -33,7 +35,7 @@ class User_Profile extends Component {
             <img
               src={this.props.profile.photo}
               className="img-rounded img-responsive center-block profile-pic"
-              width="456" 
+              width="456"
               height="708"
             />
           </Dropzone>
@@ -47,7 +49,7 @@ class User_Profile extends Component {
     const className = `form-group ${touched && error ? 'has-error' : ''}`;
 
     return (
-      <div className={className}>
+      <div className="settings-form">
         <label>
           {field.label}
         </label>
@@ -153,49 +155,59 @@ class User_Profile extends Component {
 
   render() {
     const { handleSubmit } = this.props;
+
     return (
       <div>
 
-        <Header 
+        <Header
           renderPhoto={this.renderPhoto}
-          label={'Your profile photo'}
+          label={''}
         />
 
         <section>
-          <div className="container content-section row col-lg-8 col-lg-offset-2">
-            <form onSubmit={handleSubmit(this.onSubmit.bind(this))} id="profileform">
-              <div className="form">
-                <Field
-                  label="Your name"
-                  name="name"
-                  type="text"
-                  placeholder={this.showPlaceHolder('name')}
-                  component={this.renderField}
-                />
-                <Field
-                  label="Create a chat handle"
-                  name="handle"
-                  type="text"
-                  placeholder={this.showPlaceHolder('handle')}
-                  component={this.renderField}
-                />
-              </div>
+          <form onSubmit={handleSubmit(this.onSubmit.bind(this))} id="contactform" className="text-center">
 
-              <div className="container text-center row col-md-8 col-md-offset-2">
-                <button type="submit" className="btnghost">Submit</button>
-                <Link to="/home">
-                  <button type="button" className="btnghost">Cancel</button>
-                </Link>
-                {this.renderSuccess()}
-              </div>
-              
-            </form>
-          </div>
+            <div className="settings">
+              <ul className="text-left">
+                <Grid>
+                  <Col>
+                    <Field
+                      label="Your name"
+                      name="name"
+                      type="text"
+                      placeholder={this.showPlaceHolder('name')}
+                      component={this.renderField}
+                    />
+                    <Field
+                      label="Create a chat handle"
+                      name="handle"
+                      type="text"
+                      placeholder={this.showPlaceHolder('handle')}
+                      component={this.renderField}
+                    />
+                  </Col>
+                </Grid>
+              </ul>
+            </div>
+
+            <div className="container text-center row col-md-8 col-md-offset-2">
+              <button type="submit" className="btnghost2">Submit</button>
+              <Link to="/home">
+                <button type="button" className="btnghost2">Cancel</button>
+              </Link>
+              {this.renderSuccess()}
+            </div>
+
+          </form>
         </section>
+
+
 
       </div>
     );
   }
+
+
 }
 
 function validate(values) {

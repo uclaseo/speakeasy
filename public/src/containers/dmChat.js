@@ -114,7 +114,7 @@ class DMChat extends Component {
   renderSendButton() {
     let send =
       <button
-        className="btnghost"
+        className="btnghost2"
         onClick={this.handleSendClick}>
         <i className="fa"></i>
         Send
@@ -126,10 +126,10 @@ class DMChat extends Component {
 
     return (
       <div>
-        <Header 
-           brand="SPEAKEASY"
+        <Header
+          brand="SPEAKEASY"
         />
- 
+
         <section id="contact">
           <DMLog
             directMessages={this.props.dmMessages}
@@ -142,13 +142,13 @@ class DMChat extends Component {
               <ul>
                 <Grid>
                   <Col>
-                  <input
-                    className="msg-input"
-                    placeholder="Your message here *"
-                    type="text"
-                    onChange={this.handleInputChange}
-                    value={this.state.text}
-                  />
+                    <input
+                      className="msg-input"
+                      placeholder="Your message here *"
+                      type="text"
+                      onChange={this.handleInputChange}
+                      value={this.state.text}
+                    />
                   </Col>
                 </Grid>
               </ul>
@@ -167,7 +167,7 @@ class DMChat extends Component {
         </section>
 
         <div ref={(el) => this.messagesEnd = el} />
-      
+
       </div>
     )
   }

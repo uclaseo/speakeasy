@@ -6,10 +6,10 @@ import ChatLog from '../components/chatLog'
 import { recentEventMessages, newEventMessage } from '../actions/eventMessagesActions'
 import { createDMRoom } from '../actions/dmRoomsActions'
 import { Redirect } from 'react-router-dom'
-import { Link } from 'react-router-dom';
+import { Link } from 'react-router-dom'
 import axios from 'axios'
-import Header from '../components/header';
-import { Col, Grid, Row } from 'react-bootstrap';
+import Header from '../components/header'
+import { Col, Grid, Row } from 'react-bootstrap'
 
 
 
@@ -35,6 +35,7 @@ class EventChat extends Component {
 
     this.handleInputChange = this.handleInputChange.bind(this)
     this.handleSendClick = this.handleSendClick.bind(this)
+    this.handleKeyPress = this.handleKeyPress.bind(this)
     this.handleCloseClick = this.handleCloseClick.bind(this)
     this.handleDMClick = this.handleDMClick.bind(this)
     this._handleLogIn = this._handleLogIn.bind(this)
@@ -71,7 +72,7 @@ class EventChat extends Component {
   }
 
   scrollToBottom() {
-    this.messagesEnd.scrollIntoView({ behavior: 'smooth' })
+    // this.messagesEnd.scrollIntoView({ behavior: 'smooth' })
   }
 
   handleInputChange(e) {
@@ -155,6 +156,54 @@ class EventChat extends Component {
       .catch((error) => {
         console.log('error', error);
       })
+  }
+
+  handleKeyPress(event) {
+    if (event.key === 'Enter') {
+      if (this.state.text !== '') {
+        if (this.state.files.length !== 0) {
+          const images = {};
+          const imageLink = {};
+          const text = this.state.text;
+          this.state.files.map((file, index) => {
+            images[index] = Math.floor(Math.random() * 100000) + file.name,
+              imageLink[index] = `https://s3-us-west-1.amazonaws.com/hrlaspeakeasy/${images[index]}`
+          });
+          axios.post('/api/event/image/upload/geturl', images)
+            .then((response) => {
+              response.data.map((eachFile, index) => {
+                this.registerImageUrl(eachFile)
+                axios.put(eachFile.url, this.state.files[index])
+                  .then(() => {
+                    socket.emit('newmessage', {
+                      event_id: this.props.event.id,
+                      user_name: this.props.user_name,
+                      user_id: this.props.user_id,
+                      text: text
+                    }, imageLink)
+                  })
+              })
+            })
+            .then(() => {
+              this.setState({
+                text: '',
+                files: [],
+                imagePreviewUrls: []
+              })
+            })
+        } else {
+          socket.emit('newmessage', {
+            event_id: this.props.event.id,
+            user_name: this.props.user_name,
+            user_id: this.props.user_id,
+            text: this.state.text
+          });
+          this.setState({
+            isInput: false
+          })
+        }
+      }
+    }
   }
 
   handleCloseClick(event) {
@@ -276,7 +325,7 @@ class EventChat extends Component {
   renderEmptyTextMessage() {
     let msg = this.state.isInput ? null : <div>please enter text</div>
     return (
-      {msg}
+      { msg }
     )
   }
 
@@ -286,7 +335,7 @@ class EventChat extends Component {
 
       closeEvent =
         <button
-          className="btnghost"
+          className="btnghost2"
           onClick={this.handleCloseClick}>
           <i className="fa"></i>
           Close
@@ -300,7 +349,7 @@ class EventChat extends Component {
   renderSendButton() {
     let send =
       <button
-        className="btnghost"
+        className="btnghost2"
         onClick={this.handleSendClick}>
         <i className="fa"></i>
         Send
@@ -311,7 +360,7 @@ class EventChat extends Component {
   renderPasswordButton() {
     let send =
       <button
-        className="btnghost"
+        className="btnghost2"
         type="submit"
         value="Submit">
         <i className="fa"></i>
@@ -321,27 +370,45 @@ class EventChat extends Component {
   }
 
   renderCancelButton() {
-    return(
-    <Link to="/home">
-      <button type="button" className="btnghost">Cancel</button>
-    </Link>
+    return (
+      <Link to="/home">
+        <button type="button" className="btnghost2">Cancel</button>
+      </Link>
     )
   }
 
   renderUploadPhoto() {
     let upload =
       <input
-        id="fileinput"
-        className=""
         type="file"
         accept="image/*"
         multiple="multiple"
         onChange={(event) => this.handleUpload(event)}
       />
-    return upload;
+    return (
+      <div className="photo-upload container-fluid">
+        <i>{upload}</i>
+      </div>
+    )
+  }
+
+  renderMessage() {
+    let msg;
+    if (this.props.active_event) {
+      msg = this.props.active_event.eventName;
+    } else {
+      msg = '';
+    }
+
+    return (
+      <div className="">
+        <h2>{msg}</h2>
+      </div>
+    );
   }
 
   render() {
+    console.log(this.props, this.props);
 
     if (this.state.closed === true) {
       return (
@@ -364,37 +431,48 @@ class EventChat extends Component {
     if (this.state.showPasswordInput) {
       return (
         <div>
-        <Header 
-          brand="SPEAKEASY"
-        />
+          <Header
+            brand="SPEAKEASY"
+          />
 
-        <section>
-          <div className="container content-section text-center">
-            <div className="container text-center row col-md-8 col-md-offset-2">
-              <h2>Please EnterPassword:</h2>
-              <form onSubmit={this.submitPasswordForm}>
-              <input type="text"
-                name="eventpassword"
-                value={this.state.passwordInput}
-                onChange={this.handlePasswordChange}
-              />
-              <br></br>
-              {this.renderPasswordButton()}
-              {this.renderCancelButton()}
-            </form>
-            <div ref={(el) => this.messagesEnd = el} />
+          <section>
+            <div className="container content-section text-center">
+              <div className="container text-center row col-md-8 col-md-offset-2">
+                <h2>Please EnterPassword:</h2>
+                <form onSubmit={this.submitPasswordForm}>
+                  <input type="text"
+                    name="eventpassword"
+                    value={this.state.passwordInput}
+                    onChange={this.handlePasswordChange}
+                  />
+                  <br></br>
+                  {this.renderPasswordButton()}
+                  {this.renderCancelButton()}
+                </form>
+                <div ref={(el) => this.messagesEnd = el} />
               </div>
-          </div>
-        </section>
+            </div>
+          </section>
         </div>
       )
     } else {
       return (
         <div>
-          
-          <Header 
+
+          <Header
             brand="SPEAKEASY"
           />
+
+
+          <section>
+            <div className="container content-section">
+              <div className="row">
+                <div className="container text-center row col-md-8 col-md-offset-2">
+                  {this.renderMessage()}
+                </div>
+              </div>
+            </div>
+          </section>
 
           <section id="contact">
             <ChatLog
@@ -409,13 +487,13 @@ class EventChat extends Component {
                 <ul>
                   <Grid>
                     <Col>
-                    <input
-                      className="msg-input"
-                      placeholder="Your message here *"
-                      type="text"
-                      onChange={this.handleInputChange}
-                      value={this.state.text}
-                    />
+                      <input
+                        className="msg-input"
+                        placeholder="Your message here *"
+                        type="text"
+                        onChange={this.handleInputChange}
+                        value={this.state.text}
+                      />
                     </Col>
                   </Grid>
                 </ul>
@@ -438,7 +516,6 @@ class EventChat extends Component {
             <div className="container content-section text-center">
               <div className="container text-center row col-md-8 col-md-offset-2 row">
                 {this.renderUploadPhoto()}
-                {this.renderImagePreview()}
               </div>
             </div>
           </section>
