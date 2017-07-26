@@ -194,9 +194,9 @@ class Event_Setting extends Component {
                     />
 
                     <div className="container text-center row col-md-8 col-md-offset-2">
-                      <button type="submit" className="btnghost">Submit</button>
+                      <button type="submit" className="btnghost2">Submit</button>
                       <Link to="/home">
-                        <button type="button" className="btnghost">Cancel</button>
+                        <button type="button" className="btnghost2">Cancel</button>
                       </Link>
                     </div>
 

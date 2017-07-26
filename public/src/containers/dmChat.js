@@ -114,7 +114,7 @@ class DMChat extends Component {
   renderSendButton() {
     let send =
       <button
-        className="btnghost"
+        className="btnghost2"
         onClick={this.handleSendClick}>
         <i className="fa"></i>
         Send

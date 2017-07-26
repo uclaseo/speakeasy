@@ -335,7 +335,7 @@ class EventChat extends Component {
 
       closeEvent =
         <button
-          className="btnghost"
+          className="btnghost2"
           onClick={this.handleCloseClick}>
           <i className="fa"></i>
           Close
@@ -349,7 +349,7 @@ class EventChat extends Component {
   renderSendButton() {
     let send =
       <button
-        className="btnghost"
+        className="btnghost2"
         onClick={this.handleSendClick}>
         <i className="fa"></i>
         Send
@@ -360,7 +360,7 @@ class EventChat extends Component {
   renderPasswordButton() {
     let send =
       <button
-        className="btnghost"
+        className="btnghost2"
         type="submit"
         value="Submit">
         <i className="fa"></i>
@@ -372,7 +372,7 @@ class EventChat extends Component {
   renderCancelButton() {
     return (
       <Link to="/home">
-        <button type="button" className="btnghost">Cancel</button>
+        <button type="button" className="btnghost2">Cancel</button>
       </Link>
     )
   }
@@ -380,14 +380,16 @@ class EventChat extends Component {
   renderUploadPhoto() {
     let upload =
       <input
-        id="fileinput"
-        className=""
         type="file"
         accept="image/*"
         multiple="multiple"
         onChange={(event) => this.handleUpload(event)}
       />
-    return upload;
+    return (
+      <div className="photo-upload container-fluid">
+        <i>{upload}</i>
+      </div>
+    )
   }
 
   renderMessage() {
@@ -514,7 +516,6 @@ class EventChat extends Component {
             <div className="container content-section text-center">
               <div className="container text-center row col-md-8 col-md-offset-2 row">
                 {this.renderUploadPhoto()}
-                {this.renderImagePreview()}
               </div>
             </div>
           </section>
