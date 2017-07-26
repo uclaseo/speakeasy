@@ -73,11 +73,13 @@ class Event_Setting extends Component {
     const { meta: { touched, error } } = field;
     const className = `form-group ${touched && error ? 'has-error' : ''}`;
     return (
-      <div className={className}>
+      <div className="settings-form">
         <label>
           {field.label}
         </label>
-        <input className="form-control" type="text" {...field.input} />
+        <input className="form-control"
+          type="text"
+          {...field.input} />
         <div className="help-block">
           {touched ? error : ''}
         </div>
@@ -168,7 +170,7 @@ class Event_Setting extends Component {
           <form onSubmit={handleSubmit(this.onSubmit.bind(this))} id="contactform" className="text-center">
 
             <div className="settings">
-              <ul>
+              <ul className="text-left">
                 <Grid>
                   <Col>
                     <Field

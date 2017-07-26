@@ -21,7 +21,6 @@ h4,
 h5,
 h6 {
     margin: 0 0 35px;
-    /* text-transform: uppercase;  */
     font-family: Montserrat, "Helvetica Neue", Helvetica, Arial, sans-serif;
     font-weight: 700;
     letter-spacing: 1px;
@@ -507,9 +506,10 @@ textarea.error {
 
 #contactform input,
 #contactform textarea {
+    margin: auto;
     border: 0px;
     border-bottom: 2px solid #333;
-    width: 1000px;
+    width: 500px;
     background-color: transparent;
     padding: 20px 0px;
     letter-spacing: 2px;
@@ -542,43 +542,6 @@ textarea.error {
 
 /* ------------------------------------ */
 
-#profileform {
-    /* display: inline; */
-}
-
-#profileform input,
-#profileform textarea {
-    border: 0px;
-    border-bottom: 2px solid #333;
-    width: 100%;
-    background-color: transparent;
-    padding: 20px 0px;
-    letter-spacing: 2px;
-    margin-bottom: 20px;
-}
-
-#profileform input#submit {
-    width: auto;
-    border: 2px solid;
-    padding: 10px 20px;
-    display: inline-block;
-}
-
-#profileform input#submit:hover {
-    background-color: #333;
-    color: #fff;
-    border: 2px solid #333;
-}
-
-#profileform input:focus,
-#profileform input:active,
-#profileform textarea:focus,
-#profileform textarea:active {
-    border-top: 0px;
-    border-bottom: 2px solid lightseagreen;
-    outline: 0;
-    outline: none;
-}
 
 .thumb {
     height: 50%;
@@ -664,10 +627,15 @@ textarea.error {
 
 .msg-input {
     margin: auto;
-    /* border: solid 1px red; */
 }
 
 .settings {
     background-color: #fff;
     margin-top: 100px;
+}
+
+.settings-form {
+    margin: auto;
+    width: 500px;
+    display: block;
 }

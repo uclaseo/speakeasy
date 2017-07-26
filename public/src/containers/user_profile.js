@@ -49,7 +49,7 @@ class User_Profile extends Component {
     const className = `form-group ${touched && error ? 'has-error' : ''}`;
 
     return (
-      <div className={className}>
+      <div className="settings-form">
         <label>
           {field.label}
         </label>
@@ -168,7 +168,7 @@ class User_Profile extends Component {
           <form onSubmit={handleSubmit(this.onSubmit.bind(this))} id="contactform" className="text-center">
 
             <div className="settings">
-              <ul>
+              <ul className="text-left">
                 <Grid>
                   <Col>
                     <Field
