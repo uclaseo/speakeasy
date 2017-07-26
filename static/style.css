@@ -637,8 +637,9 @@ textarea.error {
 }
 
 .portfolio {
-    width: 90%;
-    margin-left: 85px;
+    width: 100%;
+    margin-left: 10%;
+    margin-right: 10%;
     background-color: #f9f9f9;
 }
 
@@ -667,3 +668,5 @@ textarea.error {
     margin: auto;
     /* border: solid 1px red; */
 }
+
+

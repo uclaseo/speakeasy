@@ -60,19 +60,15 @@ class User_Events extends Component {
     if (this.state.userEvents.length) {
       events = this.state.userEvents.map((event, idx) => {
         return (
-          <div key={idx} >
-            <Link to="/previouseventphotos"
+            <li className="col-md-3">
+              <Link to="/previouseventphotos"
               onClick={() => this.handlePreviousEventPhotos(event)}>
-              <li>
                 <img src={event.event.eventPhoto || `http://unsplash.it/680/380?random=${idx}`} />
-                <div className="text-center">
                   <p>
                     {event.event.eventName}
                   </p>
-                </div>
-              </li>
-            </Link>
-          </div>
+              </Link>
+            </li>
         )
       })
     }
@@ -103,10 +99,13 @@ class User_Events extends Component {
             </div>
           </div>
         </section>
-
-        <Portfolio
-          renderEvents={this.renderEvents}
-        />
+        <section>
+          <div className="container-fluid">
+            <Portfolio
+              renderEvents={this.renderEvents}
+            />
+          </div>
+        </section>
 
       </div>
     )

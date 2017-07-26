@@ -126,13 +126,11 @@ class Home extends Component {
     if (this.props.nearbyEvents.length) {
       events = this.props.nearbyEvents.map((event, idx) => {
         return (
-          <div key={idx} >
-            <NearbyEventDetail
-              idx={idx}
-              event={event}
-              handleEventClick={this.handleEventClick}
-            />
-          </div>
+              <NearbyEventDetail
+                idx={idx}
+                event={event}
+                handleEventClick={this.handleEventClick}
+              />
         )
       })
     }
@@ -177,10 +175,14 @@ class Home extends Component {
             </div>
           </div>
         </section>
-
-        <Portfolio
-          renderEvents={this.renderEvents}
-        />
+        <section>
+          <div className="container-fluid">
+            <Portfolio
+              renderEvents={this.renderEvents}
+            />
+            
+          </div>
+        </section>
 
       </div>
     )

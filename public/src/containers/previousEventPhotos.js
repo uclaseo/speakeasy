@@ -29,12 +29,9 @@ class previousEventPhotos extends Component {
     if (this.props.photos.length) {
       images = this.props.photos.map((photo, idx) => {
         return (
-          <div key={idx} className="event-detail">
-            <li>
+            <li className="col-md-3">
               <img src={photo.imageLink} />
             </li>
-
-          </div>
         )
       })
     }
@@ -57,10 +54,13 @@ class previousEventPhotos extends Component {
             </div>
           </div>
         </section>
-
-        <Portfolio
-          renderEvents={this.renderImages}
-        />
+        <section>
+          <div className="container-fluid">
+            <Portfolio
+              renderEvents={this.renderImages}
+            />
+          </div>
+        </section>
       </div>
     )
   }
