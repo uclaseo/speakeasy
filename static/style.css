@@ -543,7 +543,7 @@ textarea.error {
 /* ------------------------------------ */
 
 #profileform {
-    display: inline;
+    /* display: inline; */
 }
 
 #profileform input,
@@ -669,4 +669,8 @@ textarea.error {
     /* border: solid 1px red; */
 }
 
+.settings {
+    background-color: #fff;
+    margin-top: 100px;
+}
 

@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { Field, reduxForm } from 'redux-form';
+import { Col, Grid, Row } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import { Redirect } from 'react-router-dom';
 import Auth from '../Auth0/Auth0';
@@ -9,6 +10,7 @@ import { fetchProfile } from '../actions/authAction';
 import { setActiveEventId, setCurrentEventLocation } from '../actions/index';
 import axios from 'axios';
 import Dropzone from 'react-dropzone';
+
 
 import { geolocated } from 'react-geolocated';
 import createBrowserHistory from 'history/createBrowserHistory';
@@ -159,41 +161,49 @@ class Event_Setting extends Component {
 
         <Header
           renderPhoto={this.renderPhoto}
-          label={'Click to change your event photo'}
+          label={''}
         />
 
-        <section>
-          <div className="container content-section row col-lg-8 col-lg-offset-2">
-            <form onSubmit={handleSubmit(this.onSubmit.bind(this))} id="profileform">
-              <Field
-                label="EventName"
-                name="eventname"
-                type="text"
-                component={this.renderField}
-              />
-              <Field
-                label="Password"
-                name="password"
-                type="text"
-                component={this.renderField}
-              />
+        <section >
+          <form onSubmit={handleSubmit(this.onSubmit.bind(this))} id="contactform" className="text-center">
 
-              <Field
-                label="description"
-                name="description"
-                type="text"
-                component={this.renderField}
-              />
+            <div className="settings">
+              <ul>
+                <Grid>
+                  <Col>
+                    <Field
+                      label="EventName"
+                      name="eventname"
+                      type="text"
+                      component={this.renderField}
+                    />
+                    <Field
+                      label="Password"
+                      name="password"
+                      type="text"
+                      component={this.renderField}
+                    />
 
-              <div className="container text-center row col-md-8 col-md-offset-2">
-                <button type="submit" className="btnghost">Submit</button>
-                <Link to="/home">
-                  <button type="button" className="btnghost">Cancel</button>
-                </Link>
-              </div>
+                    <Field
+                      label="description"
+                      name="description"
+                      type="text"
+                      component={this.renderField}
+                    />
 
-            </form>
-          </div>
+                    <div className="container text-center row col-md-8 col-md-offset-2">
+                      <button type="submit" className="btnghost">Submit</button>
+                      <Link to="/home">
+                        <button type="button" className="btnghost">Cancel</button>
+                      </Link>
+                    </div>
+
+                  </Col>
+                </Grid>
+              </ul>
+            </div>
+
+          </form>
         </section>
 
       </div>
