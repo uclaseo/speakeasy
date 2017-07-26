@@ -6,7 +6,7 @@ import Auth from '../Auth0/Auth0';
 import { bindActionCreators } from 'redux';
 import { fetchProfile } from '../actions/user_actions';
 import SimpleForm from './event_setting';
-import turf from 'turf'
+import turf from 'turf-distance'
 import { setNearbyEvents } from '../actions/index.js';
 import NearbyEventDetail from '../components/nearbyEventDetail';
 import { setActiveEvent } from '../actions/activeEventAction';
@@ -112,7 +112,7 @@ class Home extends Component {
       "type": "FeatureCollection",
       "features": [from, to]
     };
-    var distance = turf.distance(from, to, "miles");
+    var distance = turf(from, to, "miles");
     // console.log("distance between two points", distance);
     return distance < 0.5;
   }
