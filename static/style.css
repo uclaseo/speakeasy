@@ -1,9 +1,5 @@
 /* ------------- ARIES ------------------ */
-.center-block {
-    display: block;
-    margin-left: auto;
-    margin-right: auto;
- }
+
 body {
     width: 100%;
     height: 100%;
@@ -642,8 +638,8 @@ textarea.error {
 
 .portfolio {
     width: 100%;
-    margin-left: 0px;
-    margin-right: 0px;
+    margin-left: 10%;
+    margin-right: 10%;
     background-color: #f9f9f9;
 }
 
