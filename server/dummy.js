@@ -275,7 +275,10 @@ const crossPathDummy = [
   {id: 3, count: 1, userId: 1, possibleId: 4, chatting: true},
   {id: 4, count: 5, userId: 5, possibleId: 1, chatting: false},
   {id: 5, count: 4, userId: 1, possibleId: 8, chatting: false},
-  {id: 6, count: 4, userId: 9, possibleId: 1, chatting: false},
+  {id: 6, count: 4, userId: 15, possibleId: 1, chatting: false},
+  {id: 7, count: 5, userId: 15, possibleId: 2, chatting: false},
+  {id: 8, count: 2, userId: 15, possibleId: 3, chatting: false},
+  {id: 9, count: 4, userId: 15, possibleId: 4, chatting: false},
 ]
 
 module.exports = {
