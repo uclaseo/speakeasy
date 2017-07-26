@@ -32,7 +32,7 @@ const userDummy = [
     longitude: -0.1276250
   },
   {
-    name: 'Jason Chao',
+    name: 'Jason Shao',
     handle: 'Ping Pong Master',
     email: 'jason.chao@hackreactor.com',
     photo: 'http://bit.ly/2ugy2qm',
