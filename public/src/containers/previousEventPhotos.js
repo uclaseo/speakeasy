@@ -29,9 +29,9 @@ class previousEventPhotos extends Component {
     if (this.props.photos.length) {
       images = this.props.photos.map((photo, idx) => {
         return (
-            <li className="col-md-3">
+            <div className="col-md-3 col-centered">
               <img src={photo.imageLink} />
-            </li>
+            </div>
         )
       })
     }

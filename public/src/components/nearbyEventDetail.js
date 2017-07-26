@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom'
 const NearbyEventDetail = ({ event, handleEventClick, idx }) => {
   
   return (
-            <li className="col-md-3">
+            <div className="col-md-3 col-centered">
               <Link to="/active_event" onClick={() => handleEventClick(event)}>
                 <img 
                   src={event.eventPhoto || "https://ak5.picdn.net/shutterstock/videos/22434133/thumb/1.jpg"}  
@@ -16,7 +16,7 @@ const NearbyEventDetail = ({ event, handleEventClick, idx }) => {
                   </p>
                 </div>
               </Link>
-            </li>
+            </div>
   )
 }
 
