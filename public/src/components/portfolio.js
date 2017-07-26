@@ -5,9 +5,9 @@ let Portfolio = ({ renderEvents}) => {
     <section className="divCenter">
       <div className="portfolio ">
         <div className="gallery">
-          <ul >
+          <div className="row row-centered" >
             {renderEvents()}
-          </ul>
+          </div>
         </div>
       </div>
     </section>
