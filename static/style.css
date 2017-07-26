@@ -638,8 +638,8 @@ textarea.error {
 
 .portfolio {
     width: 100%;
-    margin-left: 10%;
-    margin-right: 10%;
+    margin-left: 0px;
+    margin-right: 0px;
     background-color: #f9f9f9;
 }
 
